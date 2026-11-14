@@ -20,7 +20,7 @@
   body{background:radial-gradient(1200px 600px at 70% -10%, #4a2416 0%, transparent 60%), var(--bg)}
   button{font:inherit;color:inherit;cursor:pointer}
   .wrap{max-width:1180px;margin:0 auto;padding:16px}
-  header.top{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  header.top{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
   .logo{font-weight:800;font-size:22px;letter-spacing:.3px}
   .logo span{color:var(--accent)}
   .chip{background:var(--panel2);border:1px solid var(--line);border-radius:999px;padding:6px 12px;font-size:14px;color:var(--muted)}
@@ -124,6 +124,33 @@
   .langpick{display:flex;justify-content:center;gap:8px;margin:4px 0 8px}
   .langpick button{padding:8px 16px;border-radius:999px;border:1px solid var(--line);background:var(--panel2);font-weight:700}
   .langpick button.on{background:var(--accent);color:#2a0f04;border-color:var(--accent)}
+  #btnMute{position:relative;z-index:60;background:var(--panel2);font-size:16px;padding:5px 12px}
+  .photo{margin:12px 0 4px;border-radius:14px;overflow:hidden;background:#000;border:1px solid var(--line)}
+  .photo img{width:100%;display:block;max-height:230px;object-fit:cover}
+  .photo.tall img{max-height:300px}
+  .photo figcaption{font-size:11.5px;color:var(--muted);padding:6px 10px;line-height:1.35;background:var(--panel2)}
+  .cmd-box{background:var(--panel2);border:1px solid var(--line);border-radius:16px;padding:12px;margin:12px 0}
+  .cmd-box h3{margin:0 0 8px}
+  .avatars{display:flex;gap:10px}
+  .avatar{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px;border-radius:14px;border:2px solid var(--line);background:var(--panel)}
+  .avatar .f{font-size:44px;line-height:1.1}
+  .avatar.on{border-color:var(--accent);box-shadow:0 0 0 3px rgba(255,138,76,.25)}
+  .namefield{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .namefield input{flex:1;font:inherit;font-size:17px;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--panel);color:var(--text)}
+  .namefield input:focus{outline:2px solid var(--accent);border-color:var(--accent)}
+  .academy .stepno{font-size:13px;color:var(--accent2);font-weight:800;letter-spacing:.5px}
+  .academy .big{font-size:64px;text-align:center;line-height:1.1;margin:6px 0;animation:bob 2.4s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-6px)}}
+  .academy h2{text-align:center;font-size:26px}
+  .academy p.lead{font-size:17px;text-align:center}
+  .dots{display:flex;justify-content:center;gap:6px;margin:12px 0}
+  .dots i{width:10px;height:10px;border-radius:99px;background:var(--line)}
+  .dots i.on{background:var(--accent);width:26px}
+  .moods{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:8px 0}
+  .moods span{background:var(--panel2);border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:14px}
+  .tipbox{background:#2a2410;border:1px solid #6b5a1a;border-radius:12px;padding:10px 12px;font-size:14px;margin-top:10px}
+  .demo-units{display:flex;justify-content:center;gap:6px;font-size:26px;flex-wrap:wrap;margin:8px 0}
+  .cmdchip{font-weight:700;color:var(--text)}
 </style>
 </head>
 <body>
@@ -132,7 +159,9 @@
     <div class="logo" id="logo">🚀 Red Planet <span>Outpost</span></div>
     <div class="chip"><span data-i18n="sol">Sol</span> <b id="solNum">1</b> / 30</div>
     <div class="chip" id="modeChip">Storm Season</div>
+    <div class="chip cmdchip" id="cmdChip"></div>
     <div class="spacer"></div>
+    <button class="linkbtn" id="btnMute" aria-label="Sound on/off">🔊</button>
     <button class="linkbtn" id="btnLang" lang="ar">🌐 العربية</button>
     <button class="linkbtn" id="btnHow" data-i18n="howBtn">❓ How to play</button>
     <button class="linkbtn" id="btnData" data-i18n="dataBtn">🛰️ Real NASA data</button>
@@ -157,10 +186,11 @@
             </radialGradient>
           </defs>
           <rect width="640" height="300" fill="url(#sky)"/>
+          <image id="scenePhoto" x="0" y="-20" width="640" height="360" preserveAspectRatio="xMidYMid slice" opacity="0"/>
           <circle id="sun" cx="560" cy="58" r="16" fill="#fff6dc"/>
           <circle id="sunHalo" cx="560" cy="58" r="30" fill="#fff6dc" opacity=".25"/>
-          <path d="M0 190 L70 160 L130 178 L210 140 L290 172 L360 150 L430 170 L520 138 L640 168 L640 300 L0 300Z" fill="#c76a3d" opacity=".7"/>
-          <rect y="200" width="640" height="100" fill="url(#ground)"/>
+          <path id="drawnHills" d="M0 190 L70 160 L130 178 L210 140 L290 172 L360 150 L430 170 L520 138 L640 168 L640 300 L0 300Z" fill="#c76a3d" opacity=".7"/>
+          <rect id="drawnGround" y="200" width="640" height="100" fill="url(#ground)"/>
           <ellipse cx="90" cy="262" rx="22" ry="6" fill="#6a2a14" opacity=".6"/>
           <ellipse cx="560" cy="275" rx="30" ry="7" fill="#6a2a14" opacity=".6"/>
           <!-- solar panels -->
@@ -201,6 +231,7 @@
           </g>
           <!-- dust overlay -->
           <rect id="dustHaze" width="640" height="300" fill="#a4592c" opacity="0"/>
+          <text id="photoCredit" x="632" y="292" font-size="9" fill="#fff" opacity="0" text-anchor="end">Photo: NASA/JPL-Caltech/MSSS (Curiosity, Mount Sharp)</text>
           <text id="sceneLabel" x="16" y="28" font-size="16" font-weight="700" fill="#3a1a0a" opacity=".75" data-i18n="scene">Gale Crater, Mars</text>
         </svg>
         <canvas id="snow"></canvas>
@@ -294,7 +325,7 @@ en:{
   srcLive:"NASA DONKI (Space Weather Database), fetched live", srcArch:"NASA DONKI space weather database & NASA Curiosity RAD",
   dyk:"<b>Did you know?</b> ",
   // cards
-  commanderCard:"<b>Commander Nova:</b> We need to make a decision, crew!", notEnough:" — not enough power/battery!", backOutpost:"Back to the outpost ▶",
+  commanderCard:"We need to make a decision, crew!", notEnough:" — not enough power/battery!", backOutpost:"Back to the outpost ▶",
   // end
   winH:"🎉 Mission complete!",
   winP:"Your crew survived <b>30 sols</b> on Mars and sent <b>{sci} science points</b> to Earth{unsent}.",
@@ -319,7 +350,7 @@ en:{
   // start
   title:"Red Planet Outpost",
   startSub:"Run a Mars base for 30 sols. Keep your crew alive, protect them from real solar storms, and do as much science as you can!",
-  startNova:"<b>Commander Nova:</b> Welcome to Mars, mission planner! Our solar panels only make a little power each sol. You decide where every unit goes. Ready?",
+  startNova:"Welcome to Mars, mission planner! Our solar panels only make a little power each sol. You decide where every unit goes. Ready?",
   mStormT:"☀️ Storm Season (May 2024)", mStormD:"Replay one of the stormiest months the Sun has had in 20 years, using real NASA solar flare data — including the giant storm that hit Mars on 20 May 2024.",
   mLiveT:"Live Sun", mLiveD:"Play the last 30 days of real space weather, downloaded right now from NASA's DONKI database. Every game is different!",
   glossary:"<b>Sol</b> = one Mars day (24 h 39 min). <b>Solar flare</b> = a giant flash of energy from the Sun. <b>Radiation</b> = invisible energy that can hurt living cells.",
@@ -328,8 +359,8 @@ en:{
   liveFailP:"The live space-weather download didn't work ({err}). This can happen if you're offline or NASA's demo key is busy.",
   liveFailP2:"You can play <b>Storm Season</b> instead — it uses real NASA data saved inside the game.",
   playStorm:"☀️ Play Storm Season", back:"Back",
-  briefLive:"<b>Commander Nova:</b> I just downloaded the last 30 days of real space weather from NASA: <b>{flr}</b> solar flares, <b>{cme}</b> solar eruptions, <b>{sep}</b> particle storms and <b>{gst}</b> magnetic storms at Earth. Each day becomes one sol.",
-  briefStorm:"<b>Commander Nova:</b> Our mission follows the real Sun from <b>May 2024</b>. NASA's records show <b>{n}</b> big space-weather days ahead. Each Earth day becomes one sol.",
+  briefLive:"I just downloaded the last 30 days of real space weather from NASA: <b>{flr}</b> solar flares, <b>{cme}</b> solar eruptions, <b>{sep}</b> particle storms and <b>{gst}</b> magnetic storms at Earth. Each day becomes one sol.",
+  briefStorm:"Our mission follows the real Sun from <b>May 2024</b>. NASA's records show <b>{n}</b> big space-weather days ahead. Each Earth day becomes one sol.",
   jobsH:"Your 3 jobs",
   j1:"🫁🍅 Keep the <b>air</b> and <b>food</b> above zero.",
   j2:"☢️ Keep the crew's <b>radiation dose</b> under <b>{b}</b>.",
@@ -366,7 +397,29 @@ en:{
   evFLR:"Solar flare {cls} on {date} at {time} UTC", evFLRm:"Solar flare {cls} on {date}",
   evSEP:"Solar energetic particle event detected by NASA spacecraft on {date} (the dose at Mars is a game estimate)",
   evCME:"Fast coronal mass ejection ({v} km/s) on {date}",
-  evGST:"Geomagnetic storm at Earth (Kp {kp}) on {date} — a sign the Sun is very active"
+  evGST:"Geomagnetic storm at Earth (Kp {kp}) on {date} — a sign the Sun is very active",
+  // commander
+  cmdH:"👩‍🚀 Choose your commander", cmdF:"Female commander", cmdM:"Male commander", cmdNameL:"Name:", cmdNamePh:"Type a name",
+  cmdTitle:"Commander {name}", cmdShort:"Cmdr {name}", defF:"Nova", defM:"Orion",
+  rx_storm3:"Everybody into the storm shelter — NOW! 🚨", rx_hit:"Ouch! Those solar particles found us. Shields matter!",
+  rx_miss:"Phew! The Sun missed us this time. 😅", rx_dust:"Dust storm incoming! Save every bit of power. 🌪️",
+  rx_low:"Careful, crew — our supplies are getting low! ⚠️", rx_sent:"Data sent! Scientists on Earth are cheering! 🎉",
+  rx_calm:"Smooth sol, team. Mars looks beautiful today. 🌄",
+  // sound
+  soundOn:"Sound on", soundOff:"Sound off",
+  // academy (how to play)
+  acH:"🎓 Astronaut Training Academy", acStep:"STEP {n} OF {m}", acNext:"Next ▶", acBack:"◀ Back", acGo:"Let's go! 🚀", acTipL:"🤫 Commander's secret:",
+  ac1T:"Catch the sunshine!", ac1:"Every sol, your solar panels catch sunlight and turn it into ⚡ power units. Mars is far from the Sun, so power is precious. During 🌪️ dust storms you get even less!",
+  ac1tip:"Leftover power charges the 🔋 battery — up to 6 units. A full battery is your best friend in a dust storm.",
+  ac2T:"Give every unit a job", ac2:"Tap <b>+</b> and <b>−</b> to share power between Air, Food, Shield, Radio and Science. Life support needs 3 and the greenhouse needs 2 — every sol!",
+  ac2tip:"No choice is free: every unit on the shield is one less for science. That's the real puzzle NASA planners solve!",
+  ac3T:"Read the Sun's mood", ac3:"The forecast tells you what the Sun is up to. When a storm is coming, power up your shield! These storms really happened — NASA recorded them.",
+  ac3tip:"On Sol 20 a giant REAL solar storm hits Mars. Be ready with a full shield!",
+  moodCalm:"🌞 Calm", moodActive:"🌤️ Active", moodFlare:"⚠️ Big flare", moodStorm:"🚨 Particle storm",
+  ac4T:"Phone home!", ac4:"Turn on the 📡 radio to beam your science to Earth and get tomorrow's forecast. Your message zooms through space for about 17 minutes!",
+  ac4tip:"Science only counts when it reaches Earth. Don't forget to send it!",
+  ac5T:"Survive 30 sols & become a legend", ac5:"Keep 🫁 air and 🍅 food above zero and ☢️ radiation under the limit. Send 40 science points home for ⭐⭐⭐. Ready, {title}?",
+  ac5tip:"Every game is different: dust storms, surprises and decisions change each time. Try new strategies!",
 },
 ar:{
   logo:'🚀 محطة <span>الكوكب الأحمر</span>', sol:"سول", howBtn:"❓ طريقة اللعب", dataBtn:"🛰️ بيانات ناسا الحقيقية", langBtn:"🌐 English",
@@ -410,7 +463,7 @@ ar:{
   ev3:" تقول ناسا إن رائد فضاء يقف بجانب المركبة كيوريوسيتي كان سيتلقى إشعاعًا يعادل 30 صورة أشعة سينية للصدر. يقترح العلماء الاحتماء في الكهوف أو خلف المنحدرات أو في ملاجئ محمية أثناء عواصف كهذه.",
   srcLive:"قاعدة بيانات طقس الفضاء DONKI من ناسا (تحميل مباشر)", srcArch:"قاعدة بيانات طقس الفضاء DONKI من ناسا وجهاز الإشعاع RAD على كيوريوسيتي",
   dyk:"<b>هل تعلم؟</b> ",
-  commanderCard:"<b>القائدة نوفا:</b> علينا أن نتخذ قرارًا يا فريق!", notEnough:" — لا توجد طاقة أو بطارية كافية!", backOutpost:"العودة إلى المحطة ▶",
+  commanderCard:"علينا أن نتخذ قرارًا يا فريق!", notEnough:" — لا توجد طاقة أو بطارية كافية!", backOutpost:"العودة إلى المحطة ▶",
   winH:"🎉 اكتملت المهمة!",
   winP:"نجا طاقمك <b>30 سول</b> على المريخ وأرسل <b>{sci} نقطة علوم</b> إلى الأرض{unsent}.",
   unsent:" ({n} نقطة أخرى لم تُرسل أبدًا — كان الراديو مطفأً!)",
@@ -433,7 +486,7 @@ ar:{
   again:"🔁 العب مرة أخرى", seeData:"🛰️ شاهد بيانات ناسا الحقيقية",
   title:"محطة الكوكب الأحمر",
   startSub:"أدِر قاعدة على المريخ لمدة 30 سول. حافظ على حياة طاقمك، واحمِهم من عواصف شمسية حقيقية، وأنجز أكبر قدر ممكن من العلوم!",
-  startNova:"<b>القائدة نوفا:</b> مرحبًا بك على المريخ يا مخطط المهمة! ألواحنا الشمسية تنتج القليل من الطاقة كل سول. أنت تقرر أين تذهب كل وحدة. هل أنت مستعد؟",
+  startNova:"مرحبًا بك على المريخ يا مخطط المهمة! ألواحنا الشمسية تنتج القليل من الطاقة كل سول. أنت تقرر أين تذهب كل وحدة. هل أنت مستعد؟",
   mStormT:"☀️ موسم العواصف (مايو 2024)", mStormD:"أعِد عيش واحد من أكثر الشهور عواصف في الشمس منذ 20 عامًا، باستخدام بيانات ناسا الحقيقية للتوهجات الشمسية — ومنها العاصفة العملاقة التي ضربت المريخ في 20 مايو 2024.",
   mLiveT:"الشمس الآن", mLiveD:"العب آخر 30 يومًا من طقس الفضاء الحقيقي، تُحمَّل الآن من قاعدة بيانات DONKI التابعة لناسا. كل لعبة مختلفة!",
   glossary:"<b>السول</b> = يوم واحد على المريخ (24 ساعة و39 دقيقة). <b>التوهج الشمسي</b> = وميض هائل من الطاقة يخرج من الشمس. <b>الإشعاع</b> = طاقة غير مرئية قد تؤذي الخلايا الحية.",
@@ -442,8 +495,8 @@ ar:{
   liveFailP:"لم ينجح تحميل طقس الفضاء المباشر ({err}). قد يحدث هذا إذا لم تكن متصلًا بالإنترنت أو إذا كان مفتاح ناسا التجريبي مشغولًا.",
   liveFailP2:"يمكنك لعب <b>موسم العواصف</b> بدلًا من ذلك — فهو يستخدم بيانات ناسا الحقيقية المحفوظة داخل اللعبة.",
   playStorm:"☀️ العب موسم العواصف", back:"رجوع",
-  briefLive:"<b>القائدة نوفا:</b> حمّلتُ للتو آخر 30 يومًا من طقس الفضاء الحقيقي من ناسا: <b>{flr}</b> توهجات شمسية، و<b>{cme}</b> انفجارات شمسية، و<b>{sep}</b> عواصف جسيمات، و<b>{gst}</b> عواصف مغناطيسية على الأرض. كل يوم يصبح سولًا واحدًا.",
-  briefStorm:"<b>القائدة نوفا:</b> مهمتنا تتبع الشمس الحقيقية في <b>مايو 2024</b>. سجلات ناسا تُظهر <b>{n}</b> أيام طقس فضائي كبيرة قادمة. كل يوم أرضي يصبح سولًا واحدًا.",
+  briefLive:"حمّلتُ للتو آخر 30 يومًا من طقس الفضاء الحقيقي من ناسا: <b>{flr}</b> توهجات شمسية، و<b>{cme}</b> انفجارات شمسية، و<b>{sep}</b> عواصف جسيمات، و<b>{gst}</b> عواصف مغناطيسية على الأرض. كل يوم يصبح سولًا واحدًا.",
+  briefStorm:"مهمتنا تتبع الشمس الحقيقية في <b>مايو 2024</b>. سجلات ناسا تُظهر <b>{n}</b> أيام طقس فضائي كبيرة قادمة. كل يوم أرضي يصبح سولًا واحدًا.",
   jobsH:"مهامك الثلاث",
   j1:"🫁🍅 حافظ على <b>الهواء</b> و<b>الطعام</b> فوق الصفر.",
   j2:"☢️ أبقِ <b>جرعة الإشعاع</b> للطاقم أقل من <b>{b}</b>.",
@@ -477,8 +530,122 @@ ar:{
   evFLR:"توهج شمسي {cls} في {date} الساعة {time} بالتوقيت العالمي", evFLRm:"توهج شمسي {cls} في {date}",
   evSEP:"حدث جسيمات شمسية نشطة رصدته مركبات ناسا في {date} (الجرعة على المريخ تقدير خاص باللعبة)",
   evCME:"انبعاث كتلي إكليلي سريع ({v} كم/ث) في {date}",
-  evGST:"عاصفة مغناطيسية على الأرض (Kp {kp}) في {date} — علامة على أن الشمس نشطة جدًا"
+  evGST:"عاصفة مغناطيسية على الأرض (Kp {kp}) في {date} — علامة على أن الشمس نشطة جدًا",
+  cmdH:"👩‍🚀 اختر قائد المهمة", cmdF:"قائدة", cmdM:"قائد", cmdNameL:"الاسم:", cmdNamePh:"اكتب اسمًا",
+  cmdTitle:p=>(p.g==="m"?"القائد ":"القائدة ")+p.name, cmdShort:p=>(p.g==="m"?"القائد ":"القائدة ")+p.name, defF:"نوفا", defM:"أوريون",
+  rx_storm3:"الجميع إلى ملجأ العواصف — الآن! 🚨", rx_hit:"آخ! وصلتنا الجسيمات الشمسية. الدرع مهم!",
+  rx_miss:"فيو! أخطأتنا الشمس هذه المرة. 😅", rx_dust:"عاصفة غبارية قادمة! وفّروا كل ذرة طاقة. 🌪️",
+  rx_low:"انتبهوا يا فريق — مواردنا تقل! ⚠️", rx_sent:"أُرسلت البيانات! العلماء على الأرض يهتفون! 🎉",
+  rx_calm:"سول هادئ يا فريق. المريخ جميل اليوم. 🌄",
+  soundOn:"الصوت يعمل", soundOff:"الصوت مكتوم",
+  acH:"🎓 أكاديمية تدريب رواد الفضاء", acStep:"الخطوة {n} من {m}", acNext:"التالي ◀", acBack:"▶ السابق", acGo:"هيا بنا! 🚀", acTipL:"🤫 نصيحة سرية:",
+  ac1T:"التقط أشعة الشمس!", ac1:"في كل سول، تلتقط ألواحك الشمسية ضوء الشمس وتحوّله إلى وحدات طاقة ⚡. المريخ بعيد عن الشمس، لذلك الطاقة ثمينة. وأثناء العواصف الغبارية 🌪️ تحصل على أقل!",
+  ac1tip:"الطاقة الزائدة تشحن البطارية 🔋 — حتى 6 وحدات. البطارية الممتلئة أفضل صديق لك في العاصفة الغبارية.",
+  ac2T:"أعطِ كل وحدة مهمة", ac2:"اضغط <b>+</b> و<b>−</b> لتوزّع الطاقة بين الهواء والطعام والدرع والراديو والعلوم. دعم الحياة يحتاج 3 والمزرعة تحتاج 2 — في كل سول!",
+  ac2tip:"لا يوجد خيار مجاني: كل وحدة للدرع تعني وحدة أقل للعلوم. هذا هو اللغز الحقيقي الذي يحله مخططو ناسا!",
+  ac3T:"اقرأ مزاج الشمس", ac3:"التوقعات تخبرك بما تفعله الشمس. عندما تقترب عاصفة، قوِّ درعك! هذه العواصف حدثت فعلًا — سجّلتها ناسا.",
+  ac3tip:"في السول 20 تضرب المريخَ عاصفةٌ شمسية حقيقية عملاقة. كن مستعدًا بدرع كامل!",
+  moodCalm:"🌞 هادئة", moodActive:"🌤️ نشطة", moodFlare:"⚠️ توهج كبير", moodStorm:"🚨 عاصفة جسيمات",
+  ac4T:"اتصل بالأرض!", ac4:"شغّل الراديو 📡 لترسل علومك إلى الأرض وتحصل على توقعات الغد. رسالتك تنطلق عبر الفضاء نحو 17 دقيقة!",
+  ac4tip:"العلوم لا تُحسب إلا عندما تصل إلى الأرض. لا تنسَ إرسالها!",
+  ac5T:"انجُ 30 سول وكن أسطورة", ac5:"حافظ على 🫁 الهواء و🍅 الطعام فوق الصفر و☢️ الإشعاع تحت الحد. أرسل 40 نقطة علوم إلى الأرض لتحصل على ⭐⭐⭐. هل أنت مستعد يا {title}؟",
+  ac5tip:"كل لعبة مختلفة: العواصف الغبارية والمفاجآت والقرارات تتغير كل مرة. جرّب خططًا جديدة!",
 }};
+
+
+/* =========================================================
+   COMMANDER (male / female + name)
+   ========================================================= */
+let CMD = {g:"f", name:""};
+try{ const c=JSON.parse(localStorage.getItem("rpo-cmd")||"null"); if(c&&(c.g==="f"||c.g==="m")) CMD={g:c.g, name:String(c.name||"").slice(0,14)}; }catch(e){}
+const esc = s => String(s).replace(/[&<>"']/g, ch=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[ch]));
+function saveCmd(){ try{localStorage.setItem("rpo-cmd", JSON.stringify(CMD));}catch(e){} }
+function cmdName(){ return CMD.name.trim() ? esc(CMD.name.trim()) : t(CMD.g==="m"?"defM":"defF"); }
+function cmdTitle(){ return t("cmdTitle",{name:cmdName(), g:CMD.g}); }
+function cmdFace(){ return CMD.g==="m" ? "👨‍🚀" : "👩‍🚀"; }
+const say = (txt) => `<div class="commander"><div class="face">${cmdFace()}</div><div class="bubble"><b>${cmdTitle()}:</b> ${txt}</div></div>`;
+
+/* =========================================================
+   REAL NASA PHOTOS (NASA Image and Video Library, public domain)
+   ========================================================= */
+const PHOTOS = {
+  gale:   {id:"PIA16032", s:"small",  cr:"NASA/JPL-Caltech/MSSS", cap:{en:"Real photo: Mount Sharp on the horizon, seen by NASA's Curiosity rover in Gale Crater",ar:"صورة حقيقية: جبل شارب في الأفق كما صوّرته مركبة ناسا كيوريوسيتي في فوهة غيل"}},
+  selfie: {id:"PIA24173", s:"medium", cr:"NASA/JPL-Caltech/MSSS", cap:{en:"Real photo: Curiosity's selfie on Mars — your robot neighbor in Gale Crater",ar:"صورة حقيقية: صورة ذاتية للمركبة كيوريوسيتي على المريخ — جارتك الآلية في فوهة غيل"}},
+  buckskin:{id:"PIA19808",s:"medium", cr:"NASA/JPL-Caltech/MSSS", cap:{en:"Real photo: Curiosity at the 'Buckskin' drill site on Mars",ar:"صورة حقيقية: كيوريوسيتي عند موقع الحفر «باكسكين» على المريخ"}},
+  snow:   {id:"PIA26302", s:"small",  cr:"NASA/JPL-Caltech", cap:{en:"Real photo: white specks and streaks in Curiosity's camera — solar storm particles hitting the sensor, 20 May 2024",ar:"صورة حقيقية: نقاط وخطوط بيضاء في كاميرا كيوريوسيتي — جسيمات العاصفة الشمسية تصطدم بالمستشعر، 20 مايو 2024"}},
+  flare:  {id:"PIA21949", s:"medium", cr:"NASA/SDO", cap:{en:"Real image: a major solar flare seen by NASA's Solar Dynamics Observatory",ar:"صورة حقيقية: توهج شمسي كبير رصده مرصد ديناميكا الشمس التابع لناسا"}},
+  panels: {id:"PIA15114", s:"medium", cr:"NASA/JPL-Caltech/Cornell", cap:{en:"Real photo: dusty solar panels on NASA's Opportunity rover (self-portrait, 2007)",ar:"صورة حقيقية: ألواح شمسية مغبرة على مركبة ناسا أوبورتونيتي (صورة ذاتية، 2007)"}},
+  tracks: {id:"PIA18590", s:"small",  cr:"NASA/JPL-Caltech/MSSS", cap:{en:"Real photo: Curiosity's wheel tracks in 'Hidden Valley' on Mars",ar:"صورة حقيقية: آثار عجلات كيوريوسيتي في «الوادي الخفي» على المريخ"}},
+  veggie: {id:"KSC-20171017-PH_ISS01_0001", s:"medium", cr:"NASA", cap:{en:"Real photo: plants growing in NASA's Veggie garden on the International Space Station",ar:"صورة حقيقية: نباتات تنمو في حديقة «فيجي» من ناسا على محطة الفضاء الدولية"}},
+  pano:   {id:"PIA16074", s:"medium", cr:"NASA/JPL-Caltech", cap:{en:"Real panorama: all around Curiosity in Gale Crater",ar:"بانوراما حقيقية: كل ما حول كيوريوسيتي في فوهة غيل"}},
+  moxie:  {id:"PIA24203", s:"medium", cr:"NASA/JPL-Caltech", cap:{en:"Real photo: MOXIE, the oxygen maker, tucked inside the Perseverance rover",ar:"صورة حقيقية: جهاز موكسي لصنع الأكسجين داخل المركبة برسيفيرانس"}},
+  sunset: {id:"PIA19400", s:"small",  cr:"NASA/JPL-Caltech/MSSS/Texas A&M Univ.", cap:{en:"Real photo: a blue sunset in Gale Crater, taken by Curiosity",ar:"صورة حقيقية: غروب أزرق في فوهة غيل التقطته كيوريوسيتي"}}
+};
+function photoOk(img){ const f=img.closest("figure"); if(!f) return; f.style.display=""; const prev=f.previousElementSibling; if(prev&&prev.classList.contains("photo-fallback")) prev.remove(); }
+const photoURL = k => { const p=PHOTOS[k]; return `https://images-assets.nasa.gov/image/${p.id}/${p.id}~${p.s}.jpg`; };
+function photo(k, cls=""){
+  const p=PHOTOS[k]; if(!p) return "";
+  // hidden until the photo really loads, so nothing broken shows when offline or blocked
+  return `<figure class="photo ${cls}" style="display:none"><img src="${photoURL(k)}" alt="${esc(L(p.cap))}" onload="photoOk(this)" onerror="this.closest('figure').remove()"><figcaption>📷 ${L(p.cap)} · ${p.cr}</figcaption></figure>`;
+}
+
+/* =========================================================
+   SOUND (synthesized with Web Audio — no files needed)
+   ========================================================= */
+const SFX = (()=>{
+  let ctx=null, master=null, muted=false, nbuf=null, amb=null;
+  try{ muted = localStorage.getItem("rpo-mute")==="1"; }catch(e){}
+  function ac(){
+    try{
+      if(!ctx){ const C=window.AudioContext||window.webkitAudioContext; if(!C) return null;
+        ctx=new C(); master=ctx.createGain(); master.gain.value=muted?0:0.6; master.connect(ctx.destination); }
+      if(ctx.state==="suspended") ctx.resume();
+      return ctx;
+    }catch(e){ return null; }
+  }
+  function tone(f,dur,{type="sine",vol=0.2,at=0,slide=null}={}){
+    const c=ac(); if(!c||muted) return;
+    const o=c.createOscillator(), g=c.createGain(), t0=c.currentTime+at;
+    o.type=type; o.frequency.setValueAtTime(f,t0); if(slide) o.frequency.exponentialRampToValueAtTime(slide,t0+dur);
+    g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(vol,t0+0.01); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    o.connect(g); g.connect(master); o.start(t0); o.stop(t0+dur+0.05);
+  }
+  function buf(){ const c=ac(); if(!nbuf){ nbuf=c.createBuffer(1,c.sampleRate*2,c.sampleRate); const d=nbuf.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1; } return nbuf; }
+  function noise(dur,{vol=0.2,at=0,type="bandpass",f=1000,f2=null,q=1}={}){
+    const c=ac(); if(!c||muted) return;
+    const s=c.createBufferSource(); s.buffer=buf(); s.loop=true;
+    const fl=c.createBiquadFilter(); fl.type=type; fl.Q.value=q; const t0=c.currentTime+at;
+    fl.frequency.setValueAtTime(f,t0); if(f2) fl.frequency.exponentialRampToValueAtTime(f2,t0+dur);
+    const g=c.createGain(); g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(vol,t0+Math.max(0.003,dur*0.2)); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    s.connect(fl); fl.connect(g); g.connect(master); s.start(t0); s.stop(t0+dur+0.05);
+  }
+  function ambient(){            // soft habitat hum + distant Mars wind
+    const c=ac(); if(!c||amb) return;
+    const s=c.createBufferSource(); s.buffer=buf(); s.loop=true;
+    const fl=c.createBiquadFilter(); fl.type="lowpass"; fl.frequency.value=260;
+    const g=c.createGain(); g.gain.value=0.035; s.connect(fl); fl.connect(g); g.connect(master); s.start();
+    const o=c.createOscillator(); o.frequency.value=58; const og=c.createGain(); og.gain.value=0.012; o.connect(og); og.connect(master); o.start();
+    amb={s,o};
+  }
+  return {
+    unlock(){ ac(); ambient(); },
+    click(){ tone(900,0.04,{type:"square",vol:0.035}); },
+    blip(up){ tone(up?620:470,0.09,{type:"triangle",vol:0.12,slide:up?940:300}); },
+    launch(){ noise(1.1,{vol:0.22,type:"lowpass",f:180,f2:2400}); tone(70,0.9,{type:"sawtooth",vol:0.06,slide:150}); },
+    // NASA "Quindar tones": the beeps heard at the start and end of Apollo radio messages
+    quindar(at=0){ tone(2525,0.25,{vol:0.1,at}); noise(0.6,{vol:0.05,at:at+0.28,f:2600,q:0.6}); tone(2475,0.25,{vol:0.1,at:at+0.95}); },
+    geiger(n=12,at=0){ for(let i=0;i<n;i++) noise(0.012,{vol:0.5,at:at+Math.random()*1.8,type:"highpass",f:2500}); },
+    alarm(big,at=0){ for(let i=0;i<(big?4:2);i++){ tone(880,0.22,{type:"square",vol:0.06,at:at+i*0.5}); tone(620,0.22,{type:"square",vol:0.06,at:at+i*0.5+0.25}); } },
+    wind(at=0){ noise(2.6,{vol:0.22,at,f:350,f2:900,q:0.7}); },
+    chime(){ [784,988,1319].forEach((f,i)=>tone(f,0.35,{vol:0.09,at:i*0.09})); },
+    good(at=0){ tone(1046,0.12,{type:"triangle",vol:0.09,at}); tone(1318,0.22,{type:"triangle",vol:0.09,at:at+0.1}); },
+    fanfare(){ [523,659,784,1046,784,1046].forEach((f,i)=>tone(f,i===5?0.7:0.18,{type:"triangle",vol:0.13,at:i*0.16})); },
+    fail(){ [392,330,262].forEach((f,i)=>tone(f,0.4,{type:"sawtooth",vol:0.06,at:i*0.32})); },
+    swoosh(){ noise(0.35,{vol:0.12,f:500,f2:3200,q:0.8}); },
+    toggle(){ muted=!muted; try{localStorage.setItem("rpo-mute",muted?"1":"0");}catch(e){} if(master) master.gain.value=muted?0:0.6; if(!muted) this.unlock(); return muted; },
+    get muted(){ return muted; }
+  };
+})();
 
 /* =========================================================
    REAL DATA (embedded so the game works offline)
@@ -663,7 +830,7 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 
 /* ---------- decision cards (bilingual) ---------- */
 const CARDS = [
-  {id:"dust", em:"🧹", title:{en:"Dusty solar panels!",ar:"ألواح شمسية مغبرة!"},
+  {id:"dust", photo:"panels", em:"🧹", title:{en:"Dusty solar panels!",ar:"ألواح شمسية مغبرة!"},
    text:{en:"A layer of red dust is covering the solar panels. Dirty panels make less power.",ar:"طبقة من الغبار الأحمر تغطي الألواح الشمسية. الألواح المتسخة تنتج طاقة أقل."},
    choices:[
      {t:{en:"Go outside and sweep them (spacewalk)",ar:"اخرج ونظّفها (سير خارج المحطة)"}, s:{en:"+2 power for 3 sols, but the astronaut gets a little extra radiation outside (+0.5).",ar:"+2 طاقة لمدة 3 سول، لكن رائد الفضاء يتلقى إشعاعًا إضافيًا قليلًا في الخارج (+0.5)."},
@@ -674,7 +841,7 @@ const CARDS = [
    fact:{en:"<b>Real Mars fact:</b> NASA's Opportunity rover ran on solar power for almost 15 years. In 2018 a planet-wide dust storm blocked the Sun and the rover never woke up again.",
          ar:"<b>حقيقة عن المريخ:</b> عملت المركبة أوبورتونيتي من ناسا بالطاقة الشمسية قرابة 15 عامًا. في 2018 حجبت عاصفة غبارية غطّت الكوكب كله الشمس، ولم تستيقظ المركبة بعدها أبدًا."},
    src:{en:"NASA Mars Exploration Rover mission",ar:"مهمة مركبات استكشاف المريخ – ناسا"}},
-  {id:"rock", em:"💎", title:{en:"A strange shiny rock!",ar:"صخرة لامعة غريبة!"},
+  {id:"rock", photo:"tracks", em:"💎", title:{en:"A strange shiny rock!",ar:"صخرة لامعة غريبة!"},
    text:{en:"The rover camera spotted a weird, shiny rock 2 km away. Driving there uses a lot of battery.",ar:"رصدت كاميرا المركبة صخرة لامعة غريبة على بُعد 2 كم. القيادة إلى هناك تستهلك الكثير من البطارية."},
    choices:[
      {t:{en:"Drive the rover there",ar:"قُد المركبة إلى هناك"}, s:{en:"Costs 2 battery. +5 science (it still needs to be radioed to Earth).",ar:"تكلّف 2 من البطارية. +5 علوم (يجب إرسالها بالراديو إلى الأرض)."}, need:()=>S.battery>=2,
@@ -696,7 +863,7 @@ const CARDS = [
    fact:{en:"<b>Real space fact:</b> The International Space Station recycles about 98% of its water, including sweat and urine! Oxygen is made by splitting water with electricity.",
          ar:"<b>حقيقة فضائية:</b> تعيد محطة الفضاء الدولية تدوير نحو 98% من مائها، حتى العرق والبول! ويُصنع الأكسجين بفصل الماء بالكهرباء."},
    src:{en:"NASA ISS Environmental Control and Life Support System (2023)",ar:"نظام التحكم البيئي ودعم الحياة في محطة الفضاء الدولية – ناسا (2023)"}},
-  {id:"lettuce", em:"🥬", title:{en:"The lettuce is growing!",ar:"الخس ينمو!"},
+  {id:"lettuce", photo:"veggie", em:"🥬", title:{en:"The lettuce is growing!",ar:"الخس ينمو!"},
    text:{en:"The greenhouse lettuce is small but tasty. Harvest it now, or wait for it to grow bigger?",ar:"خس المزرعة صغير لكنه لذيذ. هل تحصده الآن أم تنتظر حتى يكبر؟"},
    choices:[
      {t:{en:"Harvest now",ar:"احصده الآن"}, s:{en:"+10 food today, but the greenhouse grows half as much for 2 sols while you replant.",ar:"+10 طعام اليوم، لكن المزرعة تنتج النصف لمدة 2 سول أثناء إعادة الزراعة."},
@@ -707,7 +874,7 @@ const CARDS = [
    fact:{en:"<b>Real space fact:</b> In 2015, astronauts on the Space Station ate lettuce they grew themselves in NASA's 'Veggie' garden — the first space-grown food eaten by NASA astronauts.",
          ar:"<b>حقيقة فضائية:</b> في 2015 أكل رواد الفضاء في محطة الفضاء الدولية خسًا زرعوه بأنفسهم في حديقة «فيجي» من ناسا — أول طعام مزروع في الفضاء يأكله رواد ناسا."},
    src:{en:"NASA Veggie plant growth system",ar:"نظام فيجي لزراعة النباتات – ناسا"}},
-  {id:"photo", em:"📸", title:{en:"Earth asks for a panorama photo",ar:"الأرض تطلب صورة بانورامية"},
+  {id:"photo", photo:"pano", em:"📸", title:{en:"Earth asks for a panorama photo",ar:"الأرض تطلب صورة بانورامية"},
    text:{en:"Scientists back home want a 360° photo of the crater. The robot arm and camera need power.",ar:"يريد العلماء على الأرض صورة 360° للفوهة. الذراع الآلية والكاميرا تحتاجان إلى طاقة."},
    choices:[
      {t:{en:"Take the photo",ar:"التقط الصورة"}, s:{en:"Uses 1 extra power today. +4 science.",ar:"تستخدم وحدة طاقة إضافية اليوم. +4 علوم."}, need:()=>available()-allocTotal()>=1,
@@ -742,12 +909,12 @@ function chooseCard(i){
 
 /* ---------- facts shown after a sol ---------- */
 const FUN_FACTS = [
-  [{en:"A <b>sol</b> is one day on Mars. It is 24 hours and 39 minutes long — just a little longer than an Earth day.",ar:"<b>السول</b> هو يوم واحد على المريخ. طوله 24 ساعة و39 دقيقة — أطول قليلًا من يوم الأرض."},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"}],
-  [{en:"Mars gets only about <b>43%</b> of the sunlight that Earth gets, because it is farther from the Sun. Solar panels on Mars have to be big!",ar:"يصل إلى المريخ نحو <b>43%</b> فقط من ضوء الشمس الذي يصل إلى الأرض، لأنه أبعد عن الشمس. لذلك يجب أن تكون الألواح الشمسية على المريخ كبيرة!"},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"}],
-  [{en:"Mars has no global magnetic field and a very thin atmosphere, so much more radiation reaches the ground than on Earth.",ar:"ليس للمريخ مجال مغناطيسي عالمي، وغلافه الجوي رقيق جدًا، لذلك يصل إلى سطحه إشعاع أكثر بكثير من الأرض."},{en:"NASA Curiosity RAD science",ar:"علوم جهاز RAD على كيوريوسيتي – ناسا"}],
-  [{en:"On a normal day, Curiosity's radiation detector (RAD) measures about <b>700 micrograys</b> on the Mars surface. In this game, 1 radiation point = 1,000 micrograys (1 milligray).",ar:"في اليوم العادي، يقيس جهاز الإشعاع RAD على المركبة كيوريوسيتي نحو <b>700 ميكروغراي</b> على سطح المريخ. في هذه اللعبة، نقطة الإشعاع الواحدة = 1,000 ميكروغراي (1 ميليغراي)."},{en:"NASA / SwRI Curiosity RAD",ar:"ناسا / معهد ساوث وست للأبحاث – جهاز RAD"}],
+  [{en:"A <b>sol</b> is one day on Mars. It is 24 hours and 39 minutes long — just a little longer than an Earth day.",ar:"<b>السول</b> هو يوم واحد على المريخ. طوله 24 ساعة و39 دقيقة — أطول قليلًا من يوم الأرض."},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"sunset"],
+  [{en:"Mars gets only about <b>43%</b> of the sunlight that Earth gets, because it is farther from the Sun. Solar panels on Mars have to be big!",ar:"يصل إلى المريخ نحو <b>43%</b> فقط من ضوء الشمس الذي يصل إلى الأرض، لأنه أبعد عن الشمس. لذلك يجب أن تكون الألواح الشمسية على المريخ كبيرة!"},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"panels"],
+  [{en:"Mars has no global magnetic field and a very thin atmosphere, so much more radiation reaches the ground than on Earth.",ar:"ليس للمريخ مجال مغناطيسي عالمي، وغلافه الجوي رقيق جدًا، لذلك يصل إلى سطحه إشعاع أكثر بكثير من الأرض."},{en:"NASA Curiosity RAD science",ar:"علوم جهاز RAD على كيوريوسيتي – ناسا"},"gale"],
+  [{en:"On a normal day, Curiosity's radiation detector (RAD) measures about <b>700 micrograys</b> on the Mars surface. In this game, 1 radiation point = 1,000 micrograys (1 milligray).",ar:"في اليوم العادي، يقيس جهاز الإشعاع RAD على المركبة كيوريوسيتي نحو <b>700 ميكروغراي</b> على سطح المريخ. في هذه اللعبة، نقطة الإشعاع الواحدة = 1,000 ميكروغراي (1 ميليغراي)."},{en:"NASA / SwRI Curiosity RAD",ar:"ناسا / معهد ساوث وست للأبحاث – جهاز RAD"},"buckskin"],
   [{en:"Water is great at blocking radiation. Future Mars habitats might put water tanks in their walls to make a shield!",ar:"الماء ممتاز في حجب الإشعاع. قد تضع مساكن المريخ المستقبلية خزانات ماء في جدرانها لتصنع درعًا!"},{en:"NASA radiation shielding research",ar:"أبحاث ناسا في الحماية من الإشعاع"}],
-  [{en:"Air on Mars is about 95% carbon dioxide. NASA's MOXIE experiment on the Perseverance rover made real oxygen from the Martian air!",ar:"نحو 95% من هواء المريخ ثاني أكسيد الكربون. تجربة «موكسي» من ناسا على المركبة برسيفيرانس صنعت أكسجينًا حقيقيًا من هواء المريخ!"},{en:"NASA Perseverance MOXIE",ar:"تجربة موكسي على برسيفيرانس – ناسا"}],
+  [{en:"Air on Mars is about 95% carbon dioxide. NASA's MOXIE experiment on the Perseverance rover made real oxygen from the Martian air!",ar:"نحو 95% من هواء المريخ ثاني أكسيد الكربون. تجربة «موكسي» من ناسا على المركبة برسيفيرانس صنعت أكسجينًا حقيقيًا من هواء المريخ!"},{en:"NASA Perseverance MOXIE",ar:"تجربة موكسي على برسيفيرانس – ناسا"},"moxie"],
   [{en:"Mars is cold! The average temperature is about −60 °C. Heaters need power too.",ar:"المريخ بارد! متوسط درجة الحرارة نحو −60 درجة مئوية. المدافئ تحتاج إلى طاقة أيضًا."},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"}]
 ];
 function factFor(wx, factSeed){
@@ -757,10 +924,10 @@ function factFor(wx, factSeed){
     let msg = tag + evText(it) + ".";
     if(wx.level===2) msg += t("ev2");
     if(wx.level===3) msg += t("ev3");
-    return {html:msg, src: S.live? t("srcLive") : t("srcArch")};
+    return {html:msg, src: S.live? t("srcLive") : t("srcArch"), photo: wx.level===3 && !S.live ? "snow" : wx.level>=2 ? "flare" : null};
   }
   const p = FUN_FACTS[factSeed % FUN_FACTS.length];
-  return {html:t("dyk")+L(p[0]), src:L(p[1])};
+  return {html:t("dyk")+L(p[0]), src:L(p[1]), photo:p[2]||null};
 }
 
 function forecastText(){
@@ -825,7 +992,10 @@ function applyStatic(){
   $("logo").innerHTML = t("logo");
   document.querySelectorAll("[data-i18n]").forEach(el=>{ el.innerHTML = t(el.dataset.i18n); });
   const b=$("btnLang"); b.innerHTML=t("langBtn"); b.lang = LANG==="ar"?"en":"ar";
+  updateCmdChip(); updateMute();
 }
+function updateCmdChip(){ $("cmdChip").innerHTML = cmdFace()+" "+t("cmdShort",{name:cmdName(), g:CMD.g}); }
+function updateMute(){ const m=$("btnMute"); m.textContent = SFX.muted?"🔇":"🔊"; m.title = SFX.muted?t("soundOff"):t("soundOn"); m.setAttribute("aria-label", m.title); }
 function setLang(l){
   LANG=l; try{localStorage.setItem("rpo-lang",l);}catch(e){}
   applyStatic(); render();
@@ -883,8 +1053,11 @@ document.addEventListener("click",e=>{
   const k=b.dataset.k, d=+b.dataset.d;
   const nv=S.alloc[k]+d; if(nv<0||nv>CFG.maxUnits[k]) return;
   if(d>0 && available()-allocTotal()<=0) return;
-  S.alloc[k]=nv; render();
+  S.alloc[k]=nv; SFX.blip(d>0); render();
 });
+// soft click on every other button, and unlock audio on first touch
+document.addEventListener("pointerdown",()=>SFX.unlock(),{once:true});
+document.addEventListener("click",e=>{ const b=e.target.closest("button"); if(b && !b.dataset.k && b.id!=="btnGo" && b.id!=="btnMute") SFX.click(); });
 
 function showModal(html, view){$("modal").innerHTML=html; $("ov").classList.add("show"); $("modal").scrollTop=0; currentView=view||null;}
 function hideModal(){$("ov").classList.remove("show"); currentView=null;}
@@ -895,30 +1068,42 @@ $("btnGo").onclick=()=>{
   if(S.over) return;
   if(allocTotal()>available()) return;
   const res=runSol(); if(!res) return;
-  if(res.storm) snowBurst(res.storm.got);
+  SFX.launch();
+  if(res.storm){ snowBurst(res.storm.got); SFX.geiger(Math.round(8+res.storm.got*10), 0.5); if(res.storm.level===3) SFX.alarm(true,0.3); }
+  if(res.lines.some(l=>l.k==="l_dustStart")) SFX.wind(0.6);
+  if(res.lines.some(l=>l.k==="l_sent"||l.k==="l_radio")) SFX.quindar(res.storm?2.2:1.0);
   lastReport=res; showReport(); render();
 };
+function sunWarning(){ if(S.forecastFor===S.sol){ const lv=S.weather[S.sol].level; if(lv>=2) SFX.alarm(lv===3); } }
 function lineText(l){ const p={...l.p}; if(p.full) p.full=t(p.full); return t(l.k,p); }
 function showReport(){
   const res=lastReport, fact=factFor(res.wx, res.factSeed);
+  const ks=res.lines.map(l=>l.k);
+  const rx = res.storm&&res.storm.level===3 ? "rx_storm3" : res.storm ? "rx_hit" : ks.includes("l_dustStart") ? "rx_dust"
+    : (ks.includes("l_airDown")||ks.includes("l_foodDown")) ? "rx_low" : ks.includes("l_missed") ? "rx_miss"
+    : (res.lines.find(l=>l.k==="l_sent")?.p.n>=3) ? "rx_sent" : "rx_calm";
   const lines = res.lines.map(l=>`<li class="${l.cls||''}"><span class="e">${l.e}</span><span>${lineText(l)}</span></li>`).join("");
   showModal(`<h2>${t("reportH",{n:res.sol})}</h2>
+    ${say(t(rx))}
     <ul class="lines">${lines}</ul>
     <div class="fact">${fact.html}<span class="src">${t("source")} ${fact.src}</span></div>
+    ${fact.photo?photo(fact.photo):""}
     <div class="btnrow"><button class="btn primary" id="btnNext">${S.over?t("seeResults"):t("nextSol")}</button></div>`, showReport);
-  $("btnNext").onclick=()=>{ if(S.over){showEnd();} else if(S.pendingCard){showCard();} else {hideModal(); render();} };
+  $("btnNext").onclick=()=>{ if(S.over){showEnd();} else if(S.pendingCard){showCard();} else {hideModal(); render(); sunWarning();} };
 }
 
 function showCard(){
   const c=S.pendingCard;
-  showModal(`<div class="commander"><div class="face">👩‍🚀</div><div class="bubble">${t("commanderCard")}</div></div>
+  if(currentView!==showCard) SFX.chime();
+  showModal(`${say(t("commanderCard"))}
     <h2>${c.em} ${L(c.title)}</h2><p>${L(c.text)}</p>
     <div class="choices">${c.choices.map((ch,i)=>`<button class="choice" data-c="${i}" ${ch.need&&!ch.need()?'disabled':''}><b>${L(ch.t)}</b><span>${L(ch.s)}${ch.need&&!ch.need()?t("notEnough"):""}</span></button>`).join("")}</div>`, showCard);
   document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
     const msg=chooseCard(+b.dataset.c); if(msg===undefined) return;
     const view=()=>{ showModal(`<h2>${c.em} ${L(c.title)}</h2><p>${L(msg)}</p><div class="fact">${L(c.fact)}<span class="src">${t("source")} ${L(c.src)}</span></div>
+      ${c.photo?photo(c.photo):""}
       <div class="btnrow"><button class="btn primary" id="btnOk">${t("backOutpost")}</button></div>`, view);
-      $("btnOk").onclick=()=>{hideModal(); render();}; };
+      $("btnOk").onclick=()=>{hideModal(); render(); sunWarning();}; };
     view(); render();
   });
 }
@@ -935,11 +1120,12 @@ function showEnd(){
   const stormSols=H.filter(h=>h.level>=2), shielded=stormSols.filter(h=>h.alloc.shield>=2).length;
   const big=H.find(h=>h.level===3);
   let head;
+  if(currentView!==showEnd && currentView!==showData) (r.win?SFX.fanfare():SFX.fail());
   if(r.win){
     const st=stars();
     head=`<h2>${t("winH")}</h2><div class="stars">${"⭐".repeat(st)}${"☆".repeat(3-st)}</div>
       <p>${t("winP",{sci:S.sciSent, unsent:S.sciWaiting?t("unsent",{n:S.sciWaiting}):""})}</p>
-      <p>${t("st"+st)}</p>`;
+      <p>${t("st"+st)}</p>${photo("sunset")}`;
   } else {
     head=`<h2>${t("failH",{n:H.length})}</h2><p><b>${t("f_"+r.fail)}</b></p><p>${t("f_"+r.fail+"Tip")}</p><p>${t("retry")}</p>`;
   }
@@ -959,16 +1145,28 @@ function showEnd(){
 }
 
 function showStart(){
-  showModal(`${langPicker()}<div style="text-align:center;font-size:56px">🚀🔴</div>
+  showModal(`${langPicker()}<div class="photo-fallback" style="text-align:center;font-size:56px">🚀🔴</div>${photo("selfie","tall")}
   <h2 style="text-align:center">${t("title")}</h2>
   <p style="text-align:center;color:var(--muted)">${t("startSub")}</p>
-  <div class="commander"><div class="face">👩‍🚀</div><div class="bubble">${t("startNova")}</div></div>
+  <div class="cmd-box">
+    <h3>${t("cmdH")}</h3>
+    <div class="avatars">
+      <button class="avatar ${CMD.g==='f'?'on':''}" data-g="f"><span class="f">👩‍🚀</span>${t("cmdF")}</button>
+      <button class="avatar ${CMD.g==='m'?'on':''}" data-g="m"><span class="f">👨‍🚀</span>${t("cmdM")}</button>
+    </div>
+    <label class="namefield">${t("cmdNameL")} <input id="cmdName" maxlength="14" autocomplete="off" placeholder="${t(CMD.g==='m'?'defM':'defF')}" value="${esc(CMD.name)}"></label>
+  </div>
+  <div id="startSay">${say(t("startNova"))}</div>
   <div class="modes">
     <button class="mode" id="mStorm"><b>${t("mStormT")}</b><span>${t("mStormD")}</span></button>
     <button class="mode" id="mLive"><b><span class="tag live">${t("tagLive")}</span> ${t("mLiveT")}</b><span>${t("mLiveD")}</span></button>
   </div>
   <p class="glossary" style="margin-top:14px">${t("glossary")}</p>
   <div class="btnrow"><button class="btn" id="mHow">${t("howBtn")}</button></div>`, showStart);
+  document.querySelectorAll(".avatar").forEach(b=>b.onclick=()=>{ CMD.g=b.dataset.g; saveCmd(); SFX.good();
+    document.querySelectorAll(".avatar").forEach(x=>x.classList.toggle("on",x===b));
+    $("cmdName").placeholder=t(CMD.g==="m"?"defM":"defF"); $("startSay").innerHTML=say(t("startNova")); updateCmdChip(); });
+  $("cmdName").oninput=e=>{ CMD.name=e.target.value.replace(/[<>]/g,"").slice(0,14); saveCmd(); $("startSay").innerHTML=say(t("startNova")); updateCmdChip(); };
   $("mStorm").onclick=()=>{newGame(); hideModal(); render(); showBriefing();};
   $("mLive").onclick=async()=>{
     $("mLive").innerHTML=`<b>${t("contactT")}</b><span>${t("contactD")}</span>`;
@@ -986,25 +1184,45 @@ function showStart(){
 function showBriefing(){
   const src=S.source;
   const n=src.events.filter(e=>e.level>=2).length;
-  showModal(`<div class="commander"><div class="face">👩‍🚀</div><div class="bubble">${S.live
+  SFX.launch();
+  showModal(`${say(S.live
     ? t("briefLive",{flr:src.counts.flr, cme:src.counts.cme, sep:src.counts.sep, gst:src.counts.gst||0})
-    : t("briefStorm",{n})}</div></div>
+    : t("briefStorm",{n}))}
   <h3>${t("jobsH")}</h3>
   <ul><li>${t("j1")}</li><li>${t("j2",{b:CFG.doseBudget})}</li><li>${t("j3")}</li></ul>
   <p>${t("tip")}</p>
   <div class="btnrow"><button class="btn primary" id="bGo">${t("startSol")}</button></div>`, showBriefing);
-  $("bGo").onclick=()=>{hideModal(); render();};
+  $("bGo").onclick=()=>{hideModal(); render(); sunWarning();};
 }
 function showHow(back){
-  const view=()=>{ showModal(`<h2>${t("howH")}</h2>
-  <ol style="line-height:1.6;padding-inline-start:22px">
-    <li>${t("how1")}</li><li>${t("how2")}</li><li>${t("how3")}</li><li>${t("how4")}</li>
-  </ol>
-  <h3>${t("howTH")}</h3>
-  <ul><li>${t("howT1")}</li><li>${t("howT2")}</li><li>${t("howT3")}</li></ul>
-  <div class="btnrow"><button class="btn primary" id="hBack">${t("gotIt")}</button></div>`, view);
-  $("hBack").onclick=()=>{ back? back() : hideModal(); }; };
-  view();
+  const STEPS=[
+    {big:"☀️🔋", T:"ac1T", P:"ac1", tip:"ac1tip", photo:"panels"},
+    {big:"⚡", T:"ac2T", P:"ac2", tip:"ac2tip", extra:()=>`<div class="demo-units">🫁🫁🫁 🌱🌱 🛡️ 📡 🔬🔬</div>`},
+    {big:"🌞⚠️🚨", T:"ac3T", P:"ac3", tip:"ac3tip", photo:"flare", extra:()=>`<div class="moods"><span>${t("moodCalm")}</span><span>${t("moodActive")}</span><span>${t("moodFlare")}</span><span>${t("moodStorm")}</span></div>`},
+    {big:"📡🌍", T:"ac4T", P:"ac4", tip:"ac4tip", photo:"pano"},
+    {big:"⭐⭐⭐", T:"ac5T", P:"ac5", tip:"ac5tip", photo:"sunset"}
+  ];
+  let i=0;
+  const view=()=>{
+    const st=STEPS[i];
+    showModal(`<div class="academy">
+      <div style="text-align:center"><b>${t("acH")}</b></div>
+      <div class="dots">${STEPS.map((_,k)=>`<i class="${k===i?'on':''}"></i>`).join("")}</div>
+      <div class="stepno" style="text-align:center">${t("acStep",{n:i+1,m:STEPS.length})}</div>
+      <div class="big">${st.big}</div>
+      <h2>${t(st.T)}</h2>
+      <p class="lead">${t(st.P,{title:cmdTitle()})}</p>
+      ${st.extra?st.extra():""}
+      ${st.photo?photo(st.photo):""}
+      <div class="tipbox"><b>${t("acTipL")}</b> ${t(st.tip)}</div>
+      <div class="btnrow" style="justify-content:space-between">
+        <button class="btn" id="acBack" ${i===0?'style="visibility:hidden"':''}>${t("acBack")}</button>
+        <button class="btn primary" id="acNext">${i===STEPS.length-1?t("acGo"):t("acNext")}</button>
+      </div></div>`, view);
+    $("acBack").onclick=()=>{ if(i>0){i--; SFX.swoosh(); view();} };
+    $("acNext").onclick=()=>{ if(i<STEPS.length-1){i++; SFX.swoosh(); view();} else { SFX.good(); back? back() : hideModal(); } };
+  };
+  SFX.swoosh(); view();
 }
 function showData(){
   const evs = S.source.events.filter(e=>e.level>=1).sort((a,b)=>a.sol-b.sol)
@@ -1028,6 +1246,11 @@ function showData(){
 }
 $("btnHow").onclick=()=>showHow(); $("btnData").onclick=showData;
 $("btnLang").onclick=()=>setLang(LANG==="ar"?"en":"ar");
+$("btnMute").onclick=()=>{ SFX.toggle(); updateMute(); if(!SFX.muted) SFX.good(); };
+// real Mars photo behind the outpost (falls back to the drawn landscape if it can't load)
+(function(){ const im=new Image(); im.onload=()=>{ const el=$("scenePhoto"); el.setAttribute("href", im.src); el.setAttribute("opacity","1");
+  $("drawnHills").setAttribute("opacity","0"); $("drawnGround").setAttribute("opacity","0.35"); $("photoCredit").setAttribute("opacity",".8");
+  $("sceneLabel").setAttribute("fill","#fff"); }; im.src=photoURL("gale"); })();
 
 /* ---------- radiation 'snow' like Curiosity's navcam on 20 May 2024 ---------- */
 const cv=$("snow"), cx=cv.getContext("2d");
