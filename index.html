@@ -501,7 +501,7 @@ en:{
   le2:"You faced <b>{n}</b> big space-weather days and had a strong shield (2+) on <b>{s}</b> of them.",
   le3on:"On Sol {sol} you met the <b>real 20 May 2024 solar storm</b>. Curiosity measured 8,100 micrograys that day. Your shield level was {sh}, so your crew got only {got} instead of 8.1.",
   le3off:"On Sol {sol} you met the <b>real 20 May 2024 solar storm</b>. Curiosity measured 8,100 micrograys that day. Your shield was off, so your crew got the full 8.1 — ouch!",
-  le4:"Your crew's total dose was <b>{d}</b> radiation points (1 point = 1 milligray). Real Mars astronauts would get roughly 0.7 per sol just from background cosmic rays, like Curiosity measures.",
+  le4:"Your crew's total dose was <b>{d}</b> radiation points (1 point = 1 milligray). On a normal day, Curiosity measures about 0.2 milligray from background cosmic rays. The game counts background radiation a little higher so you notice it.",
   again:"🔁 Play again", seeData:"🛰️ See the real NASA data",
   // start
   title:"Red Planet Outpost",
@@ -543,7 +543,7 @@ en:{
   dataArchNote:"Saved inside the game from NASA DONKI records and NASA mission reports (not live).",
   dataSrcH:"Sources",
   src1:'<b>NASA DONKI</b> (Space Weather Database Of Notifications, Knowledge, Information) — solar flares, solar eruptions (CMEs) and particle storms.',
-  src2:'<b>NASA Curiosity rover — Radiation Assessment Detector (RAD)</b>: ~700 micrograys per sol normally; 8,100 micrograys during the 20 May 2024 storm.',
+  src2:'<b>NASA Curiosity rover — Radiation Assessment Detector (RAD)</b>: about 210 micrograys per day normally; 8,100 micrograys during the 20 May 2024 storm.',
   src3:'<b>NASA Open Science Data Repository (OSDR)</b> — spaceflight bone-loss and health research.',
   src4:'<b>NASA Veggie</b>, <b>ISS life support</b>, <b>MOXIE</b>, and <b>Opportunity rover</b> mission facts — science.nasa.gov / nasa.gov',
   simpH:"What is simplified?",
@@ -673,7 +673,7 @@ ar:{
   le2:"واجهتَ <b>{n}</b> أيام طقس فضائي كبيرة، وكان درعك قويًا (2 أو أكثر) في <b>{s}</b> منها.",
   le3on:"في السول {sol} واجهتَ <b>عاصفة 20 مايو 2024 الشمسية الحقيقية</b>. قاست كيوريوسيتي في ذلك اليوم 8,100 ميكروغراي. كان مستوى درعك {sh}، لذلك تلقى طاقمك {got} فقط بدلًا من 8.1.",
   le3off:"في السول {sol} واجهتَ <b>عاصفة 20 مايو 2024 الشمسية الحقيقية</b>. قاست كيوريوسيتي في ذلك اليوم 8,100 ميكروغراي. كان درعك مطفأً، لذلك تلقى طاقمك الجرعة كاملة 8.1 — آخ!",
-  le4:"إجمالي جرعة طاقمك <b>{d}</b> نقطة إشعاع (النقطة = 1 ميليغراي). رواد المريخ الحقيقيون سيتلقون نحو 0.7 كل سول من الأشعة الكونية وحدها، كما تقيس كيوريوسيتي.",
+  le4:"إجمالي جرعة طاقمك <b>{d}</b> نقطة إشعاع (النقطة = 1 ميليغراي). في اليوم العادي، تقيس كيوريوسيتي نحو 0.2 ميليغراي من الأشعة الكونية. اللعبة تحسب إشعاع الخلفية أعلى قليلًا لتنتبه له.",
   again:"🔁 العب مرة أخرى", seeData:"🛰️ شاهد بيانات ناسا الحقيقية",
   title:"محطة الكوكب الأحمر",
   startSub:"أدِر قاعدة على المريخ لمدة 30 سول. حافظ على حياة طاقمك، واحمِهم من عواصف شمسية حقيقية، وأنجز أكبر قدر ممكن من العلوم!",
@@ -712,7 +712,7 @@ ar:{
   dataArchNote:"محفوظة داخل اللعبة من سجلات DONKI وتقارير مهمات ناسا (ليست مباشرة).",
   dataSrcH:"المصادر",
   src1:'<b>NASA DONKI</b> (قاعدة بيانات طقس الفضاء) — التوهجات الشمسية والانبعاثات الكتلية الإكليلية وعواصف الجسيمات.',
-  src2:'<b>جهاز تقييم الإشعاع RAD على المركبة كيوريوسيتي</b>: نحو 700 ميكروغراي في السول العادي، و8,100 ميكروغراي أثناء عاصفة 20 مايو 2024.',
+  src2:'<b>جهاز تقييم الإشعاع RAD على المركبة كيوريوسيتي</b>: نحو 210 ميكروغراي في اليوم العادي، و8,100 ميكروغراي أثناء عاصفة 20 مايو 2024.',
   src3:'<b>مستودع بيانات العلوم المفتوحة OSDR من ناسا</b> — أبحاث فقدان العظام والصحة في رحلات الفضاء.',
   src4:'حقائق من مهمات ناسا: <b>فيجي</b> لزراعة النباتات، و<b>دعم الحياة في محطة الفضاء الدولية</b>، و<b>موكسي</b>، والمركبة <b>أوبورتونيتي</b> — science.nasa.gov / nasa.gov',
   simpH:"ما الذي تم تبسيطه؟",
@@ -1055,7 +1055,7 @@ function evText(e){            // description of an event in the current languag
 const CFG = {
   sols:30, powerClear:9, powerDust:5, powerStowed:3, batteryCap:6, startBattery:3,
   doseBudget:28,            // game safety budget for the 30-sol stay (mGy)
-  baseDose:0.7,             // Curiosity RAD typical ~700 µGy per sol
+  baseDose:0.7,             // game value; Curiosity RAD measured ~210 µGy/day (Hassler et al. 2014)
   shieldMult:[1,0.6,0.35,0.15],
   airNeed:3, foodEat:6, foodPerUnit:3,
   maxUnits:{life:4, green:4, shield:3, comms:1, science:6}
@@ -1326,7 +1326,7 @@ const FUN_FACTS = [
   [{en:"A <b>sol</b> is one day on Mars. It is 24 hours and 39 minutes long — just a little longer than an Earth day.",ar:"<b>السول</b> هو يوم واحد على المريخ. طوله 24 ساعة و39 دقيقة — أطول قليلًا من يوم الأرض."},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"sunset",{en:"On Mars, one day is called a sol. It is a little longer than a day on Earth — about forty extra minutes. More time to play!",ar:"على المريخ، اليوم الواحد اسمه سول. إنه أطول قليلًا من يوم الأرض — بنحو أربعين دقيقة إضافية. وقت أطول للعب!"}],
   [{en:"Mars gets only about <b>43%</b> of the sunlight that Earth gets, because it is farther from the Sun. Solar panels on Mars have to be big!",ar:"يصل إلى المريخ نحو <b>43%</b> فقط من ضوء الشمس الذي يصل إلى الأرض، لأنه أبعد عن الشمس. لذلك يجب أن تكون الألواح الشمسية على المريخ كبيرة!"},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"panels",{en:"Mars is farther from the Sun than Earth, so the sunlight there is weaker — less than half! That is why we must use our power wisely.",ar:"المريخ أبعد عن الشمس من الأرض، لذلك ضوء الشمس هناك أضعف — أقل من النصف! لهذا يجب أن نستخدم طاقتنا بحكمة."}],
   [{en:"Mars has no global magnetic field and a very thin atmosphere, so much more radiation reaches the ground than on Earth.",ar:"ليس للمريخ مجال مغناطيسي عالمي، وغلافه الجوي رقيق جدًا، لذلك يصل إلى سطحه إشعاع أكثر بكثير من الأرض."},{en:"NASA Curiosity RAD science",ar:"علوم جهاز RAD على كيوريوسيتي – ناسا"},"gale",{en:"Earth has an invisible bubble around it that protects us from space radiation. Mars lost its bubble a long time ago, so astronauts there need shields.",ar:"للأرض فقاعة غير مرئية تحمينا من إشعاع الفضاء. فقد المريخ فقاعته منذ زمن بعيد، لذلك يحتاج رواد الفضاء هناك إلى دروع."}],
-  [{en:"On a normal day, Curiosity's radiation detector (RAD) measures about <b>700 micrograys</b> on the Mars surface. In this game, 1 radiation point = 1,000 micrograys (1 milligray).",ar:"في اليوم العادي، يقيس جهاز الإشعاع RAD على المركبة كيوريوسيتي نحو <b>700 ميكروغراي</b> على سطح المريخ. في هذه اللعبة، نقطة الإشعاع الواحدة = 1,000 ميكروغراي (1 ميليغراي)."},{en:"NASA / SwRI Curiosity RAD",ar:"ناسا / معهد ساوث وست للأبحاث – جهاز RAD"},"buckskin",{en:"Curiosity has a special tool called RAD that counts radiation every day — like a step counter, but for invisible energy. Scientists use it to keep future astronauts safe.",ar:"لدى كيوريوسيتي جهاز خاص اسمه راد يعدّ الإشعاع كل يوم — مثل عدّاد الخطوات، ولكن للطاقة غير المرئية. يستخدمه العلماء ليحافظوا على سلامة رواد الفضاء في المستقبل."}],
+  [{en:"On a normal day, Curiosity's radiation detector (RAD) measures about <b>210 micrograys</b> on the Mars surface. In this game, 1 radiation point = 1,000 micrograys (1 milligray).",ar:"في اليوم العادي، يقيس جهاز الإشعاع RAD على المركبة كيوريوسيتي نحو <b>210 ميكروغراي</b> على سطح المريخ. في هذه اللعبة، نقطة الإشعاع الواحدة = 1,000 ميكروغراي (1 ميليغراي)."},{en:"NASA / SwRI Curiosity RAD",ar:"ناسا / معهد ساوث وست للأبحاث – جهاز RAD"},"buckskin",{en:"Curiosity has a special tool called RAD that counts radiation every day — like a step counter, but for invisible energy. Scientists use it to keep future astronauts safe.",ar:"لدى كيوريوسيتي جهاز خاص اسمه راد يعدّ الإشعاع كل يوم — مثل عدّاد الخطوات، ولكن للطاقة غير المرئية. يستخدمه العلماء ليحافظوا على سلامة رواد الفضاء في المستقبل."}],
   [{en:"Water is great at blocking radiation. Future Mars habitats might put water tanks in their walls to make a shield!",ar:"الماء ممتاز في حجب الإشعاع. قد تضع مساكن المريخ المستقبلية خزانات ماء في جدرانها لتصنع درعًا!"},{en:"NASA radiation shielding research",ar:"أبحاث ناسا في الحماية من الإشعاع"},null,{en:"Did you know water can block radiation? Future homes on Mars might have walls full of water, like a giant protective water blanket!",ar:"هل تعلم أن الماء يستطيع حجب الإشعاع؟ قد تكون لبيوت المريخ المستقبلية جدران مليئة بالماء، مثل بطانية ماء عملاقة تحمينا!"}],
   [{en:"Air on Mars is about 95% carbon dioxide. NASA's MOXIE experiment on the Perseverance rover made real oxygen from the Martian air!",ar:"نحو 95% من هواء المريخ ثاني أكسيد الكربون. تجربة «موكسي» من ناسا على المركبة برسيفيرانس صنعت أكسجينًا حقيقيًا من هواء المريخ!"},{en:"NASA Perseverance MOXIE",ar:"تجربة موكسي على برسيفيرانس – ناسا"},"moxie",{en:"The air on Mars is not good for breathing. But NASA built a machine called MOXIE that made real oxygen on Mars — a bit like a tree does!",ar:"هواء المريخ لا يصلح للتنفس. لكن ناسا صنعت آلة اسمها موكسي صنعت أكسجينًا حقيقيًا على المريخ — تقريبًا كما تفعل الشجرة!"}],
   [{en:"Mars is cold! The average temperature is about −60 °C. Heaters need power too.",ar:"المريخ بارد! متوسط درجة الحرارة نحو −60 درجة مئوية. المدافئ تحتاج إلى طاقة أيضًا."},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"sunset",{en:"Brrr! Mars is colder than the coldest freezer — about sixty degrees below zero. Our heaters need power to keep the crew warm.",ar:"برررر! المريخ أبرد من أبرد ثلاجة — نحو ستين درجة تحت الصفر. المدافئ تحتاج إلى طاقة لتدفئة الطاقم."}],

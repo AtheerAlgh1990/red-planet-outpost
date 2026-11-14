@@ -69,7 +69,7 @@ Kids learn by playing what NASA mission planners do every day: watch the space w
 | Data | Where it's used | Why it matters |
 |---|---|---|
 | **NASA DONKI** (Space Weather Database Of Notifications, Knowledge, Information): solar flares, CMEs, solar energetic particle (SEP) events | *Storm Season* mode replays real May 2024 events, one Earth day per sol: X1.3 (5 May) through the **X8.7 flare of 14 May** (DONKI FLR record 2024-05-14T16:46Z) and X2.9 (27 May). *Live Sun* mode downloads the last 30 days from `api.nasa.gov/DONKI` (FLR, SEP, CME) when the game loads | The radiation risk on each sol is set by real solar activity, not invented numbers |
-| **NASA Curiosity Radiation Assessment Detector (RAD)** | Background dose of 0.7 radiation points per sol (≈700 µGy). On sol 20 the dose is **8.1**, the real 8,100 µGy RAD measured on 20 May 2024 | It links the shield decision to a real measurement at the Martian surface |
+| **NASA Curiosity Radiation Assessment Detector (RAD)** | Background dose of 0.7 radiation points per sol (a game value; Curiosity measured about 210 µGy per day). On sol 20 the dose is **8.1**, the real 8,100 µGy RAD measured on 20 May 2024 | It links the shield decision to a real measurement at the Martian surface |
 | **NASA OSDR / Human Research Program**: bone loss in spaceflight (~1–1.5% per month) | "Exercise time" decision card | Real astronaut health research |
 | **NASA mission facts**: Opportunity and the 2018 dust storm, ISS water recovery (~98%), Veggie lettuce, MOXIE, Mars sunlight (~43% of Earth's), sol length, Earth–Mars radio delay (4–24 min) | Decision cards and "Did you know?" panels, each with its source shown in the game | Kids leave with true facts |
 
@@ -110,7 +110,7 @@ We used **Claude (Anthropic)** as a coding and research assistant. It helped wri
 - NASA DONKI: https://ccmc.gsfc.nasa.gov/tools/DONKI/ · API: https://api.nasa.gov/
 - DONKI flare record, X8.7, 14 May 2024: https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/FLR/30849/3
 - NASA, "NASA Watches Mars Light Up During Epic Solar Storm" (June 2024): Curiosity RAD measured 8,100 µGy on 20 May 2024
-- Curiosity RAD typical surface dose (~700 µGy per sol): NASA / Southwest Research Institute
+- Curiosity RAD typical surface dose (~210 µGy per day): Hassler et al., *Science* 343 (2014), NASA / Southwest Research Institute
 - SIDC / Royal Observatory of Belgium flare reports, May 2024 (X1.0 8 May, X1.1 9 May, X5.8 11 May, X1.0 12 May)
 - NASA Open Science Data Repository: https://osdr.nasa.gov/bio/repo/
 - NASA Veggie, ISS Environmental Control and Life Support System, Perseverance MOXIE, Mars Exploration Rover (Opportunity): science.nasa.gov / nasa.gov
