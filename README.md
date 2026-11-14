@@ -6,7 +6,7 @@ A browser game for kids aged 7–12. The player runs a small Mars outpost for 30
 
 ▶ **Play:** https://atheeralgh1990.github.io/red-planet-outpost/ (no download, no account)
 
-🎬 **Demo video (37 s):** [docs/demo.mp4](docs/demo.mp4)
+🎬 **Demo video (38 s):** [docs/demo.mp4](docs/demo.mp4)
 
 🌐 **Bilingual: English and العربية.** Switch at any time with the language button. The Arabic version uses a full right-to-left layout and translates everything, including decision cards, NASA facts and real-event descriptions.
 
