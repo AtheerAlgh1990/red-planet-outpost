@@ -515,7 +515,7 @@ en:{
   liveFailP:"The live space-weather download didn't work ({err}). This can happen if you're offline or NASA's demo key is busy.",
   liveFailP2:"You can play <b>Storm Season</b> instead — it uses real NASA data saved inside the game.",
   playStorm:"☀️ Play Storm Season", back:"Back",
-  briefLive:"I just downloaded the last 30 days of real space weather from NASA: <b>{flr}</b> solar flares, <b>{cme}</b> solar eruptions, <b>{sep}</b> particle storms and <b>{gst}</b> magnetic storms at Earth. Each day becomes one sol.",
+  briefLive:"I just downloaded the last 30 days of real space weather from NASA: <b>{flr}</b> solar flares, <b>{cme}</b> solar eruptions, <b>{sep}</b> particle storms and <b>{gst}</b> magnetic storms at Earth. NASA's model predicted <b>{mars}</b> eruptions reaching <b>Mars</b>! Each day becomes one sol.",
   briefStorm:"Our mission follows the real Sun from <b>May 2024</b>. NASA's records show <b>{n}</b> big space-weather days ahead. Each Earth day becomes one sol.",
   jobsH:"Your 3 jobs",
   j1:"🫁🍅 Keep the <b>air</b> and <b>food</b> above zero.",
@@ -554,6 +554,8 @@ en:{
   evSEP:"Solar energetic particle event detected by NASA spacecraft on {date} (the dose at Mars is a game estimate)",
   evCME:"Fast coronal mass ejection ({v} km/s) on {date}",
   evGST:"Geomagnetic storm at Earth (Kp {kp}) on {date} — a sign the Sun is very active",
+  evMCME:"NASA's space-weather model predicted a solar eruption (CME, {v} km/s) would hit Mars on {date}",
+  evMCMEg:"NASA's space-weather model predicted a solar eruption (CME, {v} km/s) would brush past Mars on {date}",
   // commander
   cmdH:"🧑‍🚀 Choose your commander", cmdF:"Female commander", cmdM:"Male commander", cmdNameL:"Name:", cmdNamePh:"Type a name",
   cmdTitle:"Commander {name}", cmdShort:"Cmdr {name}", defF:"Nova", defM:"Orion",
@@ -684,7 +686,7 @@ ar:{
   liveFailP:"لم ينجح تحميل طقس الفضاء المباشر ({err}). قد يحدث هذا إذا لم تكن متصلًا بالإنترنت أو إذا كان مفتاح ناسا التجريبي مشغولًا.",
   liveFailP2:"يمكنك لعب <b>موسم العواصف</b> بدلًا من ذلك — فهو يستخدم بيانات ناسا الحقيقية المحفوظة داخل اللعبة.",
   playStorm:"☀️ العب موسم العواصف", back:"رجوع",
-  briefLive:"حمّلتُ للتو آخر 30 يومًا من طقس الفضاء الحقيقي من ناسا: <b>{flr}</b> توهجات شمسية، و<b>{cme}</b> انفجارات شمسية، و<b>{sep}</b> عواصف جسيمات، و<b>{gst}</b> عواصف مغناطيسية على الأرض. كل يوم يصبح سولًا واحدًا.",
+  briefLive:"حمّلتُ للتو آخر 30 يومًا من طقس الفضاء الحقيقي من ناسا: <b>{flr}</b> توهجات شمسية، و<b>{cme}</b> انفجارات شمسية، و<b>{sep}</b> عواصف جسيمات، و<b>{gst}</b> عواصف مغناطيسية على الأرض. وتوقّع نموذج ناسا وصول <b>{mars}</b> انفجارات شمسية إلى <b>المريخ</b>! كل يوم يصبح سولًا واحدًا.",
   briefStorm:"مهمتنا تتبع الشمس الحقيقية في <b>مايو 2024</b>. سجلات ناسا تُظهر <b>{n}</b> أيام طقس فضائي كبيرة قادمة. كل يوم أرضي يصبح سولًا واحدًا.",
   jobsH:"مهامك الثلاث",
   j1:"🫁🍅 حافظ على <b>الهواء</b> و<b>الطعام</b> فوق الصفر.",
@@ -720,6 +722,8 @@ ar:{
   evSEP:"حدث جسيمات شمسية نشطة رصدته مركبات ناسا في {date} (الجرعة على المريخ تقدير خاص باللعبة)",
   evCME:"انبعاث كتلي إكليلي سريع ({v} كم/ث) في {date}",
   evGST:"عاصفة مغناطيسية على الأرض (Kp {kp}) في {date} — علامة على أن الشمس نشطة جدًا",
+  evMCME:"توقّع نموذج ناسا لطقس الفضاء أن انفجارًا شمسيًا (انبعاث كتلي إكليلي بسرعة {v} كم/ث) سيضرب المريخ في {date}",
+  evMCMEg:"توقّع نموذج ناسا لطقس الفضاء أن انفجارًا شمسيًا (انبعاث كتلي إكليلي بسرعة {v} كم/ث) سيمرّ بمحاذاة المريخ في {date}",
   cmdH:"🧑‍🚀 اختر قائد المهمة", cmdF:"قائدة", cmdM:"قائد", cmdNameL:"الاسم:", cmdNamePh:"اكتب اسمًا",
   cmdTitle:p=>(p.g==="m"?"القائد ":"القائدة ")+p.name, cmdShort:p=>(p.g==="m"?"القائد ":"القائدة ")+p.name, defF:"نوفا", defM:"أوريون",
   rx_storm3:"الجميع إلى ملجأ العواصف — الآن! 🚨", rx_hit:"آخ! وصلتنا الجسيمات الشمسية. الدرع مهم!",
@@ -1044,6 +1048,7 @@ function evText(e){            // description of an event in the current languag
   if(e.type==="SEP") return t("evSEP",{date:e.date});
   if(e.type==="CME") return t("evCME",{v:e.v,date:e.date});
   if(e.type==="GST") return t("evGST",{kp:e.kp,date:e.date});
+  if(e.type==="MCME") return t(e.glancing?"evMCMEg":"evMCME",{v:e.v,date:e.date});
   return e.cls;
 }
 
@@ -1400,7 +1405,7 @@ const NASA_API_KEY = "98wJbMPFzLNQ6CrzRQjgKJqrWMBN6g8rbkNKL8pb";   // team key f
 async function loadLive(){
   const end=new Date(); const start=new Date(end.getTime()-29*864e5);
   const f=d=>d.toISOString().slice(0,10);
-  const cacheKey="rpo-live2-"+f(end);
+  const cacheKey="rpo-live3-"+f(end);
   try{const c=JSON.parse(localStorage.getItem(cacheKey)||"null"); if(c&&c.events) return c;}catch(e){}
   const q=`startDate=${f(start)}&endDate=${f(end)}&api_key=${NASA_API_KEY}`;
   const get=async t=>{const r=await fetch("https://api.nasa.gov/DONKI/"+t+(t.includes("?")?"&":"?")+q); if(!r.ok) throw new Error(t.split("?")[0]+" "+r.status); const j=await r.json(); if(!Array.isArray(j)) throw new Error(t+" bad data"); return j;};
@@ -1423,9 +1428,16 @@ async function loadLive(){
     else if(c.startsWith("M") && parseFloat(c.slice(1))>=5) events.push({sol:s,type:"FLR",cls:c,level:1,date:tm.slice(0,10)});});
   sep.forEach(e=>{events.push({sol:solOf(e.eventTime),type:"SEP",cls:"SEP",level:3,dose:4.0,date:e.eventTime.slice(0,10)});});
   cme.forEach(e=>{const an=(e.cmeAnalyses||[]).find(x=>x.isMostAccurate)||(e.cmeAnalyses||[])[0]; if(an && an.speed>=1000){events.push({sol:solOf(e.startTime),type:"CME",cls:`CME ${Math.round(an.speed)} km/s`,level:1,v:Math.round(an.speed),date:e.startTime.slice(0,10)});}});
+  // NASA's WSA-ENLIL model predicts which eruptions (CMEs) will reach Mars — the most Mars-relevant live data
+  const marsSeen={}; let marsN=0;
+  cme.forEach(c=>(c.cmeAnalyses||[]).forEach(an=>(an.enlilList||[]).forEach(en=>(en.impactList||[]).forEach(im=>{
+    if(!/mars/i.test(im.location||"") || marsSeen[c.activityID] || !im.arrivalTime) return; marsSeen[c.activityID]=1; marsN++;
+    const strong = !im.isGlancingBlow && (an.speed||0)>=500;
+    events.push({sol:solOf(im.arrivalTime), type:"MCME", cls:`CME → Mars ${Math.round(an.speed||0)} km/s`, level: strong?2:1, v:Math.round(an.speed||0), glancing:!!im.isGlancingBlow, date:im.arrivalTime.slice(0,10)});
+  }))));
   gst.forEach(e=>{const kp=Math.max(0,...(e.allKpIndex||[]).map(k=>k.kpIndex)); if(kp>=6) events.push({sol:solOf(e.startTime),type:"GST",cls:`Kp ${kp}`,level:1,kp,date:e.startTime.slice(0,10)});});
   const out={start:f(start), end:f(end), live:true, fetched:new Date().toISOString(), events: events.filter(e=>e.sol>=1&&e.sol<=30),
-    counts:{flr:flr.length, sep:sep.length, cme:cme.length, gst:gst.length}};
+    counts:{flr:flr.length, sep:sep.length, cme:cme.length, gst:gst.length, mars:marsN}};
   try{localStorage.setItem(cacheKey, JSON.stringify(out));}catch(e){}
   return out;
 }
@@ -1660,7 +1672,7 @@ function showBriefing(){
   const n=src.events.filter(e=>e.level>=2).length;
   SFX.launch();
   showModal(`${say(S.live
-    ? t("briefLive",{flr:src.counts.flr, cme:src.counts.cme, sep:src.counts.sep, gst:src.counts.gst||0})
+    ? t("briefLive",{flr:src.counts.flr, cme:src.counts.cme, sep:src.counts.sep, gst:src.counts.gst||0, mars:src.counts.mars||0})
     : t("briefStorm",{n}))}
   <h3>${t("jobsH")}</h3>
   <ul><li>${t("j1")}</li><li>${t("j2",{b:CFG.doseBudget})}</li><li>${t("j3")}</li></ul>
