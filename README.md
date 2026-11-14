@@ -36,14 +36,31 @@ There is **no free safe choice.** We simulated 200 missions per strategy (`tools
 
 | Strategy | Survival rate | Science |
 |---|---|---|
-| Never shield | 0% (crew sent home around sol 18) | – |
-| Low shield every sol | ~36% | high |
-| Read the forecast, shield up on storm days | ~96% | ~42 ⭐⭐⭐ |
-| Medium shield every sol | ~98% | ~31 ⭐⭐ |
+| Never shield | 0% (crew sent home around sol 19) | – |
+| Low shield every sol | ~39% | high |
+| Read the forecast, shield up on storm days | ~95% | ~41 ⭐⭐⭐ |
+| Medium shield every sol | ~95% | ~29 ⭐⭐ |
 
 Kids learn by playing what NASA mission planners do every day: watch the space weather and protect the crew when it matters, so there's power left for the mission.
 
 ![Storm report](docs/screenshot-storm.png)
+
+## How we answer the challenge
+
+| What the challenge asks for | How Red Planet Outpost does it |
+|---|---|
+| Kids aged 7–12 run a lunar or Martian outpost | 30-sol Mars outpost in Gale Crater, plain language, big buttons, a talking scientist (Dr. Rana) who reads explanations aloud, English and Arabic |
+| **Life support** | Needs 3 power every sol or the air runs down; water-recycler and air-scrubber decisions |
+| **Radiation shielding** | Shield level 0–3 cuts the dose; real solar storms from NASA DONKI; real Curiosity RAD dose of 8,100 µGy on 20 May 2024 |
+| **Power budgeting** | 9 solar units (5 in dust storms, 3 if panels retracted) plus a battery; every unit is a choice |
+| **Food production** | Greenhouse needs 2 power; the lettuce harvest decision (now or later) |
+| **Communication delay** | The radio must be on to get tomorrow's forecast and send science home; "Ask Mission Control and wait one sol" vs "fix it yourself now" decision; real Earth–Mars light time shown |
+| The video's dust-storm example: *"retract the panels and lose power tonight, or leave them exposed and risk losing a lot more?"* | A real-time **15-second decision** when a dust storm rolls in: retract (sure, smaller loss) or leave out (60% chance the panels get buried) |
+| No free choices | Every option costs power, air, food, science or radiation (see the balance results) |
+| Consequences play out over the mission | Battery, buried panels, waiting for Earth's answer and the radiation dose carry over between sols; the debrief timeline shows what happened and why |
+| Real NASA data, attributed in the tool, not shown as live when it isn't | "REAL EVENT" and "LIVE" labels, an in-game "Real NASA data" page with sources, and a curated dataset in `data/` |
+| Replayability | Shuffled facts, random dust storms and decisions, chance particle hits, Live Sun mode |
+| Browser-playable, no download or account | One HTML file on GitHub Pages |
 
 ## NASA data used, and why
 

@@ -13,8 +13,8 @@ js = """
   while(!S.over && guard++<60){
     if(S.pendingCard){ R.chooseCard(S.pendingCard.choices.length>1 && (!S.pendingCard.choices[0].need || S.pendingCard.choices[0].need()) ? 0 : 1); }
     let al = f(S.alloc, S);
-    const solar = (S.dust.left>0?R.CFG.powerDust:R.CFG.powerClear) + (S.panelBoost>0?2:0) - (S.panelPenalty>0?1:0);
-    let avail = Math.max(2,solar) + S.battery - S.extraUse;
+    S.alloc = {life:0,green:0,shield:0,comms:0,science:0};
+    let avail = R.available() - S.extraUse;
     // trim science, then shield, then comms to fit
     for(const k of ["science","shield","comms","green","life"]){ while(Object.values(al).reduce((a,b)=>a+b,0)>avail && al[k]>0) al[k]--; }
     // spend extra on science if battery full

@@ -159,6 +159,7 @@
   .sunmeter i.l0{background:#8be37a}.sunmeter i.l1{background:#ffd65c}.sunmeter i.l2{background:#ff9a3c}.sunmeter i.l3{background:#ff3b5c}
   .forecast.fcnew{animation:fcflash 1.2s ease}
   @keyframes fcflash{0%{background:#5a3a20}100%{background:var(--panel2)}}
+  .cardtimer{font-size:18px;font-weight:800;text-align:center;color:#ffd65c;background:#3a1d10;border:1px solid #ff9a3c;border-radius:12px;padding:8px;margin-top:8px;animation:pulse 1s infinite}
   .avgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
   .avgrid .avatar{padding:8px 4px;font-size:13px}
   .spec{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(135deg,#1f3346,#17263a);border:1px solid #35587a;border-radius:16px;padding:12px;margin-top:12px;animation:popin .45s cubic-bezier(.2,1.4,.4,1)}
@@ -448,6 +449,11 @@ en:{
   l_dustOver:"The dust storm is over. Full sunshine tomorrow!",
   l_dustStart:"A dust storm is here! Solar panels will make less power for {n} sols.",
   delayLive:"4 to 24",
+  l_unstow:"Panels unfolded again — they're clean and ready. Full power!", l_buried:"Oh no! The storm buried the solar panels. They'll make 3 less power for 5 sols.",
+  l_lucky:"Lucky! The panels survived the storm without getting buried.", l_earthAnswer:"Mission Control's answer arrived (after about {m} minutes in space)! The air scrubber is fixed.",
+  l_earthWait:"Still waiting for Earth's answer — the radio was off! The air scrubber is still broken (−8 air).",
+  timerLeft:"⏱️ {n} seconds to decide!", timerUp:"⏰ Time's up! When nobody decides, the panels stay out…",
+
   reportH:"Sol {n} report", nextSol:"Next sol ▶", seeResults:"See mission results", source:"Source:",
   // forecast
   fcNone:"<b>No forecast today.</b><small>The radio was off yesterday, so no message from Earth arrived. Turn on 📡 to get tomorrow's space weather.</small>",
@@ -617,6 +623,11 @@ ar:{
   l_dustOver:"انتهت العاصفة الغبارية. شمس كاملة غدًا!",
   l_dustStart:"وصلت عاصفة غبارية! ستنتج الألواح الشمسية طاقة أقل لمدة {n} سول.",
   delayLive:"4 إلى 24",
+  l_unstow:"فُتحت الألواح من جديد — إنها نظيفة وجاهزة. طاقة كاملة!", l_buried:"يا للأسف! دفنت العاصفة الألواح الشمسية. ستنتج 3 وحدات طاقة أقل لمدة 5 سول.",
+  l_lucky:"يا للحظ! نجت الألواح من العاصفة ولم تُدفن.", l_earthAnswer:"وصل جواب مركز التحكم (بعد نحو {m} دقيقة في الفضاء)! تم إصلاح جهاز تنقية الهواء.",
+  l_earthWait:"ما زلنا ننتظر جواب الأرض — كان الراديو مطفأً! جهاز تنقية الهواء ما زال معطلًا (−8 هواء).",
+  timerLeft:"⏱️ {n} ثانية لتقرّر!", timerUp:"⏰ انتهى الوقت! عندما لا يقرر أحد، تبقى الألواح مكشوفة…",
+
   reportH:"تقرير السول {n}", nextSol:"السول التالي ▶", seeResults:"اعرض نتائج المهمة", source:"المصدر:",
   fcNone:"<b>لا توجد توقعات اليوم.</b><small>كان الراديو مطفأً أمس، فلم تصل رسالة من الأرض. شغّل 📡 لتحصل على توقعات طقس الفضاء للغد.</small>",
   fcFrom:"توقعات من الأرض:",
@@ -1037,8 +1048,8 @@ function evText(e){            // description of an event in the current languag
 }
 
 const CFG = {
-  sols:30, powerClear:9, powerDust:5, batteryCap:6, startBattery:3,
-  doseBudget:27,            // game safety budget for the 30-sol stay (mGy)
+  sols:30, powerClear:9, powerDust:5, powerStowed:3, batteryCap:6, startBattery:3,
+  doseBudget:28,            // game safety budget for the 30-sol stay (mGy)
   baseDose:0.7,             // Curiosity RAD typical ~700 µGy per sol
   shieldMult:[1,0.6,0.35,0.15],
   airNeed:3, foodEat:6, foodPerUnit:3,
@@ -1095,9 +1106,9 @@ function newGame(opts={}){
 }
 
 function solarPower(){
-  let p = S.dust.left>0 ? CFG.powerDust : CFG.powerClear;
+  let p = S.dust.left>0 ? (S.dust.retracted ? CFG.powerStowed : CFG.powerDust) : CFG.powerClear;
   if(S.panelBoost>0) p+=2;
-  if(S.panelPenalty>0) p-=1;
+  if(S.panelPenalty>0) p-=(S.panelPenaltyAmt||1);
   return Math.max(2,p);
 }
 function allocTotal(){return Object.values(S.alloc).reduce((a,b)=>a+b,0)+S.extraUse}
@@ -1129,6 +1140,10 @@ function runSol(){
   if(airChange<0) add("🫁","l_airDown",{n:airChange},"bad");
   else if(airChange>0) add("🫁","l_airUp",{n:airChange},"good");
 
+  if(S.awaitEarth){
+    if(a.comms){ S.awaitEarth=false; add("📡","l_earthAnswer",{m:commDelay(sol)},"good"); }
+    else { S.air=clamp(S.air-8,0,100); add("⏳","l_earthWait",{},"bad"); }
+  }
   let grow = a.green*CFG.foodPerUnit; if(S.greenhouseHalf>0){grow=Math.floor(grow/2); S.greenhouseHalf--;}
   const foodChange = grow - CFG.foodEat;
   S.food = clamp(S.food+foodChange,0,100);
@@ -1159,10 +1174,15 @@ function runSol(){
   } else if(S.sciWaiting>0) add("📡","l_waiting",{n:S.sciWaiting});
 
   if(S.panelBoost>0) S.panelBoost--; if(S.panelPenalty>0) S.panelPenalty--;
-  if(S.dust.left>0){S.dust.left--; if(S.dust.left===0) add("🌤️","l_dustOver",{},"good");}
+  if(S.dust.left>0){S.dust.left--; if(S.dust.left===0){
+    add("🌤️","l_dustOver",{},"good");
+    if(S.dust.retracted){ add("🛰️","l_unstow",{},"good"); }
+    else if(S.dust.exposed){ if(S.rng()<0.6){ S.panelPenalty=5; S.panelPenaltyAmt=3; add("🏜️","l_buried",{},"bad"); } else add("🍀","l_lucky",{},"good"); }
+    S.dust.retracted=false; S.dust.exposed=false; } }
   S.extraUse=0;
 
-  if(S.dust.startIn===0){S.dust.left=2+Math.floor(S.rng()*3); S.dust.startIn=-1; add("🌪️","l_dustStart",{n:S.dust.left},"bad");}
+  let stormDecision=false;
+  if(S.dust.startIn===0){S.dust.left=2+Math.floor(S.rng()*3); S.dust.startIn=-1; add("🌪️","l_dustStart",{n:S.dust.left},"bad"); stormDecision=true;}
   else if(S.dust.startIn>0) S.dust.startIn--;
   else if(S.dust.left===0 && sol>=3 && sol<CFG.sols-1 && S.rng()<0.07) S.dust.startIn=1;
 
@@ -1179,7 +1199,8 @@ function runSol(){
   else {
     S.sol++;
     S.cardCooldown--;
-    if(S.cardCooldown<=0 && S.rng()<0.38){ S.pendingCard=pickCard(); S.cardCooldown=3; }
+    if(stormDecision){ S.pendingCard=CARDS.find(c=>c.id==="stow"); S.cardCooldown=2; }
+    else if(S.cardCooldown<=0 && S.rng()<0.38){ S.pendingCard=pickCard(); S.cardCooldown=3; }
   }
   return {sol, lines, wx, storm, factSeed};
 }
@@ -1192,13 +1213,39 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 
 /* ---------- decision cards (bilingual) ---------- */
 const CARDS = [
+  {id:"stow", special:true, timer:15, timeoutChoice:1, photo:"panels", em:"🌪️",
+   kid:{en:"Mars dust is finer than flour, and it sticks to everything! NASA's InSight lander on Mars got so much dust on its solar panels that it ran out of power in 2022.",ar:"غبار المريخ أنعم من الطحين، ويلتصق بكل شيء! تراكم الغبار على ألواح مسبار ناسا إنسايت على المريخ حتى نفدت طاقته عام 2022."},
+   title:{en:"Dust storm! Decide fast!",ar:"عاصفة غبارية! قرّر بسرعة!"},
+   text:{en:"A dust storm just rolled in. Your solar panels are about to get buried! Retract them and lose power tonight — or leave them out and risk losing a lot more?",ar:"وصلت عاصفة غبارية للتو. ألواحك الشمسية على وشك أن تُدفن! هل تطويها وتخسر الطاقة الليلة — أم تتركها مكشوفة وتخاطر بخسارة أكبر بكثير؟"},
+   choices:[
+     {t:{en:"Retract the panels",ar:"اطوِ الألواح"}, s:{en:"Safe, but only 3 power per sol until the storm ends.",ar:"آمن، لكن طاقتك 3 وحدات فقط في كل سول حتى تنتهي العاصفة."},
+      f:()=>{S.dust.retracted=true; return {en:"Panels folded away! Power will be very low during the storm — use your battery wisely.",ar:"طُويت الألواح! ستكون الطاقة قليلة جدًا أثناء العاصفة — استخدم بطاريتك بحكمة."}}},
+     {t:{en:"Leave them out",ar:"اتركها مكشوفة"}, s:{en:"5 power per sol during the storm, but a big chance they get buried (−3 power for 5 sols).",ar:"5 وحدات طاقة في كل سول أثناء العاصفة، لكن هناك احتمال كبير أن تُدفن (−3 طاقة لمدة 5 سول)."},
+      f:()=>{S.dust.exposed=true; return {en:"The panels stay out. Let's hope the dust doesn't bury them!",ar:"بقيت الألواح مكشوفة. لنأمل ألّا يدفنها الغبار!"}}}
+   ],
+   fact:{en:"<b>Real Mars fact:</b> Dust is one of the biggest dangers for solar-powered missions. NASA's InSight lander ended its mission in December 2022 after dust covered its solar panels.",ar:"<b>حقيقة عن المريخ:</b> الغبار من أكبر الأخطار على المهمات التي تعمل بالطاقة الشمسية. أنهى مسبار ناسا إنسايت مهمته في ديسمبر 2022 بعد أن غطّى الغبار ألواحه الشمسية."},
+   src:{en:"NASA InSight mission",ar:"مهمة إنسايت – ناسا"}},
+  {id:"delay", em:"📞", ok:()=>!S.awaitEarth,
+   kid:{en:"When the Perseverance rover landed on Mars, the landing took about seven minutes — but its radio message took about eleven minutes to reach Earth. By the time engineers heard it had started landing, it was already safe on the ground!",ar:"عندما هبطت المركبة برسيفيرانس على المريخ، استغرق الهبوط نحو سبع دقائق — لكن رسالتها اللاسلكية احتاجت نحو إحدى عشرة دقيقة لتصل إلى الأرض. عندما سمع المهندسون أن الهبوط بدأ، كانت المركبة قد هبطت بأمان!"},
+   title:{en:"A warning light is blinking!",ar:"ضوء تحذير يومض!"},
+   text:{en:"The air scrubber shows a strange warning. Experts on Earth know how to fix it — but radio messages take minutes each way, so their answer won't arrive until next sol.",ar:"جهاز تنقية الهواء يُظهر تحذيرًا غريبًا. الخبراء على الأرض يعرفون كيف يصلحونه — لكن الرسائل تستغرق دقائق في كل اتجاه، فلن يصل جوابهم قبل السول التالي."},
+   choices:[
+     {t:{en:"Ask Mission Control and wait",ar:"اسأل مركز التحكم وانتظر"}, s:{en:"Safe fix, but you lose 8 air each sol until the answer arrives. You must keep the 📡 radio ON to receive it!",ar:"إصلاح آمن، لكنك تخسر 8 من الهواء كل سول حتى يصل الجواب. يجب أن يبقى الراديو 📡 يعمل لتستقبله!"},
+      f:()=>{S.awaitEarth=true; return {en:"Message sent! It's flying to Earth at the speed of light… Keep your radio on next sol to get the answer.",ar:"أُرسلت الرسالة! إنها تطير إلى الأرض بسرعة الضوء… أبقِ الراديو يعمل في السول التالي لتستقبل الجواب."}}},
+     {t:{en:"Fix it yourself now",ar:"أصلحه بنفسك الآن"}, s:{en:"No waiting! But it's risky: it might work perfectly… or make things worse (−25 air).",ar:"بدون انتظار! لكنه مخاطرة: قد ينجح تمامًا… أو يزيد الأمر سوءًا (−25 هواء)."},
+      f:()=>{ if(S.rng()<0.5){ S.sciWaiting+=2; return {en:"Brilliant! You fixed it yourself — and learned something new (+2 science).",ar:"رائع! أصلحته بنفسك — وتعلّمت شيئًا جديدًا (+2 علوم)."}; }
+              S.air=clamp(S.air-25,0,100); return {en:"Oops! The fix went wrong and some air leaked out (−25 air). Sometimes waiting for experts is worth it.",ar:"أوه! لم ينجح الإصلاح وتسرّب بعض الهواء (−25 هواء). أحيانًا يستحق انتظار الخبراء."}; }}
+   ],
+   fact:{en:"<b>Real space fact:</b> Mars is so far away that a radio message takes between about 4 and 24 minutes to arrive. Mars astronauts will have to solve many problems on their own, without instant help from Earth.",ar:"<b>حقيقة فضائية:</b> المريخ بعيد جدًا لدرجة أن الرسالة اللاسلكية تستغرق بين 4 و24 دقيقة تقريبًا لتصل. سيضطر رواد المريخ إلى حل كثير من المشكلات بأنفسهم، دون مساعدة فورية من الأرض."},
+   src:{en:"NASA Mars 2020 Perseverance landing / NASA Mars communications",ar:"هبوط برسيفيرانس 2020 / اتصالات المريخ – ناسا"}},
+
   {id:"dust", kid:{en:"Dust on solar panels is like dirt on your glasses — it blocks the light! A real Mars rover named Opportunity stopped working after a giant dust storm covered its panels.",ar:"الغبار على الألواح الشمسية مثل الأوساخ على نظارتك — يحجب الضوء! توقفت مركبة حقيقية على المريخ اسمها أوبورتونيتي عن العمل بعد أن غطّت عاصفة غبارية عملاقة ألواحها."}, photo:"panels", em:"🧹", title:{en:"Dusty solar panels!",ar:"ألواح شمسية مغبرة!"},
    text:{en:"A layer of red dust is covering the solar panels. Dirty panels make less power.",ar:"طبقة من الغبار الأحمر تغطي الألواح الشمسية. الألواح المتسخة تنتج طاقة أقل."},
    choices:[
      {t:{en:"Go outside and sweep them (spacewalk)",ar:"اخرج ونظّفها (سير خارج المحطة)"}, s:{en:"+2 power for 3 sols, but the astronaut gets a little extra radiation outside (+0.5).",ar:"+2 طاقة لمدة 3 سول، لكن رائد الفضاء يتلقى إشعاعًا إضافيًا قليلًا في الخارج (+0.5)."},
       f:()=>{S.panelBoost=3; S.dose=+(S.dose+0.5).toFixed(2); return {en:"Sparkly clean panels! The habitat walls weren't there to protect the astronaut, so they got a bit of radiation.",ar:"ألواح نظيفة لامعة! لم تكن جدران المسكن موجودة لحماية رائد الفضاء، فتلقى قليلًا من الإشعاع."}}},
      {t:{en:"Leave them for now",ar:"اتركها الآن"}, s:{en:"Stay safe inside, but lose 1 power for 4 sols.",ar:"ابقَ آمنًا في الداخل، لكن ستخسر وحدة طاقة لمدة 4 سول."},
-      f:()=>{S.panelPenalty=4; return {en:"The dust stays. Your panels will be weaker for a while.",ar:"بقي الغبار. ستكون ألواحك أضعف لفترة."}}}
+      f:()=>{S.panelPenalty=4; S.panelPenaltyAmt=1; return {en:"The dust stays. Your panels will be weaker for a while.",ar:"بقي الغبار. ستكون ألواحك أضعف لفترة."}}}
    ],
    fact:{en:"<b>Real Mars fact:</b> NASA's Opportunity rover ran on solar power for almost 15 years. In 2018 a planet-wide dust storm blocked the Sun and the rover never woke up again.",
          ar:"<b>حقيقة عن المريخ:</b> عملت المركبة أوبورتونيتي من ناسا بالطاقة الشمسية قرابة 15 عامًا. في 2018 حجبت عاصفة غبارية غطّت الكوكب كله الشمس، ولم تستيقظ المركبة بعدها أبدًا."},
@@ -1260,7 +1307,7 @@ const CARDS = [
    src:{en:"NASA Human Research Program / NASA Open Science Data Repository (OSDR) bone studies",ar:"برنامج ناسا للأبحاث البشرية / دراسات العظام في مستودع بيانات العلوم المفتوحة (OSDR)"}}
 ];
 function pickCard(){
-  const pool = CARDS.filter(c=>!S.usedCards.slice(-3).includes(c.id));
+  const pool = CARDS.filter(c=>!c.special && !S.usedCards.slice(-3).includes(c.id) && (!c.ok || c.ok()));
   const c = pool[Math.floor(S.rng()*pool.length)]; S.usedCards.push(c.id); return c;
 }
 function chooseCard(i){
@@ -1512,7 +1559,19 @@ function showCard(){
     <div class="ctl" id="${cardRead.id}" style="margin:-4px 0 6px"><button class="btn" data-spk="${cardRead.id}" style="padding:6px 12px;font-size:14px">${t("readMe")}</button></div>
     <div class="choices">${c.choices.map((ch,i)=>`<button class="choice" data-c="${i}" ${ch.need&&!ch.need()?'disabled':''}><b>${L(ch.t)}</b><span>${L(ch.s)}${ch.need&&!ch.need()?t("notEnough"):""}</span></button>`).join("")}</div>`, showCard);
   if(Narrator.auto) Narrator.speak(cardRead.text, cardRead.id, 900);
+  clearInterval(window.__cardTimer);
+  if(c.timer){
+    // a real-time decision, like the dust-storm example from the challenge video
+    let left = (window.__cardLeft && currentView===showCard) ? window.__cardLeft : c.timer;
+    const tick=()=>{ const el=$("cardTimer"); if(el) el.innerHTML=t("timerLeft",{n:left}); };
+    const box=document.createElement("div"); box.id="cardTimer"; box.className="cardtimer"; $("modal").querySelector(".choices").before(box); tick();
+    if(currentView!==showCard || !window.__cardLeft) SFX.alarm(false);
+    window.__cardTimer=setInterval(()=>{ left--; window.__cardLeft=left; tick(); if(left<=5&&left>0) SFX.click();
+      if(left<=0){ clearInterval(window.__cardTimer); window.__cardLeft=0; const el=$("cardTimer"); if(el) el.innerHTML=t("timerUp");
+        setTimeout(()=>{ const b=document.querySelector(`.choice[data-c="${c.timeoutChoice}"]`); if(b) b.click(); }, 900); } },1000);
+  }
   document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
+    clearInterval(window.__cardTimer); window.__cardLeft=null;
     const msg=chooseCard(+b.dataset.c); if(msg===undefined) return;
     const view=()=>{ const sp=specialist(L(c.kid)); showModal(`<h2>${c.em} ${L(c.title)}</h2><p>${L(msg)}</p>
       ${sp.html}
@@ -1683,7 +1742,7 @@ function snowBurst(strength){
 }
 
 /* test hook */
-window.RPO={newGame,runSol,chooseCard,get S(){return S},CFG,MAY2024,render,loadLive,setLang,t,I18N,showEnd,showData,showCard,CARDS};
+window.RPO={newGame,runSol,chooseCard,get S(){return S},CFG,MAY2024,render,loadLive,setLang,t,I18N,showEnd,showData,showCard,CARDS,available,allocTotal};
 
 try{ const ic=document.createElement("link"); ic.rel="icon"; ic.href="data:image/svg+xml,"+encodeURIComponent(logoSVG(64)); document.head.appendChild(ic); }catch(e){}
 newGame(); applyStatic(); render(); showStart();
