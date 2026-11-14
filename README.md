@@ -80,7 +80,7 @@ The curated dataset is in [`data/may2024_space_weather.json`](data/may2024_space
 - Power, air and food numbers are simplified for play. The radiation figures come from real measurements.
 
 ## Built for kids
-- **English and Arabic** with a language switch and a right-to-left layout, so children in Saudi Arabia and across the Arab world can play in their own language
+- **English and Arabic** with a language switch and a right-to-left layout, so Arabic-speaking children can play in their own language
 - **Dr. Rana, a talking space scientist**, reads a kid-friendly explanation of each fact aloud (browser speech, English and Arabic), highlighting each word so children can read along. A pronunciation list fixes words voices often misread.
 - **Choose your commander**: female or male astronaut portrait and a custom name; Arabic grammar follows the commander's gender
 - **Sound effects** made in the browser, including NASA's real Apollo "Quindar tones" on radio calls and Geiger-counter clicks during radiation hits (with a mute button)
