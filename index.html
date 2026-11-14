@@ -749,7 +749,7 @@ ar:{
 }};
 
 
-const AVATARS_IDS=["f1","f2","f3","m1","m2","m3"];
+const AVATARS_IDS=["f1","m1"];   // female / male commander
 /* =========================================================
    COMMANDER (male / female + name)
    ========================================================= */
@@ -1566,8 +1566,8 @@ function showStart(){
   <p style="text-align:center;color:var(--muted)">${t("startSub")}</p>
   <div class="cmd-box">
     <h3>${t("cmdH")}</h3>
-    <div class="avgrid">
-      ${AVATARS_IDS.map(id=>`<button class="avatar ${CMD.av===id?'on':''}" data-av="${id}" aria-label="${t(AVATARS[id].g==='m'?'cmdM':'cmdF')} ${L(AVATARS[id].name)}"><span class="f">${avatarSVG(id,64)}</span>${L(AVATARS[id].name)}</button>`).join("")}
+    <div class="avatars">
+      ${AVATARS_IDS.map(id=>`<button class="avatar ${CMD.av===id?'on':''}" data-av="${id}"><span class="f">${avatarSVG(id,72)}</span>${t(AVATARS[id].g==='m'?'cmdM':'cmdF')}</button>`).join("")}
     </div>
     <label class="namefield">${t("cmdNameL")} <input id="cmdName" maxlength="14" autocomplete="off" placeholder="${L(AVATARS[CMD.av].name)}" value="${esc(CMD.name)}"></label>
   </div>

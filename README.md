@@ -65,7 +65,7 @@ The curated dataset is in [`data/may2024_space_weather.json`](data/may2024_space
 ## Built for kids
 - **English and Arabic** with a language switch and a right-to-left layout, so children in Saudi Arabia and across the Arab world can play in their own language
 - **Dr. Rana, a talking space scientist**, reads a kid-friendly explanation of each fact aloud (browser speech, English and Arabic), highlighting each word so children can read along. A pronunciation list fixes words voices often misread.
-- **Choose your commander**: 6 portraits (female and male, different skin tones, including a commander in hijab) and a custom name; Arabic grammar follows the commander's gender
+- **Choose your commander**: female or male astronaut portrait and a custom name; Arabic grammar follows the commander's gender
 - **Sound effects** made in the browser, including NASA's real Apollo "Quindar tones" on radio calls and Geiger-counter clicks during radiation hits (with a mute button)
 - **Real NASA photos** (Curiosity's selfie, Mount Sharp, the real 20 May 2024 storm image, Veggie plants…) with credits; drawings are used instead if offline
 - **18 facts dealt from a shuffled deck** and 12 different solar-storm explanations, so each game teaches something new
