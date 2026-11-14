@@ -6,6 +6,10 @@ A browser game for kids aged 7–12. The player runs a small Mars outpost for 30
 
 ▶ **Play:** https://atheeralgh1990.github.io/red-planet-outpost/ (no download, no account)
 
+🌐 **Bilingual: English and العربية.** Switch at any time with the language button. The Arabic version uses a full right-to-left layout and translates everything, including decision cards, NASA facts and real-event descriptions.
+
+> **بالعربية:** «محطة الكوكب الأحمر» لعبة متصفح للأطفال من 7 إلى 12 سنة. يدير اللاعب قاعدة على المريخ لمدة 30 سول (يومًا مريخيًا)، ويوزّع طاقة شمسية محدودة بين الهواء والطعام ودرع الإشعاع والراديو والعلوم. العواصف الشمسية في اللعبة أحداث حقيقية من سجلات ناسا لطقس الفضاء.
+
 ![Main screen](docs/screenshot-main.png)
 
 ---
@@ -59,6 +63,7 @@ The curated dataset is in [`data/may2024_space_weather.json`](data/may2024_space
 - Power, air and food numbers are simplified for play. The radiation figures come from real measurements.
 
 ## Built for kids
+- **English and Arabic** with a language switch and a right-to-left layout, so children in Saudi Arabia and across the Arab world can play in their own language
 - Plain language, with terms like sol, solar flare and radiation explained the first time they appear
 - Big buttons, emoji icons, works on tablets and phones
 - Failure isn't punishing: "Mission paused" explains what happened and gives a hint, as in a real astronaut simulator
@@ -75,7 +80,7 @@ The curated dataset is in [`data/may2024_space_weather.json`](data/may2024_space
 Run it locally by opening `index.html` in any browser.
 
 ## Use of AI
-We used **Claude (Anthropic)** as a coding and research assistant. It helped write the game code, design the trade-off mechanics, find and check the NASA data sources, run the balance simulations, and draft this README and our presentation. Our team chose the concept, reviewed and play-tested the game, and made the design decisions. The game contains no AI-generated images: all art is simple hand-coded SVG and emoji.
+We used **Claude (Anthropic)** as a coding and research assistant. It helped write the game code, design the trade-off mechanics, find and check the NASA data sources, run the balance simulations, and draft this README, our presentation and the Arabic translation (reviewed by our team). Our team chose the concept, reviewed and play-tested the game, and made the design decisions. The game contains no AI-generated images: all art is simple hand-coded SVG and emoji.
 
 ## References
 - NASA DONKI: https://ccmc.gsfc.nasa.gov/tools/DONKI/ · API: https://api.nasa.gov/
