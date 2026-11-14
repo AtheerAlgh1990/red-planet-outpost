@@ -1,2 +1,94 @@
-# red-planet-outpost
-Red Planet Outpost: a Mars outpost trainer game for kids 7-12 built on real NASA space-weather data. NASA Space Apps 2026 – Orbit Cousins
+# 🚀 Red Planet Outpost: 30-Sol Mission
+
+**Team Orbit Cousins · 2026 NASA Space Apps Challenge · Challenge: _Build a Junior Astronaut Mission Trainer_**
+
+A browser game for kids aged 7–12. The player runs a small Mars outpost for 30 sols (Mars days), splitting a limited supply of solar power between air, food, a radiation shield, a radio link to Earth and science. The solar storms in the game are **real events from NASA's space-weather records**. That includes the storm of 20 May 2024, when NASA's Curiosity rover measured its biggest radiation surge ever on the surface of Mars.
+
+▶ **Play:** https://atheeralgh1990.github.io/red-planet-outpost/ (no download, no account)
+
+![Main screen](docs/screenshot-main.png)
+
+---
+
+## The problem
+
+Space content for kids tends to be one of two things. Either it's posters and facts with no real decisions, or it's too technical to hold a young learner's attention. Kids rarely get to *feel* the trade-offs that decide whether a mission succeeds or fails.
+
+## Our solution: every power unit has a cost
+
+Each sol, the solar panels make **9 power units**, or only **5 during a dust storm**. A battery stores up to 6 leftover units. The player gives every unit a job:
+
+| System | What it does | The trade-off |
+|---|---|---|
+| 🫁 Life Support | Makes oxygen | Needs 3 every sol or the air runs down |
+| 🌱 Greenhouse | Grows food | Needs 2 every sol or the food runs down |
+| 🛡️ Radiation Shield | Storm shelter and water-wall pumps | Each unit blocks radiation but takes power from science |
+| 📡 Radio to Earth | Sends science home and brings tomorrow's space-weather forecast | Costs power. Without it, storms arrive by surprise and science never reaches Earth |
+| 🔬 Science | The reason the crew is on Mars | Only what reaches Earth counts toward the score |
+
+The player **wins** by surviving all 30 sols with air and food above zero and the radiation dose under the safety budget. Stars reward science sent to Earth.
+
+There is **no free safe choice.** We simulated 200 missions per strategy (`tools/balance_sim.py`):
+
+| Strategy | Survival rate | Science |
+|---|---|---|
+| Never shield | 0% (crew sent home around sol 18) | – |
+| Low shield every sol | ~36% | high |
+| Read the forecast, shield up on storm days | ~96% | ~42 ⭐⭐⭐ |
+| Medium shield every sol | ~98% | ~31 ⭐⭐ |
+
+Kids learn by playing what NASA mission planners do every day: watch the space weather and protect the crew when it matters, so there's power left for the mission.
+
+![Storm report](docs/screenshot-storm.png)
+
+## NASA data used, and why
+
+| Data | Where it's used | Why it matters |
+|---|---|---|
+| **NASA DONKI** (Space Weather Database Of Notifications, Knowledge, Information): solar flares, CMEs, solar energetic particle (SEP) events | *Storm Season* mode replays real May 2024 events, one Earth day per sol: X1.3 (5 May) through the **X8.7 flare of 14 May** (DONKI FLR record 2024-05-14T16:46Z) and X2.9 (27 May). *Live Sun* mode downloads the last 30 days from `api.nasa.gov/DONKI` (FLR, SEP, CME) when the game loads | The radiation risk on each sol is set by real solar activity, not invented numbers |
+| **NASA Curiosity Radiation Assessment Detector (RAD)** | Background dose of 0.7 radiation points per sol (≈700 µGy). On sol 20 the dose is **8.1**, the real 8,100 µGy RAD measured on 20 May 2024 | It links the shield decision to a real measurement at the Martian surface |
+| **NASA OSDR / Human Research Program**: bone loss in spaceflight (~1–1.5% per month) | "Exercise time" decision card | Real astronaut health research |
+| **NASA mission facts**: Opportunity and the 2018 dust storm, ISS water recovery (~98%), Veggie lettuce, MOXIE, Mars sunlight (~43% of Earth's), sol length, Earth–Mars radio delay (4–24 min) | Decision cards and "Did you know?" panels, each with its source shown in the game | Kids leave with true facts |
+
+The curated dataset is in [`data/may2024_space_weather.json`](data/may2024_space_weather.json), with a source for every event.
+
+### Being honest about the data
+- Storm Season data is **archived and labeled "REAL EVENT"**. It is never presented as live.
+- Live Sun data is labeled **"LIVE"** with the time it was downloaded. If NASA can't be reached, the game says so and offers Storm Season instead.
+- Flares seen from Earth often point away from Mars, so whether a flare's particles reach the outpost is decided by chance. The in-game teaching panel explains this.
+- Power, air and food numbers are simplified for play. The radiation figures come from real measurements.
+
+## Built for kids
+- Plain language, with terms like sol, solar flare and radiation explained the first time they appear
+- Big buttons, emoji icons, works on tablets and phones
+- Failure isn't punishing: "Mission paused" explains what happened and gives a hint, as in a real astronaut simulator
+- Replayable: random dust storms, chance particle hits, 6 decision cards and the live mode make each game different
+
+![Debrief](docs/screenshot-debrief.png)
+
+## How it works (technical)
+- One self-contained `index.html` (HTML, CSS, vanilla JavaScript, inline SVG). No build step, no libraries, works offline (Storm Season)
+- A seeded random number generator makes playthroughs repeatable for testing (`window.RPO` test hook)
+- `tools/balance_sim.py` (Python and Playwright) runs hundreds of automated missions per strategy to tune balance
+- Hosted on GitHub Pages
+
+Run it locally by opening `index.html` in any browser.
+
+## Use of AI
+We used **Claude (Anthropic)** as a coding and research assistant. It helped write the game code, design the trade-off mechanics, find and check the NASA data sources, run the balance simulations, and draft this README and our presentation. Our team chose the concept, reviewed and play-tested the game, and made the design decisions. The game contains no AI-generated images: all art is simple hand-coded SVG and emoji.
+
+## References
+- NASA DONKI: https://ccmc.gsfc.nasa.gov/tools/DONKI/ · API: https://api.nasa.gov/
+- DONKI flare record, X8.7, 14 May 2024: https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/FLR/30849/3
+- NASA, "NASA Watches Mars Light Up During Epic Solar Storm" (June 2024): Curiosity RAD measured 8,100 µGy on 20 May 2024
+- Curiosity RAD typical surface dose (~700 µGy per sol): NASA / Southwest Research Institute
+- SIDC / Royal Observatory of Belgium flare reports, May 2024 (X1.0 8 May, X1.1 9 May, X5.8 11 May, X1.0 12 May)
+- NASA Open Science Data Repository: https://osdr.nasa.gov/bio/repo/
+- NASA Veggie, ISS Environmental Control and Life Support System, Perseverance MOXIE, Mars Exploration Rover (Opportunity): science.nasa.gov / nasa.gov
+
+## Team
+**Orbit Cousins**, Riyadh, Saudi Arabia 🇸🇦
+
+_Not an official NASA product. No NASA logos are used._
+
+License: MIT

@@ -1,0 +1,26 @@
+{
+  "title": "Real space weather events, May 2024 (Solar Cycle 25 'storm season')",
+  "note": "Curated from NASA DONKI flare records and NASA mission reports. Used by the game's 'Storm Season' mode. Each event maps one Earth day to one game sol (sol 1 = 1 May 2024). Times are UTC.",
+  "level_scale": {
+    "0": "Calm Sun",
+    "1": "Active Sun - minor particle risk",
+    "2": "Big X-class flare - particles may reach Mars",
+    "3": "Solar particle storm measured at Mars surface"
+  },
+  "events": [
+    {"date": "2024-05-05", "sol": 5,  "type": "FLR", "class": "X1.3", "level": 2, "region": "AR3663", "source": "The Watchers / NOAA SWPC flare list"},
+    {"date": "2024-05-08", "sol": 8,  "type": "FLR", "class": "X1.0", "peak": "01:41", "level": 2, "region": "AR3663", "source": "SIDC (Royal Observatory of Belgium)"},
+    {"date": "2024-05-08", "sol": 8,  "type": "CME", "class": "Earth-directed CMEs", "level": 1, "region": "AR3664", "source": "NASA / NOAA reports on May 2024 storms"},
+    {"date": "2024-05-09", "sol": 9,  "type": "FLR", "class": "X1.1", "peak": "17:44", "level": 2, "region": "AR3664", "source": "SIDC"},
+    {"date": "2024-05-10", "sol": 10, "type": "FLR", "class": "X3.9", "level": 2, "region": "AR3664", "source": "AAVSO / NASA SDO"},
+    {"date": "2024-05-11", "sol": 11, "type": "FLR", "class": "X5.8", "peak": "01:23", "level": 2, "region": "AR3664", "source": "SIDC / NASA SDO"},
+    {"date": "2024-05-12", "sol": 12, "type": "FLR", "class": "X1.0", "peak": "16:26", "level": 2, "region": "AR3664", "source": "SIDC"},
+    {"date": "2024-05-14", "sol": 14, "type": "FLR", "class": "X8.7", "peak": "16:51", "level": 2, "region": "AR3664", "source": "NASA DONKI FLR record 2024-05-14T16:46Z (linked CME 2024-05-14T17:00:00-CME-001)"},
+    {"date": "2024-05-20", "sol": 20, "type": "SEP", "class": "~X12 (far side, estimated by Solar Orbiter)", "level": 3, "region": "AR3664 (renamed AR3697)", "mars_dose_uGy": 8100, "source": "NASA, 'NASA Watches Mars Light Up During Epic Solar Storm' (June 2024): Curiosity RAD measured 8,100 micrograys, its largest surge since landing"},
+    {"date": "2024-05-27", "sol": 27, "type": "FLR", "class": "X2.9", "peak": "07:08", "level": 2, "region": "returning AR3664", "source": "EarthSky sun activity archive / NOAA SWPC"}
+  ],
+  "mars_baseline": {
+    "rad_daily_dose_uGy": 700,
+    "source": "Curiosity RAD typical daily dose at Gale crater (~700 micrograys per sol), NASA/SwRI"
+  }
+}
