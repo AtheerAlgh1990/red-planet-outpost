@@ -6,6 +6,8 @@ A browser game for kids aged 7–12. The player runs a small Mars outpost for 30
 
 ▶ **Play:** https://atheeralgh1990.github.io/red-planet-outpost/ (no download, no account)
 
+🎬 **30-second demo video:** [docs/demo.mp4](docs/demo.mp4)
+
 🌐 **Bilingual: English and العربية.** Switch at any time with the language button. The Arabic version uses a full right-to-left layout and translates everything, including decision cards, NASA facts and real-event descriptions.
 
 > **بالعربية:** «محطة الكوكب الأحمر» لعبة متصفح للأطفال من 7 إلى 12 سنة. يدير اللاعب قاعدة على المريخ لمدة 30 سول (يومًا مريخيًا)، ويوزّع طاقة شمسية محدودة بين الهواء والطعام ودرع الإشعاع والراديو والعلوم. العواصف الشمسية في اللعبة أحداث حقيقية من سجلات ناسا لطقس الفضاء.
