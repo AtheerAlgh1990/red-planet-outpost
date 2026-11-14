@@ -152,6 +152,25 @@
   .tipbox{background:#2a2410;border:1px solid #6b5a1a;border-radius:12px;padding:10px 12px;font-size:14px;margin-top:10px}
   .demo-units{display:flex;justify-content:center;gap:6px;font-size:26px;flex-wrap:wrap;margin:8px 0}
   .cmdchip{font-weight:700;color:var(--text)}
+  .spec{display:flex;gap:12px;align-items:flex-start;background:linear-gradient(135deg,#1f3346,#17263a);border:1px solid #35587a;border-radius:16px;padding:12px;margin-top:12px;animation:popin .45s cubic-bezier(.2,1.4,.4,1)}
+  @keyframes popin{from{transform:translateY(14px) scale(.96);opacity:0}to{transform:none;opacity:1}}
+  .spec .av{position:relative;flex:0 0 64px;height:64px;border-radius:50%;background:radial-gradient(circle at 50% 35%,#2f5f8a,#173049);display:grid;place-items:center;font-size:40px;border:2px solid #6fd3ff}
+  .spec.talking .av::before,.spec.talking .av::after{content:"";position:absolute;inset:-6px;border-radius:50%;border:2px solid #6fd3ff;animation:ring 1.2s ease-out infinite}
+  .spec.talking .av::after{animation-delay:.6s}
+  @keyframes ring{from{transform:scale(.9);opacity:.9}to{transform:scale(1.35);opacity:0}}
+  .spec.talking .av span{animation:talk .25s ease-in-out infinite alternate}
+  @keyframes talk{to{transform:translateY(-2px) scale(1.04)}}
+  .spec .who{font-size:13px;color:#9cc2d6;margin-bottom:4px}
+  .spec .who b{color:#fff;font-size:15px}
+  .spec .say{font-size:17px;line-height:1.55}
+  html[lang=ar] .spec .say{line-height:1.8}
+  .spec .say .w{border-radius:4px;transition:background .15s}
+  .spec .say .w.on{background:#ffd65c;color:#2a1a00}
+  .spec .ctl{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+  .spec .ctl button{font-size:13px;padding:6px 10px;border-radius:999px;border:1px solid #35587a;background:#0f1d2c;color:#cfe8f5}
+  .spec .novoice{font-size:12px;color:#ffd65c;margin-top:6px}
+  details.more{margin-top:8px}
+  details.more summary{cursor:pointer;font-size:13px;color:var(--muted)}
 </style>
 </head>
 <body>
@@ -185,6 +204,22 @@
               <stop offset="0.6" stop-color="#6fd3ff" stop-opacity="0"/>
               <stop offset="1" stop-color="#6fd3ff" stop-opacity="0.7"/>
             </radialGradient>
+            <filter id="blur3" x="-20%" y="-50%" width="140%" height="200%"><feGaussianBlur stdDeviation="3"/></filter>
+            <filter id="grain"><feTurbulence type="fractalNoise" baseFrequency=".9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+            <pattern id="cells" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="skewY(-12)">
+              <rect width="7" height="7" fill="#14284a"/><rect x=".6" y=".6" width="5.8" height="5.8" fill="#1d3a6b"/><rect x=".6" y=".6" width="5.8" height="2" fill="#2c4f8a" opacity=".6"/>
+            </pattern>
+            <linearGradient id="sheen" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#fff" stop-opacity=".05"/><stop offset=".55" stop-color="#fff" stop-opacity=".28"/><stop offset=".7" stop-color="#fff" stop-opacity=".02"/></linearGradient>
+            <linearGradient id="metal" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7d858b"/><stop offset=".6" stop-color="#e6e9ec"/><stop offset="1" stop-color="#a5adb3"/></linearGradient>
+            <radialGradient id="dish" cx=".65" cy=".35" r=".9"><stop offset="0" stop-color="#ffffff"/><stop offset=".6" stop-color="#d7dce0"/><stop offset="1" stop-color="#8e979d"/></radialGradient>
+            <linearGradient id="habBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset=".45" stop-color="#ecebe7"/><stop offset=".8" stop-color="#c9c4bc"/><stop offset="1" stop-color="#9c958c"/></linearGradient>
+            <linearGradient id="leftShade" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#3a1a0c" stop-opacity=".38"/><stop offset=".45" stop-color="#3a1a0c" stop-opacity=".05"/><stop offset="1" stop-color="#fff3df" stop-opacity=".12"/></linearGradient>
+            <radialGradient id="window" cx=".5" cy=".5" r=".6"><stop offset="0" stop-color="#ffe7a8"/><stop offset=".7" stop-color="#ffb84d"/><stop offset="1" stop-color="#b86a1e"/></radialGradient>
+            <linearGradient id="bag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#c9784a"/><stop offset="1" stop-color="#7b3a1b"/></linearGradient>
+            <radialGradient id="led" cx=".5" cy=".75" r=".75"><stop offset="0" stop-color="#ff7ad9"/><stop offset=".6" stop-color="#c04aa8"/><stop offset="1" stop-color="#6d2a6a"/></radialGradient>
+            <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity=".45"/><stop offset=".5" stop-color="#e6fff7" stop-opacity=".12"/><stop offset="1" stop-color="#ffffff" stop-opacity=".25"/></linearGradient>
+            <linearGradient id="roverBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f4f5f6"/><stop offset="1" stop-color="#a8adb2"/></linearGradient>
+            <linearGradient id="hazeGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e8b48a" stop-opacity=".10"/><stop offset=".6" stop-color="#d9935e" stop-opacity=".06"/><stop offset="1" stop-color="#5a2410" stop-opacity=".12"/></linearGradient>
           </defs>
           <rect width="640" height="300" fill="url(#sky)"/>
           <image id="scenePhoto" x="0" y="-20" width="640" height="360" preserveAspectRatio="xMidYMid slice" opacity="0"/>
@@ -192,44 +227,139 @@
           <circle id="sunHalo" cx="560" cy="58" r="30" fill="#fff6dc" opacity=".25"/>
           <path id="drawnHills" d="M0 190 L70 160 L130 178 L210 140 L290 172 L360 150 L430 170 L520 138 L640 168 L640 300 L0 300Z" fill="#c76a3d" opacity=".7"/>
           <rect id="drawnGround" y="200" width="640" height="100" fill="url(#ground)"/>
-          <ellipse cx="90" cy="262" rx="22" ry="6" fill="#6a2a14" opacity=".6"/>
-          <ellipse cx="560" cy="275" rx="30" ry="7" fill="#6a2a14" opacity=".6"/>
-          <!-- solar panels -->
+          <!-- ===== realistic outpost (lit from the upper right, like the photo) ===== -->
+          <g id="outpost">
+          <!-- contact shadows -->
+          <g filter="url(#blur3)" fill="#2a1006" opacity=".55">
+            <ellipse cx="96" cy="262" rx="88" ry="9"/>
+            <ellipse cx="318" cy="262" rx="112" ry="13"/>
+            <ellipse cx="458" cy="262" rx="46" ry="8"/>
+            <ellipse cx="565" cy="268" rx="40" ry="6"/>
+            <ellipse cx="215" cy="262" rx="14" ry="4"/>
+          </g>
+          <!-- landing pad / regolith work area -->
+          <ellipse cx="320" cy="262" rx="300" ry="20" fill="#7a3a1d" opacity=".18"/>
+
+          <!-- solar array field -->
           <g id="panels">
-            <g transform="translate(40,196)"><rect x="0" y="0" width="70" height="26" rx="3" fill="#1d3557" stroke="#a8dadc" stroke-width="2" transform="skewX(-15)"/><line x1="20" y1="26" x2="20" y2="40" stroke="#ccc" stroke-width="3"/><line x1="50" y1="26" x2="50" y2="40" stroke="#ccc" stroke-width="3"/></g>
-            <g transform="translate(125,196)"><rect x="0" y="0" width="70" height="26" rx="3" fill="#1d3557" stroke="#a8dadc" stroke-width="2" transform="skewX(-15)"/><line x1="20" y1="26" x2="20" y2="40" stroke="#ccc" stroke-width="3"/><line x1="50" y1="26" x2="50" y2="40" stroke="#ccc" stroke-width="3"/></g>
-            <rect id="panelDust" x="30" y="194" width="170" height="30" fill="#c98a5a" opacity="0"/>
-          </g>
-          <!-- shield glow -->
-          <ellipse id="shield" cx="330" cy="232" rx="105" ry="78" fill="url(#shieldGlow)" opacity="0"/>
-          <!-- habitat -->
-          <g>
-            <rect x="262" y="210" width="136" height="30" rx="6" fill="#d9d9d9"/>
-            <path d="M270 212 A60 56 0 0 1 390 212Z" fill="#f2f2f2" stroke="#bdbdbd" stroke-width="2"/>
-            <circle cx="305" cy="196" r="8" fill="#6fd3ff" stroke="#999" stroke-width="2"/>
-            <circle cx="330" cy="188" r="8" fill="#6fd3ff" stroke="#999" stroke-width="2"/>
-            <circle cx="355" cy="196" r="8" fill="#6fd3ff" stroke="#999" stroke-width="2"/>
-            <rect x="318" y="222" width="24" height="18" rx="3" fill="#888"/>
-          </g>
-          <!-- greenhouse -->
-          <g>
-            <path d="M410 240 A38 34 0 0 1 486 240Z" fill="#cfeedd" opacity=".85" stroke="#9cc" stroke-width="2"/>
-            <g id="plants">
-              <circle cx="430" cy="234" r="6" fill="#4caf50"/><circle cx="446" cy="230" r="7" fill="#66bb6a"/><circle cx="462" cy="233" r="6" fill="#43a047"/><circle cx="476" cy="236" r="4" fill="#81c784"/>
+            <g transform="translate(18,214) scale(.82)" opacity=".92">
+              <line x1="22" y1="34" x2="24" y2="58" stroke="url(#metal)" stroke-width="3"/><line x1="70" y1="22" x2="72" y2="54" stroke="url(#metal)" stroke-width="3"/>
+              <polygon points="0,26 84,8 92,32 8,50" fill="url(#cells)" stroke="#d7dde2" stroke-width="2"/>
+              <polygon points="0,26 84,8 92,32 8,50" fill="url(#sheen)"/>
+            </g>
+            <g transform="translate(96,206) scale(.82)" opacity=".92">
+              <line x1="22" y1="34" x2="24" y2="58" stroke="url(#metal)" stroke-width="3"/><line x1="70" y1="22" x2="72" y2="54" stroke="url(#metal)" stroke-width="3"/>
+              <polygon points="0,26 84,8 92,32 8,50" fill="url(#cells)" stroke="#d7dde2" stroke-width="2"/>
+              <polygon points="0,26 84,8 92,32 8,50" fill="url(#sheen)"/>
+            </g>
+            <g transform="translate(6,224)">
+              <line x1="24" y1="36" x2="26" y2="40" stroke="#555" stroke-width="3"/>
+              <line x1="22" y1="34" x2="24" y2="40" stroke="url(#metal)" stroke-width="3.5"/><line x1="72" y1="22" x2="74" y2="38" stroke="url(#metal)" stroke-width="3.5"/>
+              <polygon points="0,26 84,8 92,32 8,50" fill="url(#cells)" stroke="#e3e8ec" stroke-width="2"/>
+              <polygon points="0,26 84,8 92,32 8,50" fill="url(#sheen)"/>
+            </g>
+            <g transform="translate(92,216)">
+              <line x1="22" y1="34" x2="24" y2="46" stroke="url(#metal)" stroke-width="3.5"/><line x1="72" y1="22" x2="74" y2="44" stroke="url(#metal)" stroke-width="3.5"/>
+              <polygon points="0,26 84,8 92,32 8,50" fill="url(#cells)" stroke="#e3e8ec" stroke-width="2"/>
+              <polygon points="0,26 84,8 92,32 8,50" fill="url(#sheen)"/>
+            </g>
+            <!-- power cable to habitat -->
+            <path d="M150 262 C190 268 230 266 262 252" stroke="#222" stroke-width="2" fill="none" opacity=".7"/>
+            <g id="panelDust" opacity="0">
+              <polygon points="6,250 90,232 98,256 14,274" fill="#c4875a" opacity=".75"/>
+              <polygon points="92,242 176,224 184,248 100,266" fill="#c4875a" opacity=".75"/>
+              <polygon points="18,235 87,220 94,240 25,255" fill="#c4875a" opacity=".7"/>
+              <polygon points="96,228 165,213 172,233 103,248" fill="#c4875a" opacity=".7"/>
             </g>
           </g>
-          <!-- antenna -->
-          <g id="antenna" transform="translate(222,170)">
-            <line x1="12" y1="18" x2="12" y2="70" stroke="#ccc" stroke-width="4"/>
-            <path d="M0 18 Q12 -6 24 18Z" fill="#eee" stroke="#aaa" stroke-width="2"/>
-            <circle id="commsLight" cx="12" cy="6" r="4" fill="#444"/>
+
+          <!-- radio dish (high-gain antenna) -->
+          <g id="antenna" transform="translate(204,196)">
+            <rect x="4" y="58" width="22" height="10" rx="2" fill="url(#metal)"/>
+            <line x1="15" y1="58" x2="15" y2="22" stroke="url(#metal)" stroke-width="4"/>
+            <line x1="15" y1="40" x2="5" y2="58" stroke="#9aa" stroke-width="1.5"/><line x1="15" y1="40" x2="25" y2="58" stroke="#9aa" stroke-width="1.5"/>
+            <g transform="rotate(-28 15 18)">
+              <ellipse cx="15" cy="18" rx="19" ry="8" fill="url(#dish)" stroke="#bfc6cc" stroke-width="1.2"/>
+              <ellipse cx="17" cy="17" rx="13" ry="5" fill="#ffffff" opacity=".35"/>
+              <line x1="15" y1="18" x2="15" y2="2" stroke="#8a9399" stroke-width="1.5"/>
+            </g>
+            <circle id="commsLight" cx="22" cy="5" r="3.2" fill="#444"/>
           </g>
-          <!-- rover -->
-          <g id="rover" transform="translate(520,236)">
-            <rect x="0" y="0" width="44" height="14" rx="3" fill="#e0e0e0"/>
-            <rect x="30" y="-12" width="4" height="12" fill="#bbb"/><rect x="26" y="-16" width="12" height="6" rx="2" fill="#999"/>
-            <circle cx="6" cy="17" r="5" fill="#333"/><circle cx="22" cy="17" r="5" fill="#333"/><circle cx="38" cy="17" r="5" fill="#333"/>
+
+          <!-- shield glow -->
+          <ellipse id="shield" cx="318" cy="222" rx="128" ry="66" fill="url(#shieldGlow)" opacity="0"/>
+
+          <!-- main habitat: inflatable module half-buried in regolith sandbags -->
+          <g>
+            <!-- airlock -->
+            <rect x="236" y="205" width="38" height="40" rx="14" fill="url(#habBody)"/>
+            <rect x="236" y="205" width="38" height="40" rx="14" fill="url(#leftShade)"/>
+            <circle cx="248" cy="224" r="9" fill="#9aa3a8" stroke="#6d757a" stroke-width="2"/>
+            <circle cx="248" cy="224" r="4" fill="url(#window)"/>
+            <!-- body -->
+            <rect x="262" y="180" width="148" height="66" rx="30" fill="url(#habBody)"/>
+            <g stroke="#cfcac2" stroke-width="1.4" opacity=".9">
+              <path d="M292 182 Q290 213 292 244"/><path d="M318 181 Q316 213 318 245"/><path d="M344 181 Q342 213 344 245"/><path d="M370 181 Q368 213 370 245"/><path d="M394 184 Q392 213 394 242"/>
+            </g>
+            <rect x="262" y="180" width="148" height="66" rx="30" fill="url(#leftShade)"/>
+            <ellipse cx="300" cy="186" rx="40" ry="4" fill="#fff" opacity=".7"/>
+            <!-- windows with warm interior light -->
+            <rect x="300" y="196" width="16" height="10" rx="4" fill="url(#window)" stroke="#7d868c" stroke-width="1.5"/>
+            <rect x="330" y="195" width="16" height="10" rx="4" fill="url(#window)" stroke="#7d868c" stroke-width="1.5"/>
+            <rect x="360" y="196" width="16" height="10" rx="4" fill="url(#window)" stroke="#7d868c" stroke-width="1.5"/>
+            <!-- roof details -->
+            <rect x="372" y="172" width="16" height="9" rx="2" fill="url(#metal)"/>
+            <line x1="296" y1="181" x2="296" y2="160" stroke="#bbb" stroke-width="1.5"/><circle cx="296" cy="159" r="2.4" fill="#ff4d4d"/>
+            <!-- sandbag berm -->
+            <g fill="url(#bag)" stroke="#5e2a12" stroke-width=".8">
+              <ellipse cx="258" cy="252" rx="14" ry="7"/><ellipse cx="282" cy="252" rx="14" ry="7"/><ellipse cx="306" cy="253" rx="14" ry="7"/><ellipse cx="330" cy="253" rx="14" ry="7"/><ellipse cx="354" cy="253" rx="14" ry="7"/><ellipse cx="378" cy="252" rx="14" ry="7"/><ellipse cx="402" cy="251" rx="14" ry="7"/>
+              <ellipse cx="270" cy="242" rx="13" ry="6.5"/><ellipse cx="294" cy="243" rx="13" ry="6.5"/><ellipse cx="318" cy="243" rx="13" ry="6.5"/><ellipse cx="342" cy="243" rx="13" ry="6.5"/><ellipse cx="366" cy="243" rx="13" ry="6.5"/><ellipse cx="390" cy="242" rx="13" ry="6.5"/>
+              <ellipse cx="282" cy="233" rx="12" ry="6"/><ellipse cx="305" cy="234" rx="12" ry="6"/><ellipse cx="328" cy="234" rx="12" ry="6"/><ellipse cx="351" cy="234" rx="12" ry="6"/><ellipse cx="374" cy="233" rx="12" ry="6"/>
+            </g>
+            <rect x="250" y="226" width="166" height="34" fill="url(#leftShade)" opacity=".6"/>
           </g>
+
+          <!-- greenhouse: inflatable dome lit pink by red + blue LED grow lights -->
+          <g>
+            <ellipse cx="458" cy="252" rx="44" ry="7" fill="#8f8a84"/>
+            <path d="M416 252 A42 40 0 0 1 500 252Z" fill="url(#led)"/>
+            <g id="plants">
+              <path d="M428 252 q4-14 10-2 q2-16 9-1 q4-13 9 0" fill="#3f9b4a"/>
+              <path d="M450 252 q5-18 11-2 q3-15 9 0 q4-12 9 1" fill="#4fb35a"/>
+              <path d="M472 252 q4-13 9-1 q3-11 8 1" fill="#3a8f44"/>
+              <ellipse cx="458" cy="252" rx="36" ry="3" fill="#5a3b26"/>
+            </g>
+            <path d="M416 252 A42 40 0 0 1 500 252Z" fill="url(#glass)" stroke="#e8f5f2" stroke-width="1.5"/>
+            <g stroke="#f2fbf9" stroke-width="1" fill="none" opacity=".7">
+              <path d="M458 212 L458 252"/><path d="M430 222 Q458 238 486 222"/><path d="M420 238 Q458 248 496 238"/>
+            </g>
+            <path d="M428 226 Q440 214 458 213" stroke="#fff" stroke-width="3" fill="none" opacity=".55" stroke-linecap="round"/>
+          </g>
+
+          <!-- rover (six wheels, rocker-bogie, camera mast — like NASA's Curiosity) -->
+          <g id="rover" transform="translate(530,226)">
+            <rect x="52" y="10" width="14" height="10" rx="2" fill="#5b5f63"/>
+            <g stroke="#4a4e52" stroke-width="1"><line x1="55" y1="10" x2="55" y2="20"/><line x1="59" y1="10" x2="59" y2="20"/><line x1="63" y1="10" x2="63" y2="20"/></g>
+            <rect x="6" y="8" width="50" height="16" rx="2" fill="url(#roverBody)" stroke="#9aa0a5" stroke-width="1"/>
+            <rect x="10" y="4" width="34" height="5" rx="1" fill="#c9a24a"/>
+            <line x1="14" y1="8" x2="14" y2="-16" stroke="#d0d4d8" stroke-width="2.5"/>
+            <rect x="8" y="-22" width="14" height="8" rx="2" fill="#e8eaec" stroke="#8d9297" stroke-width="1"/>
+            <circle cx="11" cy="-18" r="1.6" fill="#223"/><circle cx="17" cy="-18" r="1.6" fill="#223"/>
+            <path d="M6 18 L-4 22 L-2 30" stroke="#b9bec2" stroke-width="2" fill="none"/>
+            <g stroke="#3b3f43" stroke-width="2.2" fill="none"><path d="M8 24 L20 32 L32 24"/><path d="M32 24 L46 32 L58 24"/></g>
+            <g fill="#2a2c2e" stroke="#6b7075" stroke-width="1.2">
+              <circle cx="8" cy="34" r="6"/><circle cx="32" cy="34" r="6"/><circle cx="56" cy="34" r="6"/>
+            </g>
+            <g fill="#8a8f94"><circle cx="8" cy="34" r="2"/><circle cx="32" cy="34" r="2"/><circle cx="56" cy="34" r="2"/></g>
+            <rect x="6" y="8" width="50" height="16" rx="2" fill="url(#leftShade)"/>
+          </g>
+          <!-- wheel tracks -->
+          <path d="M600 272 C560 280 520 284 470 286" stroke="#5c2810" stroke-width="2" fill="none" opacity=".35" stroke-dasharray="3 3"/>
+          <path d="M604 278 C566 286 522 290 474 292" stroke="#5c2810" stroke-width="2" fill="none" opacity=".35" stroke-dasharray="3 3"/>
+          </g>
+          <!-- film grain + dusty air to blend drawings with the photo -->
+          <rect width="640" height="300" fill="url(#hazeGrad)"/>
+          <rect width="640" height="300" filter="url(#grain)" opacity=".07"/>
           <!-- dust overlay -->
           <rect id="dustHaze" width="640" height="300" fill="#a4592c" opacity="0"/>
           <text id="photoCredit" x="632" y="292" font-size="9" fill="#fff" opacity="0" text-anchor="end">Photo: NASA/JPL-Caltech/MSSS (Curiosity, Mount Sharp)</text>
@@ -406,6 +536,13 @@ en:{
   rx_miss:"Phew! The Sun missed us this time. 😅", rx_dust:"Dust storm incoming! Save every bit of power. 🌪️",
   rx_low:"Careful, crew — our supplies are getting low! ⚠️", rx_sent:"Data sent! Scientists on Earth are cheering! 🎉",
   rx_calm:"Smooth sol, team. Mars looks beautiful today. 🌄",
+  specName:"Dr. Rana", specRole:"Space Scientist", specListen:"🔁 Listen again", specStop:"⏹ Stop",
+  specAutoOn:"🗣️ Auto-read: ON", specAutoOff:"🗣️ Auto-read: OFF", specNoVoice:"This device has no {lng} voice installed — read along with the words above!",
+  lngName:"English", readMe:"🔊 Read it to me", moreFacts:"📖 More details for grown-ups",
+  kid_ev1:"The Sun is extra busy today, like a pot of soup bubbling on the stove. Little bursts of particles might fly our way, so keep an eye on your shield!",
+  kid_ev2:"Whoa! The Sun just made a giant flash called a solar flare. It's like the Sun sneezing out energy! Sometimes the tiny particles fly to Mars, and sometimes they miss. That's why your shield is so important.",
+  kid_ev3:"This really happened on May twentieth, 2024! A huge solar storm hit Mars, and NASA's Curiosity rover measured it. An astronaut standing there would get as much radiation as thirty X-rays at the doctor! That's why astronauts need a strong shelter.",
+
   // sound
   soundOn:"Sound on", soundOff:"Sound off",
   // academy (how to play)
@@ -538,6 +675,13 @@ ar:{
   rx_miss:"فيو! أخطأتنا الشمس هذه المرة. 😅", rx_dust:"عاصفة غبارية قادمة! وفّروا كل ذرة طاقة. 🌪️",
   rx_low:"انتبهوا يا فريق — مواردنا تقل! ⚠️", rx_sent:"أُرسلت البيانات! العلماء على الأرض يهتفون! 🎉",
   rx_calm:"سول هادئ يا فريق. المريخ جميل اليوم. 🌄",
+  specName:"د. رنا", specRole:"عالمة فضاء", specListen:"🔁 استمع مرة أخرى", specStop:"⏹ إيقاف",
+  specAutoOn:"🗣️ القراءة التلقائية: تعمل", specAutoOff:"🗣️ القراءة التلقائية: متوقفة", specNoVoice:"لا يوجد صوت {lng} مثبّت على هذا الجهاز — اقرأ الكلمات في الأعلى!",
+  lngName:"عربي", readMe:"🔊 اقرأ لي", moreFacts:"📖 تفاصيل أكثر للكبار",
+  kid_ev1:"الشمس مشغولة جدًا اليوم، مثل قِدر حساء يغلي على النار. قد تطير نحونا دفعات صغيرة من الجسيمات، فانتبه لدرعك!",
+  kid_ev2:"واو! أطلقت الشمس وميضًا عملاقًا اسمه التوهج الشمسي. كأن الشمس عطست طاقة! أحيانًا تطير الجسيمات الصغيرة نحو المريخ، وأحيانًا تخطئه. لهذا درعك مهم جدًا.",
+  kid_ev3:"هذا حدث فعلًا في العشرين من مايو عام ألفين وأربعة وعشرين! ضربت عاصفة شمسية ضخمة المريخ، وقاستها مركبة ناسا كيوريوسيتي. رائد الفضاء الذي يقف هناك كان سيتلقى إشعاعًا يساوي ثلاثين صورة أشعة عند الطبيب! لهذا يحتاج رواد الفضاء إلى ملجأ قوي.",
+
   soundOn:"الصوت يعمل", soundOff:"الصوت مكتوم",
   acH:"🎓 أكاديمية تدريب رواد الفضاء", acStep:"الخطوة {n} من {m}", acNext:"التالي ◀", acBack:"▶ السابق", acGo:"هيا بنا! 🚀", acTipL:"🤫 نصيحة سرية:",
   ac1T:"التقط أشعة الشمس!", ac1:"في كل سول، تلتقط ألواحك الشمسية ضوء الشمس وتحوّله إلى وحدات طاقة ⚡. المريخ بعيد عن الشمس، لذلك الطاقة ثمينة. وأثناء العواصف الغبارية 🌪️ تحصل على أقل!",
@@ -647,6 +791,64 @@ const SFX = (()=>{
     get muted(){ return muted; }
   };
 })();
+
+
+/* =========================================================
+   DR. RANA — a talking space scientist (browser speech, no files)
+   ========================================================= */
+const Narrator = (()=>{
+  const synth = window.speechSynthesis;
+  let auto = true, timer=null, cur=null;
+  try{ const v=localStorage.getItem("rpo-autoread"); if(v!==null) auto = v==="1"; }catch(e){}
+  if(synth){ synth.getVoices(); synth.onvoiceschanged = ()=>synth.getVoices(); }
+  function pickVoice(lang){
+    if(!synth) return null;
+    const want = lang==="ar"?"ar":"en";
+    const vs = synth.getVoices().filter(v=>(v.lang||"").toLowerCase().replace("_","-").startsWith(want));
+    if(!vs.length) return null;
+    const score=v=>(/natural|neural|online/i.test(v.name)?6:0)+(/female|zira|aria|jenny|samantha|hoda|zariyah|salma|laila|amina|google/i.test(v.name)?3:0)
+                   +(want==="ar"&&/sa/i.test(v.lang)?2:0)+(want==="en"&&/us/i.test(v.lang)?1:0)+(v.localService?0:1);
+    return vs.sort((a,b)=>score(b)-score(a))[0];
+  }
+  function stop(){ clearTimeout(timer); timer=null; if(synth) synth.cancel(); document.querySelectorAll(".spec.talking").forEach(e=>e.classList.remove("talking")); document.querySelectorAll(".spec .w.on").forEach(w=>w.classList.remove("on")); cur=null; }
+  function speak(text, boxId, delay=0){
+    stop(); if(!synth) return false;
+    const voice = pickVoice(LANG); if(!voice) return false;
+    timer=setTimeout(()=>{
+      const box=document.getElementById(boxId);
+      const u=new SpeechSynthesisUtterance(text.replace(/[\u{1F300}-\u{1FAFF}☀-➿]/gu,""));
+      u.voice=voice; u.lang=voice.lang; u.rate = LANG==="ar"?0.92:0.95; u.pitch=1.08; u.volume=1;
+      const words = box ? [...box.querySelectorAll(".w")] : [];
+      u.onstart=()=>{ box&&box.classList.add("talking"); };
+      u.onboundary=e=>{ if(e.name && e.name!=="word") return; words.forEach(w=>w.classList.toggle("on", e.charIndex>=+w.dataset.s && e.charIndex<+w.dataset.e)); };
+      u.onend=u.onerror=()=>{ box&&box.classList.remove("talking"); words.forEach(w=>w.classList.remove("on")); };
+      cur=u; synth.speak(u);
+    }, delay);
+    return true;
+  }
+  return { speak, stop, has:()=>!!pickVoice(LANG), get auto(){return auto}, toggleAuto(){ auto=!auto; try{localStorage.setItem("rpo-autoread",auto?"1":"0");}catch(e){} return auto; } };
+})();
+let specSeq=0;
+// builds Dr. Rana's pop-up; the text is split into words so they light up as she speaks
+function specialist(text){
+  const id="spec"+(++specSeq); let pos=0;
+  const clean=text.replace(/[\u{1F300}-\u{1FAFF}☀-➿]/gu,"");
+  const words=clean.split(/(\s+)/).map(w=>{ const s0=pos; pos+=w.length; return /\S/.test(w)?`<span class="w" data-s="${s0}" data-e="${pos}">${esc(w)}</span>`:w; }).join("");
+  const html=`<div class="spec" id="${id}"><div class="av"><span>👩🏽‍🔬</span></div><div style="flex:1">
+    <div class="who"><b>${t("specName")}</b> · ${t("specRole")}</div>
+    <div class="say">${words}</div>
+    <div class="ctl"><button data-spk="${id}">${t("specListen")}</button><button data-spkstop="1">${t("specStop")}</button><button data-spkauto="1">${Narrator.auto?t("specAutoOn"):t("specAutoOff")}</button></div>
+    ${Narrator.has()?"":`<div class="novoice">${t("specNoVoice",{lng:t("lngName")})}</div>`}
+  </div></div>`;
+  return {id, html, text:clean};
+}
+const specTexts={};
+document.addEventListener("click",e=>{
+  const a=e.target.closest("[data-spk]"); if(a){ Narrator.speak(specTexts[a.dataset.spk]||"", a.dataset.spk); return; }
+  if(e.target.closest("[data-spkstop]")){ Narrator.stop(); return; }
+  const t2=e.target.closest("[data-spkauto]"); if(t2){ const on=Narrator.toggleAuto(); document.querySelectorAll("[data-spkauto]").forEach(b=>b.textContent=on?t("specAutoOn"):t("specAutoOff")); if(!on) Narrator.stop(); }
+});
+function showSpec(sp, delay){ specTexts[sp.id]=sp.text; if(Narrator.auto) Narrator.speak(sp.text, sp.id, delay); }
 
 /* =========================================================
    REAL DATA (embedded so the game works offline)
@@ -831,7 +1033,7 @@ function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
 
 /* ---------- decision cards (bilingual) ---------- */
 const CARDS = [
-  {id:"dust", photo:"panels", em:"🧹", title:{en:"Dusty solar panels!",ar:"ألواح شمسية مغبرة!"},
+  {id:"dust", kid:{en:"Dust on solar panels is like dirt on your glasses — it blocks the light! A real Mars rover named Opportunity stopped working after a giant dust storm covered its panels.",ar:"الغبار على الألواح الشمسية مثل الأوساخ على نظارتك — يحجب الضوء! توقفت مركبة حقيقية على المريخ اسمها أوبورتونيتي عن العمل بعد أن غطّت عاصفة غبارية عملاقة ألواحها."}, photo:"panels", em:"🧹", title:{en:"Dusty solar panels!",ar:"ألواح شمسية مغبرة!"},
    text:{en:"A layer of red dust is covering the solar panels. Dirty panels make less power.",ar:"طبقة من الغبار الأحمر تغطي الألواح الشمسية. الألواح المتسخة تنتج طاقة أقل."},
    choices:[
      {t:{en:"Go outside and sweep them (spacewalk)",ar:"اخرج ونظّفها (سير خارج المحطة)"}, s:{en:"+2 power for 3 sols, but the astronaut gets a little extra radiation outside (+0.5).",ar:"+2 طاقة لمدة 3 سول، لكن رائد الفضاء يتلقى إشعاعًا إضافيًا قليلًا في الخارج (+0.5)."},
@@ -842,7 +1044,7 @@ const CARDS = [
    fact:{en:"<b>Real Mars fact:</b> NASA's Opportunity rover ran on solar power for almost 15 years. In 2018 a planet-wide dust storm blocked the Sun and the rover never woke up again.",
          ar:"<b>حقيقة عن المريخ:</b> عملت المركبة أوبورتونيتي من ناسا بالطاقة الشمسية قرابة 15 عامًا. في 2018 حجبت عاصفة غبارية غطّت الكوكب كله الشمس، ولم تستيقظ المركبة بعدها أبدًا."},
    src:{en:"NASA Mars Exploration Rover mission",ar:"مهمة مركبات استكشاف المريخ – ناسا"}},
-  {id:"rock", photo:"tracks", em:"💎", title:{en:"A strange shiny rock!",ar:"صخرة لامعة غريبة!"},
+  {id:"rock", kid:{en:"Mars rovers drive super slowly — slower than a turtle! People on Earth plan every move very carefully so the rover stays safe.",ar:"مركبات المريخ تسير ببطء شديد — أبطأ من السلحفاة! يخطط الناس على الأرض لكل حركة بعناية حتى تبقى المركبة آمنة."}, photo:"tracks", em:"💎", title:{en:"A strange shiny rock!",ar:"صخرة لامعة غريبة!"},
    text:{en:"The rover camera spotted a weird, shiny rock 2 km away. Driving there uses a lot of battery.",ar:"رصدت كاميرا المركبة صخرة لامعة غريبة على بُعد 2 كم. القيادة إلى هناك تستهلك الكثير من البطارية."},
    choices:[
      {t:{en:"Drive the rover there",ar:"قُد المركبة إلى هناك"}, s:{en:"Costs 2 battery. +5 science (it still needs to be radioed to Earth).",ar:"تكلّف 2 من البطارية. +5 علوم (يجب إرسالها بالراديو إلى الأرض)."}, need:()=>S.battery>=2,
@@ -853,7 +1055,7 @@ const CARDS = [
    fact:{en:"<b>Real Mars fact:</b> Rovers drive very slowly. Curiosity's top speed is about 0.14 km/h — slower than a turtle walks! Every trip is planned carefully by teams on Earth.",
          ar:"<b>حقيقة عن المريخ:</b> المركبات تسير ببطء شديد. السرعة القصوى لكيوريوسيتي نحو 0.14 كم/ساعة — أبطأ من مشي السلحفاة! كل رحلة يخطط لها فريق على الأرض بعناية."},
    src:{en:"NASA JPL Curiosity mission facts",ar:"حقائق مهمة كيوريوسيتي – مختبر الدفع النفاث (JPL) التابع لناسا"}},
-  {id:"leak", em:"💧", title:{en:"The water recycler is dripping",ar:"جهاز إعادة تدوير الماء يقطر"},
+  {id:"leak", kid:{en:"In space, astronauts recycle almost all of their water — even sweat! They can also split water to make the oxygen they breathe.",ar:"في الفضاء، يعيد رواد الفضاء تدوير كل مائهم تقريبًا — حتى العرق! ويستطيعون أيضًا فصل الماء ليصنعوا الأكسجين الذي يتنفسونه."}, em:"💧", title:{en:"The water recycler is dripping",ar:"جهاز إعادة تدوير الماء يقطر"},
    text:{en:"Water is precious: the habitat splits water to make oxygen. The recycler needs fixing.",ar:"الماء ثمين: المسكن يفصل الماء ليصنع الأكسجين. جهاز إعادة التدوير يحتاج إلى إصلاح."},
    choices:[
      {t:{en:"Fix it now",ar:"أصلحه الآن"}, s:{en:"The crew spends the day on repairs: no science today.",ar:"يقضي الطاقم اليوم في الإصلاح: لا علوم اليوم."},
@@ -864,7 +1066,7 @@ const CARDS = [
    fact:{en:"<b>Real space fact:</b> The International Space Station recycles about 98% of its water, including sweat and urine! Oxygen is made by splitting water with electricity.",
          ar:"<b>حقيقة فضائية:</b> تعيد محطة الفضاء الدولية تدوير نحو 98% من مائها، حتى العرق والبول! ويُصنع الأكسجين بفصل الماء بالكهرباء."},
    src:{en:"NASA ISS Environmental Control and Life Support System (2023)",ar:"نظام التحكم البيئي ودعم الحياة في محطة الفضاء الدولية – ناسا (2023)"}},
-  {id:"lettuce", photo:"veggie", em:"🥬", title:{en:"The lettuce is growing!",ar:"الخس ينمو!"},
+  {id:"lettuce", kid:{en:"Astronauts have grown real lettuce in space — and eaten it! Growing food is super important for long trips to Mars.",ar:"زرع رواد الفضاء خسًا حقيقيًا في الفضاء — وأكلوه! زراعة الطعام مهمة جدًا للرحلات الطويلة إلى المريخ."}, photo:"veggie", em:"🥬", title:{en:"The lettuce is growing!",ar:"الخس ينمو!"},
    text:{en:"The greenhouse lettuce is small but tasty. Harvest it now, or wait for it to grow bigger?",ar:"خس المزرعة صغير لكنه لذيذ. هل تحصده الآن أم تنتظر حتى يكبر؟"},
    choices:[
      {t:{en:"Harvest now",ar:"احصده الآن"}, s:{en:"+10 food today, but the greenhouse grows half as much for 2 sols while you replant.",ar:"+10 طعام اليوم، لكن المزرعة تنتج النصف لمدة 2 سول أثناء إعادة الزراعة."},
@@ -875,7 +1077,7 @@ const CARDS = [
    fact:{en:"<b>Real space fact:</b> In 2015, astronauts on the Space Station ate lettuce they grew themselves in NASA's 'Veggie' garden — the first space-grown food eaten by NASA astronauts.",
          ar:"<b>حقيقة فضائية:</b> في 2015 أكل رواد الفضاء في محطة الفضاء الدولية خسًا زرعوه بأنفسهم في حديقة «فيجي» من ناسا — أول طعام مزروع في الفضاء يأكله رواد ناسا."},
    src:{en:"NASA Veggie plant growth system",ar:"نظام فيجي لزراعة النباتات – ناسا"}},
-  {id:"photo", photo:"pano", em:"📸", title:{en:"Earth asks for a panorama photo",ar:"الأرض تطلب صورة بانورامية"},
+  {id:"photo", kid:{en:"Messages between Earth and Mars take many minutes to arrive. So nobody can drive a rover like a video game — every command is planned ahead!",ar:"الرسائل بين الأرض والمريخ تستغرق دقائق كثيرة لتصل. لذلك لا يستطيع أحد قيادة المركبة مثل لعبة فيديو — كل أمر يُخطط له مسبقًا!"}, photo:"pano", em:"📸", title:{en:"Earth asks for a panorama photo",ar:"الأرض تطلب صورة بانورامية"},
    text:{en:"Scientists back home want a 360° photo of the crater. The robot arm and camera need power.",ar:"يريد العلماء على الأرض صورة 360° للفوهة. الذراع الآلية والكاميرا تحتاجان إلى طاقة."},
    choices:[
      {t:{en:"Take the photo",ar:"التقط الصورة"}, s:{en:"Uses 1 extra power today. +4 science.",ar:"تستخدم وحدة طاقة إضافية اليوم. +4 علوم."}, need:()=>available()-allocTotal()>=1,
@@ -886,7 +1088,7 @@ const CARDS = [
    fact:{en:"<b>Real space fact:</b> Radio messages take about 4 to 24 minutes to travel between Earth and Mars, depending on where the planets are. That's why Mission Control can't drive a rover with a joystick — every command is planned ahead.",
          ar:"<b>حقيقة فضائية:</b> تستغرق الرسائل اللاسلكية بين الأرض والمريخ من 4 إلى 24 دقيقة تقريبًا، حسب موقع الكوكبين. لهذا لا يستطيع مركز التحكم قيادة المركبة بعصا التحكم — كل أمر يُخطط له مسبقًا."},
    src:{en:"NASA Mars communications",ar:"اتصالات المريخ – ناسا"}},
-  {id:"gym", em:"🏃", title:{en:"Exercise time!",ar:"وقت التمارين!"},
+  {id:"gym", kid:{en:"When you float in space, your bones do not have to work hard, so they get weaker. That is why astronauts exercise every day, like superheroes in training!",ar:"عندما تطفو في الفضاء، لا تعمل عظامك بجهد، فتضعف. لهذا يتمرّن رواد الفضاء كل يوم، مثل الأبطال الخارقين في التدريب!"}, em:"🏃", title:{en:"Exercise time!",ar:"وقت التمارين!"},
    text:{en:"The flight doctor reminds the crew to exercise. Living in low gravity makes bones and muscles weaker.",ar:"يذكّر طبيب الرحلة الطاقمَ بالتمرّن. العيش في جاذبية منخفضة يُضعف العظام والعضلات."},
    choices:[
      {t:{en:"Run on the treadmill",ar:"اركض على جهاز المشي"}, s:{en:"Uses 1 extra power today. The crew stays strong.",ar:"يستخدم وحدة طاقة إضافية اليوم. يبقى الطاقم قويًا."}, need:()=>available()-allocTotal()>=1,
@@ -910,13 +1112,13 @@ function chooseCard(i){
 
 /* ---------- facts shown after a sol ---------- */
 const FUN_FACTS = [
-  [{en:"A <b>sol</b> is one day on Mars. It is 24 hours and 39 minutes long — just a little longer than an Earth day.",ar:"<b>السول</b> هو يوم واحد على المريخ. طوله 24 ساعة و39 دقيقة — أطول قليلًا من يوم الأرض."},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"sunset"],
-  [{en:"Mars gets only about <b>43%</b> of the sunlight that Earth gets, because it is farther from the Sun. Solar panels on Mars have to be big!",ar:"يصل إلى المريخ نحو <b>43%</b> فقط من ضوء الشمس الذي يصل إلى الأرض، لأنه أبعد عن الشمس. لذلك يجب أن تكون الألواح الشمسية على المريخ كبيرة!"},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"panels"],
-  [{en:"Mars has no global magnetic field and a very thin atmosphere, so much more radiation reaches the ground than on Earth.",ar:"ليس للمريخ مجال مغناطيسي عالمي، وغلافه الجوي رقيق جدًا، لذلك يصل إلى سطحه إشعاع أكثر بكثير من الأرض."},{en:"NASA Curiosity RAD science",ar:"علوم جهاز RAD على كيوريوسيتي – ناسا"},"gale"],
-  [{en:"On a normal day, Curiosity's radiation detector (RAD) measures about <b>700 micrograys</b> on the Mars surface. In this game, 1 radiation point = 1,000 micrograys (1 milligray).",ar:"في اليوم العادي، يقيس جهاز الإشعاع RAD على المركبة كيوريوسيتي نحو <b>700 ميكروغراي</b> على سطح المريخ. في هذه اللعبة، نقطة الإشعاع الواحدة = 1,000 ميكروغراي (1 ميليغراي)."},{en:"NASA / SwRI Curiosity RAD",ar:"ناسا / معهد ساوث وست للأبحاث – جهاز RAD"},"buckskin"],
-  [{en:"Water is great at blocking radiation. Future Mars habitats might put water tanks in their walls to make a shield!",ar:"الماء ممتاز في حجب الإشعاع. قد تضع مساكن المريخ المستقبلية خزانات ماء في جدرانها لتصنع درعًا!"},{en:"NASA radiation shielding research",ar:"أبحاث ناسا في الحماية من الإشعاع"}],
-  [{en:"Air on Mars is about 95% carbon dioxide. NASA's MOXIE experiment on the Perseverance rover made real oxygen from the Martian air!",ar:"نحو 95% من هواء المريخ ثاني أكسيد الكربون. تجربة «موكسي» من ناسا على المركبة برسيفيرانس صنعت أكسجينًا حقيقيًا من هواء المريخ!"},{en:"NASA Perseverance MOXIE",ar:"تجربة موكسي على برسيفيرانس – ناسا"},"moxie"],
-  [{en:"Mars is cold! The average temperature is about −60 °C. Heaters need power too.",ar:"المريخ بارد! متوسط درجة الحرارة نحو −60 درجة مئوية. المدافئ تحتاج إلى طاقة أيضًا."},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"}]
+  [{en:"A <b>sol</b> is one day on Mars. It is 24 hours and 39 minutes long — just a little longer than an Earth day.",ar:"<b>السول</b> هو يوم واحد على المريخ. طوله 24 ساعة و39 دقيقة — أطول قليلًا من يوم الأرض."},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"sunset",{en:"On Mars, one day is called a sol. It is a little longer than a day on Earth — about forty extra minutes. More time to play!",ar:"على المريخ، اليوم الواحد اسمه سول. إنه أطول قليلًا من يوم الأرض — بنحو أربعين دقيقة إضافية. وقت أطول للعب!"}],
+  [{en:"Mars gets only about <b>43%</b> of the sunlight that Earth gets, because it is farther from the Sun. Solar panels on Mars have to be big!",ar:"يصل إلى المريخ نحو <b>43%</b> فقط من ضوء الشمس الذي يصل إلى الأرض، لأنه أبعد عن الشمس. لذلك يجب أن تكون الألواح الشمسية على المريخ كبيرة!"},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"panels",{en:"Mars is farther from the Sun than Earth, so the sunlight there is weaker — less than half! That is why we must use our power wisely.",ar:"المريخ أبعد عن الشمس من الأرض، لذلك ضوء الشمس هناك أضعف — أقل من النصف! لهذا يجب أن نستخدم طاقتنا بحكمة."}],
+  [{en:"Mars has no global magnetic field and a very thin atmosphere, so much more radiation reaches the ground than on Earth.",ar:"ليس للمريخ مجال مغناطيسي عالمي، وغلافه الجوي رقيق جدًا، لذلك يصل إلى سطحه إشعاع أكثر بكثير من الأرض."},{en:"NASA Curiosity RAD science",ar:"علوم جهاز RAD على كيوريوسيتي – ناسا"},"gale",{en:"Earth has an invisible bubble around it that protects us from space radiation. Mars lost its bubble a long time ago, so astronauts there need shields.",ar:"للأرض فقاعة غير مرئية تحمينا من إشعاع الفضاء. فقد المريخ فقاعته منذ زمن بعيد، لذلك يحتاج رواد الفضاء هناك إلى دروع."}],
+  [{en:"On a normal day, Curiosity's radiation detector (RAD) measures about <b>700 micrograys</b> on the Mars surface. In this game, 1 radiation point = 1,000 micrograys (1 milligray).",ar:"في اليوم العادي، يقيس جهاز الإشعاع RAD على المركبة كيوريوسيتي نحو <b>700 ميكروغراي</b> على سطح المريخ. في هذه اللعبة، نقطة الإشعاع الواحدة = 1,000 ميكروغراي (1 ميليغراي)."},{en:"NASA / SwRI Curiosity RAD",ar:"ناسا / معهد ساوث وست للأبحاث – جهاز RAD"},"buckskin",{en:"Curiosity has a special tool called RAD that counts radiation every day — like a step counter, but for invisible energy. Scientists use it to keep future astronauts safe.",ar:"لدى كيوريوسيتي جهاز خاص اسمه راد يعدّ الإشعاع كل يوم — مثل عدّاد الخطوات، ولكن للطاقة غير المرئية. يستخدمه العلماء ليحافظوا على سلامة رواد الفضاء في المستقبل."}],
+  [{en:"Water is great at blocking radiation. Future Mars habitats might put water tanks in their walls to make a shield!",ar:"الماء ممتاز في حجب الإشعاع. قد تضع مساكن المريخ المستقبلية خزانات ماء في جدرانها لتصنع درعًا!"},{en:"NASA radiation shielding research",ar:"أبحاث ناسا في الحماية من الإشعاع"},null,{en:"Did you know water can block radiation? Future homes on Mars might have walls full of water, like a giant protective water blanket!",ar:"هل تعلم أن الماء يستطيع حجب الإشعاع؟ قد تكون لبيوت المريخ المستقبلية جدران مليئة بالماء، مثل بطانية ماء عملاقة تحمينا!"}],
+  [{en:"Air on Mars is about 95% carbon dioxide. NASA's MOXIE experiment on the Perseverance rover made real oxygen from the Martian air!",ar:"نحو 95% من هواء المريخ ثاني أكسيد الكربون. تجربة «موكسي» من ناسا على المركبة برسيفيرانس صنعت أكسجينًا حقيقيًا من هواء المريخ!"},{en:"NASA Perseverance MOXIE",ar:"تجربة موكسي على برسيفيرانس – ناسا"},"moxie",{en:"The air on Mars is not good for breathing. But NASA built a machine called MOXIE that made real oxygen on Mars — a bit like a tree does!",ar:"هواء المريخ لا يصلح للتنفس. لكن ناسا صنعت آلة اسمها موكسي صنعت أكسجينًا حقيقيًا على المريخ — تقريبًا كما تفعل الشجرة!"}],
+  [{en:"Mars is cold! The average temperature is about −60 °C. Heaters need power too.",ar:"المريخ بارد! متوسط درجة الحرارة نحو −60 درجة مئوية. المدافئ تحتاج إلى طاقة أيضًا."},{en:"NASA Mars facts",ar:"حقائق ناسا عن المريخ"},"sunset",{en:"Brrr! Mars is colder than the coldest freezer — about sixty degrees below zero. Our heaters need power to keep the crew warm.",ar:"برررر! المريخ أبرد من أبرد ثلاجة — نحو ستين درجة تحت الصفر. المدافئ تحتاج إلى طاقة لتدفئة الطاقم."}]
 ];
 function factFor(wx, factSeed){
   if(wx.level>0 && wx.items.length){
@@ -925,10 +1127,11 @@ function factFor(wx, factSeed){
     let msg = tag + evText(it) + ".";
     if(wx.level===2) msg += t("ev2");
     if(wx.level===3) msg += t("ev3");
-    return {html:msg, src: S.live? t("srcLive") : t("srcArch"), photo: wx.level===3 && !S.live ? "snow" : wx.level>=2 ? "flare" : null};
+    return {html:msg, src: S.live? t("srcLive") : t("srcArch"), photo: wx.level===3 && !S.live ? "snow" : wx.level>=2 ? "flare" : null,
+            kid: t(wx.level===3 && S.live ? "kid_ev2" : "kid_ev"+wx.level)};
   }
   const p = FUN_FACTS[factSeed % FUN_FACTS.length];
-  return {html:t("dyk")+L(p[0]), src:L(p[1]), photo:p[2]||null};
+  return {html:t("dyk")+L(p[0]), src:L(p[1]), photo:p[2]||null, kid:L(p[3])};
 }
 
 function forecastText(){
@@ -1060,8 +1263,8 @@ document.addEventListener("click",e=>{
 document.addEventListener("pointerdown",()=>SFX.unlock(),{once:true});
 document.addEventListener("click",e=>{ const b=e.target.closest("button"); if(b && !b.dataset.k && b.id!=="btnGo" && b.id!=="btnMute") SFX.click(); });
 
-function showModal(html, view){$("modal").innerHTML=html; $("ov").classList.add("show"); $("modal").scrollTop=0; currentView=view||null;}
-function hideModal(){$("ov").classList.remove("show"); currentView=null;}
+function showModal(html, view){Narrator.stop(); $("modal").innerHTML=html; $("ov").classList.add("show"); $("modal").scrollTop=0; currentView=view||null;}
+function hideModal(){Narrator.stop(); $("ov").classList.remove("show"); currentView=null;}
 const langPicker = () => `<div class="langpick"><button data-lang="en" class="${LANG==='en'?'on':''}">English</button><button data-lang="ar" lang="ar" class="${LANG==='ar'?'on':''}">العربية</button></div>`;
 document.addEventListener("click",e=>{const b=e.target.closest("[data-lang]"); if(b) setLang(b.dataset.lang);});
 
@@ -1078,8 +1281,10 @@ $("btnGo").onclick=()=>{
 function sunWarning(){ if(S.forecastFor===S.sol){ const lv=S.weather[S.sol].level; if(lv>=2) SFX.alarm(lv===3); } }
 function lineText(l){ const p={...l.p}; if(p.full) p.full=t(p.full); return t(l.k,p); }
 function showReport(){
+  const firstShow = currentView!==showReport;
   const res=lastReport, fact=factFor(res.wx, res.factSeed);
   const ks=res.lines.map(l=>l.k);
+  const sp=specialist(fact.kid||fact.html.replace(/<[^>]+>/g,""));
   const rx = res.storm&&res.storm.level===3 ? "rx_storm3" : res.storm ? "rx_hit" : ks.includes("l_dustStart") ? "rx_dust"
     : (ks.includes("l_airDown")||ks.includes("l_foodDown")) ? "rx_low" : ks.includes("l_missed") ? "rx_miss"
     : (res.lines.find(l=>l.k==="l_sent")?.p.n>=3) ? "rx_sent" : "rx_calm";
@@ -1087,24 +1292,32 @@ function showReport(){
   showModal(`<h2>${t("reportH",{n:res.sol})}</h2>
     ${say(t(rx))}
     <ul class="lines">${lines}</ul>
-    <div class="fact">${fact.html}<span class="src">${t("source")} ${fact.src}</span></div>
+    ${sp.html}
     ${fact.photo?photo(fact.photo):""}
+    <details class="more"><summary>${t("moreFacts")}</summary><div class="fact">${fact.html}<span class="src">${t("source")} ${fact.src}</span></div></details>
     <div class="btnrow"><button class="btn primary" id="btnNext">${S.over?t("seeResults"):t("nextSol")}</button></div>`, showReport);
+  showSpec(sp, firstShow ? (res.storm?2600:(ks.includes("l_sent")||ks.includes("l_radio"))?2000:700) : 200);
   $("btnNext").onclick=()=>{ if(S.over){showEnd();} else if(S.pendingCard){showCard();} else {hideModal(); render(); sunWarning();} };
 }
 
 function showCard(){
   const c=S.pendingCard;
   if(currentView!==showCard) SFX.chime();
+  const cardRead={id:"cardread"+(++specSeq), text:`${L(c.title)}. ${L(c.text)} ${c.choices.map((ch,k)=>(k?(LANG==="ar"?"أو: ":"Or: "):"")+L(ch.t)+".").join(" ")}`};
+  specTexts[cardRead.id]=cardRead.text;
   showModal(`${say(t("commanderCard"))}
     <h2>${c.em} ${L(c.title)}</h2><p>${L(c.text)}</p>
+    <div class="ctl" id="${cardRead.id}" style="margin:-4px 0 6px"><button class="btn" data-spk="${cardRead.id}" style="padding:6px 12px;font-size:14px">${t("readMe")}</button></div>
     <div class="choices">${c.choices.map((ch,i)=>`<button class="choice" data-c="${i}" ${ch.need&&!ch.need()?'disabled':''}><b>${L(ch.t)}</b><span>${L(ch.s)}${ch.need&&!ch.need()?t("notEnough"):""}</span></button>`).join("")}</div>`, showCard);
+  if(Narrator.auto) Narrator.speak(cardRead.text, cardRead.id, 900);
   document.querySelectorAll(".choice").forEach(b=>b.onclick=()=>{
     const msg=chooseCard(+b.dataset.c); if(msg===undefined) return;
-    const view=()=>{ showModal(`<h2>${c.em} ${L(c.title)}</h2><p>${L(msg)}</p><div class="fact">${L(c.fact)}<span class="src">${t("source")} ${L(c.src)}</span></div>
+    const view=()=>{ const sp=specialist(L(c.kid)); showModal(`<h2>${c.em} ${L(c.title)}</h2><p>${L(msg)}</p>
+      ${sp.html}
       ${c.photo?photo(c.photo):""}
+      <details class="more"><summary>${t("moreFacts")}</summary><div class="fact">${L(c.fact)}<span class="src">${t("source")} ${L(c.src)}</span></div></details>
       <div class="btnrow"><button class="btn primary" id="btnOk">${t("backOutpost")}</button></div>`, view);
-      $("btnOk").onclick=()=>{hideModal(); render(); sunWarning();}; };
+      $("btnOk").onclick=()=>{hideModal(); render(); sunWarning();}; showSpec(sp, 400); };
     view(); render();
   });
 }
