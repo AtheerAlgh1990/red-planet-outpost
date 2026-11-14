@@ -511,22 +511,39 @@ function forecastText(){
 /* =========================================================
    LIVE MODE — real NASA DONKI data fetched in the browser
    ========================================================= */
+// Put your own free key from https://api.nasa.gov here (DEMO_KEY is shared and rate-limited).
+const NASA_API_KEY = "DEMO_KEY";
 async function loadLive(){
   const end=new Date(); const start=new Date(end.getTime()-29*864e5);
   const f=d=>d.toISOString().slice(0,10);
-  const base="https://api.nasa.gov/DONKI/";
-  const key="DEMO_KEY";
-  const q=`?startDate=${f(start)}&endDate=${f(end)}&api_key=${key}`;
-  const get=async t=>{const r=await fetch(base+t+q); if(!r.ok) throw new Error(t+" "+r.status); return r.json();};
-  const [flr,sep,cme] = await Promise.all([get("FLR"), get("SEP").catch(()=>[]), get("CME").catch(()=>[])]);
+  const cacheKey="rpo-live-"+f(end);
+  try{const c=JSON.parse(localStorage.getItem(cacheKey)||"null"); if(c&&c.events) return c;}catch(e){}
+  const q=`?startDate=${f(start)}&endDate=${f(end)}&api_key=${NASA_API_KEY}`;
+  const get=async t=>{const r=await fetch("https://api.nasa.gov/DONKI/"+t+(t.includes("?")?q.replace("?","&"):q)); if(!r.ok) throw new Error(t.split("?")[0]+" "+r.status); const j=await r.json(); if(!Array.isArray(j)) throw new Error(t+" bad data"); return j;};
+  const [rF,rS,rC,rG] = await Promise.allSettled([get("FLR"),get("SEP"),get("CME"),get("GST")]);
+  let flr = rF.status==="fulfilled"? rF.value : null;
+  const sep = rS.status==="fulfilled"? rS.value : [];
+  const cme = rC.status==="fulfilled"? rC.value : [];
+  const gst = rG.status==="fulfilled"? rG.value : [];
+  if(!flr){ // FLR endpoint unavailable: read flare alerts from DONKI notifications instead
+    try{ const n=await get("notifications?type=FLR");
+      flr=n.filter(m=>m.messageType==="FLR").map(m=>{const c=(m.messageBody.match(/\b([MX]\d+(?:\.\d+)?)\b/)||[])[1]||"M1"; return {classType:c, peakTime:m.messageIssueTime};});
+    }catch(e){ flr=[]; }
+  }
+  if(rF.status!=="fulfilled" && rS.status!=="fulfilled" && rC.status!=="fulfilled" && rG.status!=="fulfilled" && !flr.length)
+    throw new Error((rF.reason&&rF.reason.message)||"NASA DONKI unavailable");
   const solOf = iso => Math.floor((new Date(iso.slice(0,10)) - new Date(f(start)))/864e5)+1;
   const events=[];
-  (flr||[]).forEach(e=>{const c=e.classType||""; const s=solOf(e.peakTime||e.beginTime);
-    if(c.startsWith("X")) events.push({sol:s,type:"FLR",cls:c,level:2,src:`Solar flare ${c} peaking ${ (e.peakTime||e.beginTime).replace("T"," ").replace("Z"," UTC")}`});
-    else if(c.startsWith("M") && parseFloat(c.slice(1))>=5) events.push({sol:s,type:"FLR",cls:c,level:1,src:`Solar flare ${c} on ${(e.peakTime||e.beginTime).slice(0,10)}`});});
-  (sep||[]).forEach(e=>{const s=solOf(e.eventTime); events.push({sol:s,type:"SEP",cls:"SEP",level:3,dose:4.0,src:`Solar energetic particle event detected by NASA spacecraft on ${e.eventTime.slice(0,10)} (dose at Mars is a game estimate)`});});
-  (cme||[]).forEach(e=>{const an=(e.cmeAnalyses||[]).find(x=>x.isMostAccurate)||(e.cmeAnalyses||[])[0]; if(an && an.speed>=1000){events.push({sol:solOf(e.startTime),type:"CME",cls:`CME ${Math.round(an.speed)} km/s`,level:1,src:`Fast coronal mass ejection (${Math.round(an.speed)} km/s) on ${e.startTime.slice(0,10)}`});}});
-  return {label:`Live Sun · ${f(start)} → ${f(end)}`, start:f(start), live:true, fetched:new Date().toISOString(), events, counts:{flr:(flr||[]).length, sep:(sep||[]).length, cme:(cme||[]).length}};
+  flr.forEach(e=>{const c=e.classType||""; const t=e.peakTime||e.beginTime; if(!t) return; const s=solOf(t);
+    if(c.startsWith("X")) events.push({sol:s,type:"FLR",cls:c,level:2,src:`Solar flare ${c} on ${t.slice(0,10)} at ${t.slice(11,16)} UTC`});
+    else if(c.startsWith("M") && parseFloat(c.slice(1))>=5) events.push({sol:s,type:"FLR",cls:c,level:1,src:`Solar flare ${c} on ${t.slice(0,10)}`});});
+  sep.forEach(e=>{const s=solOf(e.eventTime); events.push({sol:s,type:"SEP",cls:"SEP",level:3,dose:4.0,src:`Solar energetic particle event detected by NASA spacecraft on ${e.eventTime.slice(0,10)} (the dose at Mars is a game estimate)`});});
+  cme.forEach(e=>{const an=(e.cmeAnalyses||[]).find(x=>x.isMostAccurate)||(e.cmeAnalyses||[])[0]; if(an && an.speed>=1000){events.push({sol:solOf(e.startTime),type:"CME",cls:`CME ${Math.round(an.speed)} km/s`,level:1,src:`Fast coronal mass ejection (${Math.round(an.speed)} km/s) on ${e.startTime.slice(0,10)}`});}});
+  gst.forEach(e=>{const kp=Math.max(0,...(e.allKpIndex||[]).map(k=>k.kpIndex)); if(kp>=6) events.push({sol:solOf(e.startTime),type:"GST",cls:`Kp ${kp}`,level:1,src:`Geomagnetic storm at Earth (Kp ${kp}) on ${e.startTime.slice(0,10)} — a sign the Sun is very active`});});
+  const out={label:`Live Sun · ${f(start)} → ${f(end)}`, start:f(start), live:true, fetched:new Date().toISOString(), events: events.filter(e=>e.sol>=1&&e.sol<=30),
+    counts:{flr:flr.length, sep:sep.length, cme:cme.length, gst:gst.length}};
+  try{localStorage.setItem(cacheKey, JSON.stringify(out));}catch(e){}
+  return out;
 }
 
 /* =========================================================
@@ -686,7 +703,7 @@ function showBriefing(){
   const src=S.source;
   const n=src.events.filter(e=>e.level>=2).length;
   showModal(`<div class="commander"><div class="face">👩‍🚀</div><div class="bubble"><b>Commander Nova:</b> ${S.live
-    ? `I just downloaded the last 30 days of real space weather from NASA: <b>${src.counts.flr}</b> solar flares, <b>${src.counts.cme}</b> solar eruptions and <b>${src.counts.sep}</b> particle storms. Each day becomes one sol.`
+    ? `I just downloaded the last 30 days of real space weather from NASA: <b>${src.counts.flr}</b> solar flares, <b>${src.counts.cme}</b> solar eruptions, <b>${src.counts.sep}</b> particle storms and <b>${src.counts.gst}</b> magnetic storms at Earth. Each day becomes one sol.`
     : `Our mission follows the real Sun from <b>May 2024</b>. NASA's records show <b>${n}</b> big space-weather days ahead. Each Earth day becomes one sol.`}</div></div>
   <h3>Your 3 jobs</h3>
   <ul><li>🫁🍅 Keep the <b>air</b> and <b>food</b> above zero.</li>
