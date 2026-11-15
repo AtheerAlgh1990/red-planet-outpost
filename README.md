@@ -6,7 +6,7 @@ A browser game for kids aged 7–12. The player runs a small Mars outpost for 30
 
 ▶ **Play:** https://atheeralgh1990.github.io/red-planet-outpost/ (no download, no account)
 
-🎬 **Demo video (38 s):** [docs/demo.mp4](docs/demo.mp4)
+🎬 **Demo video (29 s, narrated, English captions):** [docs/demo.mp4](docs/demo.mp4)
 
 🌐 **Bilingual: English and العربية.** Switch at any time with the language button. The Arabic version uses a full right-to-left layout and translates everything, including decision cards, NASA facts and real-event descriptions.
 
@@ -43,7 +43,7 @@ There is **no free safe choice.** We simulated 200 missions per strategy (`tools
 | Read the forecast, shield up on storm days | ~95% | ~41 ⭐⭐⭐ |
 | Medium shield every sol | ~95% | ~29 ⭐⭐ |
 
-Kids learn by playing what NASA mission planners do every day: watch the space weather and protect the crew when it matters, so there's power left for the mission.
+**Why the real data matters:** keeping the shield on medium every sol is just as safe as reading the forecast, but it wastes power. Players who read the real space-weather forecast and shield up only on storm days send home **about 40% more science (41 vs 29) at the same safety**. That's exactly what NASA mission planners do: watch the space weather and protect the crew when it matters, so there's power left for the mission.
 
 ![Storm report](docs/screenshot-storm.png)
 
@@ -61,25 +61,28 @@ Kids learn by playing what NASA mission planners do every day: watch the space w
 | No free choices | Every option costs power, air, food, science or radiation (see the balance results) |
 | Consequences play out over the mission | Battery, buried panels, waiting for Earth's answer and the radiation dose carry over between sols; the debrief timeline shows what happened and why |
 | Real NASA data, attributed in the tool, not shown as live when it isn't | "REAL EVENT" and "LIVE" labels, an in-game "Real NASA data" page with sources, and a curated dataset in `data/` |
-| Replayability | Shuffled facts, random dust storms and decisions, chance particle hits, Live Sun mode |
+| Replayability | Shuffled facts, random dust storms, 8 decision cards, chance particle hits, Live Sun mode (a different 30 days every day) |
 | Browser-playable, no download or account | One HTML file on GitHub Pages |
 
 ## NASA data used, and why
 
 | Data | Where it's used | Why it matters |
 |---|---|---|
-| **NASA DONKI** (Space Weather Database Of Notifications, Knowledge, Information): solar flares, CMEs, solar energetic particle (SEP) events | *Storm Season* mode replays real May 2024 events, one Earth day per sol: X1.3 (5 May) through the **X8.7 flare of 14 May** (DONKI FLR record 2024-05-14T16:46Z) and X2.9 (27 May). *Live Sun* mode downloads the last 30 days from `api.nasa.gov/DONKI` (FLR, SEP, CME) when the game loads | The radiation risk on each sol is set by real solar activity, not invented numbers |
-| **NASA Curiosity Radiation Assessment Detector (RAD)** | Background dose of 0.7 radiation points per sol (a game value; Curiosity measured about 210 µGy per day). On sol 20 the dose is **8.1**, the real 8,100 µGy RAD measured on 20 May 2024 | It links the shield decision to a real measurement at the Martian surface |
+| **NASA DONKI: archived** (Space Weather Database Of Notifications, Knowledge, Information) | *Storm Season* mode replays real May 2024 events, one Earth day per sol: X1.3 (5 May) through the **X8.7 flare of 14 May** (DONKI FLR record 2024-05-14T16:46Z) and X2.9 (27 May) | The radiation risk on each sol is set by real solar activity, not invented numbers |
+| **NASA DONKI: live**, via `api.nasa.gov` | *Live Sun* mode downloads the last 30 days of space weather when the game loads, so **today's real Sun sets how risky your mission is**. Most Mars-specific of all: **NASA's WSA-ENLIL model predictions of which solar eruptions (CMEs) reach Mars**. A direct hit at 500 km/s or more is a big storm day; a glancing blow is an active day. The game also uses DONKI CMEs (1,000 km/s or faster), solar particle events (SEP), geomagnetic storms (GST, Kp 6+) and X-class and strong M-class flares. If DONKI's flare feed is down, flare alerts are read from DONKI notifications instead. Results are cached once a day in each player's browser | The forecast the player reads is NASA's real forecast for Mars, not a random number |
+| **NASA Curiosity Radiation Assessment Detector (RAD)** | On sol 20 the storm dose is **8.1 radiation points: the real 8,100 µGy RAD measured on 20 May 2024**. Everyday cosmic-ray background is 0.7 points per sol (see the note below) | It links the shield decision to a real measurement at the Martian surface |
 | **NASA OSDR / Human Research Program**: bone loss in spaceflight (~1–1.5% per month) | "Exercise time" decision card | Real astronaut health research |
 | **NASA mission facts**: Opportunity and the 2018 dust storm, ISS water recovery (~98%), Veggie lettuce, MOXIE, Mars sunlight (~43% of Earth's), sol length, Earth–Mars radio delay (4–24 min) | Decision cards and "Did you know?" panels, each with its source shown in the game | Kids leave with true facts |
 
-The curated dataset is in [`data/may2024_space_weather.json`](data/may2024_space_weather.json), with a source for every event.
+The curated dataset is in [`data/may2024_space_weather.json`](data/may2024_space_weather.json), with a source for every event. The events come from NASA DONKI and NASA mission reports. Flare classes and peak times were checked against NOAA SWPC and SIDC (Royal Observatory of Belgium) flare lists.
 
 ### Being honest about the data
 - Storm Season data is **archived and labeled "REAL EVENT"**. It is never presented as live.
 - Live Sun data is labeled **"LIVE"** with the time it was downloaded. If NASA can't be reached, the game says so and offers Storm Season instead.
 - Flares seen from Earth often point away from Mars, so whether a flare's particles reach the outpost is decided by chance. The in-game teaching panel explains this.
-- Power, air and food numbers are simplified for play. The radiation figures come from real measurements.
+- **Radiation scale:** 1 radiation point = 1,000 µGy, so the 20 May 2024 storm is its real size (8.1 points = 8,100 µGy). Curiosity's real everyday background is about 210 µGy per sol (0.2 points). We **turned it up to 0.7 points per sol** so everyday radiation still matters in a 30-sol game. This makes the storm look smaller next to everyday radiation than it really was (about 12 times the background in the game, about 39 times in reality). The game's end-of-mission debrief explains this to players too.
+- Power, air and food numbers are simplified for play.
+- Live Sun results are cached once a day in each browser, so the game doesn't call NASA on every reload.
 
 ## Built for kids
 - **English and Arabic** with a language switch and a right-to-left layout, so Arabic-speaking children can play in their own language
@@ -91,7 +94,7 @@ The curated dataset is in [`data/may2024_space_weather.json`](data/may2024_space
 - Plain language, with terms like sol, solar flare and radiation explained the first time they appear
 - Big buttons, emoji icons, works on tablets and phones
 - Failure isn't punishing: "Mission paused" explains what happened and gives a hint, as in a real astronaut simulator
-- Replayable: random dust storms, chance particle hits, 6 decision cards and the live mode make each game different
+- Replayable: random dust storms, chance particle hits, 8 decision cards and the live mode make each game different
 
 ![Debrief](docs/screenshot-debrief.png)
 
