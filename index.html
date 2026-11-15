@@ -429,7 +429,7 @@ en:{
   chipStorm:"☀️ Storm Season · May 2024", chipLive:'<span class="tag live">LIVE</span> Live Sun',
   pip_sun:"Solar power", pip_bat:"Battery power",
   poolHint:'☀️ Solar today: <b>{solar}</b>{dust} &nbsp;·&nbsp; 🔋 Battery: <b>{bat}</b> &nbsp;·&nbsp; Power left to give: <b>{left}</b>{extra}',
-  poolDust:" (dust storm!)", poolExtra:" &nbsp;·&nbsp; Extra task today: <b>{n}</b>",
+  poolDust:" (dust storm!)", poolDig:" (−2: rover digging 🚜)", poolExtra:" &nbsp;·&nbsp; Extra task today: <b>{n}</b>",
   less:"less", more:"more",
   go:"▶ Run Sol {n}", goOver:"Too much power planned — remove {n}",
   batLeft:"{n} unused power will be saved in the battery (max {cap}).", batUsing:"Using {n} power from the battery today.", batAll:"All power has a job. Nice planning!",
@@ -443,6 +443,12 @@ en:{
   l_stormHit:"Solar particles reached Mars! Unshielded: {raw}. Your shield let in {got}.",
   l_missed:"The Sun was active, but its particles missed Mars today. Lucky!",
   l_dose:"Radiation dose today: {d} (shield level {s}).",
+  l_cosmic:"Cosmic rays from deep space: {d}. They never stop, and a thin shield barely slows them.",
+  l_cosmicCov:"Cosmic rays: {d}. Your Mars-soil cover is blocking about 30% of them.",
+  l_digging:"The rover is piling Mars soil on the habitat (−2 power). Sols of digging left: {n}.",
+  l_covered:"Done! The habitat is covered with Mars soil. Cosmic rays are cut by about 30% from now on.",
+  le_cov:"You covered the habitat with Mars soil, so the crew got about 30% less cosmic radiation every sol after that. Real Mars bases may do the same, using soil that is already there.",
+  le_nocov:"Cosmic rays hit your crew every sol. Covering the habitat with Mars soil would have cut them by about 30%. Try it next time!",
   l_sci:p=>`Collected ${p.n} science point${p.n>1?"s":""}.`,
   l_sent:"Sent {n} science to Earth. Message travel time: about {m} minutes!",
   l_radio:"Radio check with Earth. Message travel time: about {m} minutes.",
@@ -546,6 +552,7 @@ en:{
   src1:'<b>NASA DONKI</b> (Space Weather Database Of Notifications, Knowledge, Information) — solar flares, solar eruptions (CMEs) and particle storms.',
   src2:'<b>NASA Curiosity rover — Radiation Assessment Detector (RAD)</b>: about 210 micrograys per day normally; 8,100 micrograys during the 20 May 2024 storm.',
   src3:'<b>NASA Open Science Data Repository (OSDR)</b> — spaceflight bone-loss and health research.',
+  src5:'<b>Cosmic rays:</b> Curiosity RAD measured about 210 micrograys a day from cosmic rays on Mars and about 480 a day in space on the way there (Hassler et al., <i>Science</i>, 2014). A layer of Mars soil (10 g/cm²) cuts cosmic-ray energy by about 30% (Gakis &amp; Atri, International Astronautical Congress, 2022).',
   src4:'<b>NASA Veggie</b>, <b>ISS life support</b>, <b>MOXIE</b>, and <b>Opportunity rover</b> mission facts — science.nasa.gov / nasa.gov',
   simpH:"What is simplified?",
   simpP:"Each Earth day is one sol. Power, air and food numbers are simplified so the game is playable. Whether a flare's particles hit Mars is decided by chance, because flares seen from Earth often point away from Mars. The 20 May 2024 storm dose (8.1) is the real Curiosity measurement.",
@@ -606,7 +613,7 @@ ar:{
   chipStorm:"☀️ موسم العواصف · مايو 2024", chipLive:'<span class="tag live">مباشر</span> الشمس الآن',
   pip_sun:"طاقة شمسية", pip_bat:"طاقة البطارية",
   poolHint:'☀️ الطاقة الشمسية اليوم: <b>{solar}</b>{dust} &nbsp;·&nbsp; 🔋 البطارية: <b>{bat}</b> &nbsp;·&nbsp; طاقة متبقية للتوزيع: <b>{left}</b>{extra}',
-  poolDust:" (عاصفة غبارية!)", poolExtra:" &nbsp;·&nbsp; مهمة إضافية اليوم: <b>{n}</b>",
+  poolDust:" (عاصفة غبارية!)", poolDig:" (−2: المركبة تحفر 🚜)", poolExtra:" &nbsp;·&nbsp; مهمة إضافية اليوم: <b>{n}</b>",
   less:"أقل", more:"أكثر",
   go:"▶ شغّل السول {n}", goOver:"الطاقة المخطط لها أكثر من المتاح — أزِل {n}",
   batLeft:"{n} وحدة غير مستخدمة ستُحفظ في البطارية (الحد الأقصى {cap}).", batUsing:"سنستخدم {n} من طاقة البطارية اليوم.", batAll:"كل وحدة طاقة لها مهمة. تخطيط رائع!",
@@ -619,6 +626,12 @@ ar:{
   l_stormHit:"وصلت جسيمات شمسية إلى المريخ! بدون درع: {raw}. درعك سمح بدخول {got}.",
   l_missed:"كانت الشمس نشطة، لكن جسيماتها لم تصل إلى المريخ اليوم. يا للحظ!",
   l_dose:"جرعة الإشعاع اليوم: {d} (مستوى الدرع {s}).",
+  l_cosmic:"الأشعة الكونية من أعماق الفضاء: {d}. إنها لا تتوقف أبدًا، والدرع الرقيق بالكاد يبطئها.",
+  l_cosmicCov:"الأشعة الكونية: {d}. غطاء تربة المريخ يحجب نحو 30% منها.",
+  l_digging:"المركبة تكوّم تربة المريخ فوق المسكن (−2 طاقة). أيام الحفر المتبقية: {n}.",
+  l_covered:"تم! غُطّي المسكن بتربة المريخ. من الآن تقل الأشعة الكونية بنحو 30%.",
+  le_cov:"غطّيت المسكن بتربة المريخ، فتلقى الطاقم أشعة كونية أقل بنحو 30% في كل سول بعد ذلك. قد تفعل قواعد المريخ الحقيقية الشيء نفسه، باستخدام تربة موجودة هناك أصلًا.",
+  le_nocov:"ضربت الأشعة الكونية طاقمك في كل سول. لو غطّيت المسكن بتربة المريخ لقلّت بنحو 30%. جرّب ذلك في المرة القادمة!",
   l_sci:"جمعتَ {n} نقطة علوم.",
   l_sent:"أُرسلت {n} نقطة علوم إلى الأرض. استغرقت الرسالة نحو {m} دقيقة للوصول!",
   l_radio:"اتصال تجريبي مع الأرض. استغرقت الرسالة نحو {m} دقيقة.",
@@ -715,6 +728,7 @@ ar:{
   src1:'<b>NASA DONKI</b> (قاعدة بيانات طقس الفضاء) — التوهجات الشمسية والانبعاثات الكتلية الإكليلية وعواصف الجسيمات.',
   src2:'<b>جهاز تقييم الإشعاع RAD على المركبة كيوريوسيتي</b>: نحو 210 ميكروغراي في اليوم العادي، و8,100 ميكروغراي أثناء عاصفة 20 مايو 2024.',
   src3:'<b>مستودع بيانات العلوم المفتوحة OSDR من ناسا</b> — أبحاث فقدان العظام والصحة في رحلات الفضاء.',
+  src5:'<b>الأشعة الكونية:</b> قاس جهاز RAD على كيوريوسيتي نحو 210 ميكروغراي يوميًا من الأشعة الكونية على المريخ، ونحو 480 يوميًا في الفضاء أثناء الرحلة (Hassler وزملاؤه، <i>Science</i>، 2014). وطبقة من تربة المريخ (10 غرام/سم²) تقلل طاقة الأشعة الكونية بنحو 30% (Gakis وAtri، المؤتمر الدولي للملاحة الفضائية، 2022).',
   src4:'حقائق من مهمات ناسا: <b>فيجي</b> لزراعة النباتات، و<b>دعم الحياة في محطة الفضاء الدولية</b>، و<b>موكسي</b>، والمركبة <b>أوبورتونيتي</b> — science.nasa.gov / nasa.gov',
   simpH:"ما الذي تم تبسيطه؟",
   simpP:"كل يوم أرضي يساوي سولًا واحدًا. أرقام الطاقة والهواء والطعام مبسطة لتكون اللعبة ممتعة. وصول جسيمات التوهج إلى المريخ يُحدَّد بالحظ، لأن التوهجات التي نراها من الأرض غالبًا ما تتجه بعيدًا عن المريخ. جرعة عاصفة 20 مايو 2024 (8.1) هي قياس كيوريوسيتي الحقيقي.",
@@ -1055,9 +1069,12 @@ function evText(e){            // description of an event in the current languag
 
 const CFG = {
   sols:30, powerClear:9, powerDust:5, powerStowed:3, batteryCap:6, startBattery:3,
-  doseBudget:28,            // game safety budget for the 30-sol stay (mGy)
+  doseBudget:30,            // game safety budget for the 30-sol stay (mGy)
   baseDose:0.7,             // game value; Curiosity RAD measured ~210 µGy/day (Hassler et al. 2014)
-  shieldMult:[1,0.6,0.35,0.15],
+  shieldMult:[1,0.6,0.35,0.15],   // storm shelter vs SOLAR particles (lower energy, easy to block)
+  cosmicMult:[1,0.9,0.85,0.8],    // the same thin shelter only dents COSMIC rays (far more energetic)
+  coverMult:0.7,                  // Mars-soil cover: ~30% less cosmic-ray energy (Gakis & Atri, IAC 2022, 10 g/cm2 regolith)
+  digSols:3, digPower:2,          // the rover spends 2 power a sol for 3 sols piling soil on the habitat
   airNeed:3, foodEat:6, foodPerUnit:3,
   maxUnits:{life:4, green:4, shield:3, comms:1, science:6}
 };
@@ -1068,7 +1085,7 @@ const SYSTEMS = [
   {k:"green",  em:"🌱", c:"var(--food)",
    name:{en:"Greenhouse",ar:"المزرعة"}, desc:{en:"Grow lights for the plants. The crew eats every sol.",ar:"أضواء لنمو النباتات. الطاقم يأكل كل سول."}, need:{en:"Needs 2 to stay steady",ar:"تحتاج 2 لتبقى ثابتة"}},
   {k:"shield", em:"🛡️", c:"var(--rad)",
-   name:{en:"Radiation Shield",ar:"درع الإشعاع"}, desc:{en:"Powers the storm shelter & water-wall pumps. Blocks radiation from the Sun.",ar:"يشغّل ملجأ العواصف ومضخات جدار الماء. يحجب إشعاع الشمس."}, need:{en:"More = less radiation",ar:"كلما زاد = إشعاع أقل"}},
+   name:{en:"Radiation Shield",ar:"درع الإشعاع"}, desc:{en:"Powers the storm shelter & water-wall pumps. Great against solar storms, but only blocks a little of the cosmic rays.",ar:"يشغّل ملجأ العواصف ومضخات جدار الماء. ممتاز ضد العواصف الشمسية، لكنه يحجب القليل فقط من الأشعة الكونية."}, need:{en:"More = less radiation",ar:"كلما زاد = إشعاع أقل"}},
   {k:"comms",  em:"📡", c:"var(--comms)",
    name:{en:"Radio to Earth",ar:"الراديو إلى الأرض"}, desc:{en:"Sends your science home & gets tomorrow's space weather forecast.",ar:"يرسل علومك إلى الأرض ويجلب توقعات طقس الفضاء للغد."}, need:{en:"On / Off",ar:"تشغيل / إيقاف"}},
   {k:"science",em:"🔬", c:"var(--sci)",
@@ -1104,7 +1121,7 @@ function newGame(opts={}){
     weather: buildWeather(source),
     forecastFor: 1,
     dust:{left:0, startIn:-1},
-    panelBoost:0, panelPenalty:0, greenhouseHalf:0, lettuceWait:-1, noScienceToday:false, extraUse:0,
+    panelBoost:0, panelPenalty:0, greenhouseHalf:0, lettuceWait:-1, noScienceToday:false, extraUse:0, covered:false, digLeft:0, coverAsked:0,
     pendingCard:null, usedCards:[], history:[], over:false, result:null, cardCooldown:2,
     factDeck:null, factPos:0, evCount:[0,0,0,0]
   };
@@ -1115,6 +1132,7 @@ function solarPower(){
   let p = S.dust.left>0 ? (S.dust.retracted ? CFG.powerStowed : CFG.powerDust) : CFG.powerClear;
   if(S.panelBoost>0) p+=2;
   if(S.panelPenalty>0) p-=(S.panelPenaltyAmt||1);
+  if(S.digLeft>0) p-=CFG.digPower;
   return Math.max(2,p);
 }
 function allocTotal(){return Object.values(S.alloc).reduce((a,b)=>a+b,0)+S.extraUse}
@@ -1158,7 +1176,10 @@ function runSol(){
   if(S.lettuceWait>0){S.lettuceWait--; if(S.lettuceWait===0){S.food=clamp(S.food+18,0,100); add("🥬","l_lettuce",{},"good"); S.lettuceWait=-1;}}
 
   const wx=S.weather[sol]; const mult=CFG.shieldMult[a.shield];
-  let dose = CFG.baseDose*mult; let storm=null;
+  // two kinds of radiation: steady cosmic rays (hard to block) + solar storms (the shield is good at these)
+  const cosmic = CFG.baseDose*CFG.cosmicMult[a.shield]*(S.covered?CFG.coverMult:1);
+  let dose = cosmic; let storm=null;
+  add("🌌", S.covered?"l_cosmicCov":"l_cosmic", {d:cosmic.toFixed(2)});
   const h=hitDose(wx.level);
   if(h.hit){
     const raw = wx.level===3 ? (wx.items.find(i=>i.dose)?.dose ?? 6) : h.dose;
@@ -1180,6 +1201,7 @@ function runSol(){
   } else if(S.sciWaiting>0) add("📡","l_waiting",{n:S.sciWaiting});
 
   if(S.panelBoost>0) S.panelBoost--; if(S.panelPenalty>0) S.panelPenalty--;
+  if(S.digLeft>0){ S.digLeft--; if(S.digLeft===0){ S.covered=true; add("🪨","l_covered",{},"good"); } else add("🚜","l_digging",{n:S.digLeft}); }
   if(S.dust.left>0){S.dust.left--; if(S.dust.left===0){
     add("🌤️","l_dustOver",{},"good");
     if(S.dust.retracted){ add("🛰️","l_unstow",{},"good"); }
@@ -1206,6 +1228,7 @@ function runSol(){
     S.sol++;
     S.cardCooldown--;
     if(stormDecision){ S.pendingCard=CARDS.find(c=>c.id==="stow"); S.cardCooldown=2; }
+    else if(!S.covered && !S.digLeft && ((S.sol===3 && S.coverAsked===0) || (S.sol===11 && S.coverAsked===1))){ S.coverAsked++; S.pendingCard=CARDS.find(c=>c.id==="cover"); S.cardCooldown=2; }
     else if(S.cardCooldown<=0 && S.rng()<0.38){ S.pendingCard=pickCard(); S.cardCooldown=3; }
   }
   return {sol, lines, wx, storm, factSeed};
@@ -1231,6 +1254,18 @@ const CARDS = [
    ],
    fact:{en:"<b>Real Mars fact:</b> Dust is one of the biggest dangers for solar-powered missions. NASA's InSight lander ended its mission in December 2022 after dust covered its solar panels.",ar:"<b>حقيقة عن المريخ:</b> الغبار من أكبر الأخطار على المهمات التي تعمل بالطاقة الشمسية. أنهى مسبار ناسا إنسايت مهمته في ديسمبر 2022 بعد أن غطّى الغبار ألواحه الشمسية."},
    src:{en:"NASA InSight mission",ar:"مهمة إنسايت – ناسا"}},
+  {id:"cover", special:true, photo:"gale", em:"🪨",
+   kid:{en:"There are two kinds of space radiation. Solar storms come and go, and our shield is good at stopping them. But cosmic rays come from exploding stars far away, and they never stop! They are so strong that a thin shield barely slows them. A thick blanket of Mars soil helps a lot, and it's free, because it's already here!",ar:"هناك نوعان من إشعاع الفضاء. العواصف الشمسية تأتي وتذهب، ودرعنا جيد في إيقافها. لكن الأشعة الكونية تأتي من نجوم انفجرت بعيدًا، ولا تتوقف أبدًا! إنها قوية جدًا لدرجة أن الدرع الرقيق بالكاد يبطئها. بطانية سميكة من تربة المريخ تساعد كثيرًا، وهي مجانية، لأنها موجودة هنا أصلًا!"},
+   title:{en:"Cosmic rays never stop!",ar:"الأشعة الكونية لا تتوقف أبدًا!"},
+   text:{en:"Even on quiet days, cosmic rays from deep space hit the outpost. Your storm shield only stops a little of them. The rover could pile Mars soil on top of the habitat to block them every sol for the rest of the mission.",ar:"حتى في الأيام الهادئة، تضرب الأشعة الكونية القادمة من أعماق الفضاء المحطة. درع العواصف يوقف القليل منها فقط. تستطيع المركبة أن تكوّم تربة المريخ فوق المسكن لتحجبها في كل سول حتى نهاية المهمة."},
+   choices:[
+     {t:{en:"Cover the habitat with Mars soil",ar:"غطِّ المسكن بتربة المريخ"}, s:{en:"The rover digs for 3 sols (−2 power each sol). After that, cosmic rays are cut by 30% every sol.",ar:"تحفر المركبة لمدة 3 سول (−2 طاقة في كل سول). بعد ذلك تقل الأشعة الكونية بنسبة 30% في كل سول."},
+      f:()=>{S.digLeft=CFG.digSols; return {en:"The rover starts digging! For 3 sols you'll have 2 less power. Then your outpost will be wrapped in a protective soil blanket.",ar:"بدأت المركبة الحفر! لمدة 3 سول ستكون طاقتك أقل بوحدتين. بعدها ستكون محطتك ملفوفة ببطانية واقية من التربة."}}},
+     {t:{en:"Not now, keep the power",ar:"ليس الآن، احتفظ بالطاقة"}, s:{en:"No power cost today, but the crew keeps getting the full cosmic-ray dose every sol.",ar:"لا تكلفة طاقة اليوم، لكن الطاقم يستمر في تلقي جرعة الأشعة الكونية كاملة كل سول."},
+      f:()=>({en:"OK! The power goes to other systems. Remember: cosmic rays add up a little every single sol.",ar:"حسنًا! تذهب الطاقة إلى أنظمة أخرى. تذكّر: الأشعة الكونية تتراكم قليلًا في كل سول."})}
+   ],
+   fact:{en:"<b>Real NASA data:</b> Curiosity's RAD measured about <b>210 micrograys a day</b> from cosmic rays on the Mars surface, compared with about <b>480 a day</b> in space on the way to Mars, so Mars's thin air blocks about half. A 2022 study found that a layer of Mars soil (10 g/cm²) cuts cosmic-ray energy by about <b>30%</b>.",ar:"<b>بيانات ناسا الحقيقية:</b> قاس جهاز RAD على كيوريوسيتي نحو <b>210 ميكروغراي يوميًا</b> من الأشعة الكونية على سطح المريخ، مقارنة بنحو <b>480 يوميًا</b> في الفضاء أثناء الرحلة إلى المريخ، أي أن هواء المريخ الرقيق يحجب نحو النصف. ووجدت دراسة عام 2022 أن طبقة من تربة المريخ (10 غرام/سم²) تقلل طاقة الأشعة الكونية بنحو <b>30%</b>."},
+   src:{en:"NASA Curiosity RAD (Hassler et al., Science 2014) · Gakis & Atri, International Astronautical Congress 2022",ar:"جهاز RAD على كيوريوسيتي – ناسا (Hassler وزملاؤه، Science 2014) · Gakis وAtri، المؤتمر الدولي للملاحة الفضائية 2022"}},
   {id:"delay", em:"📞", ok:()=>!S.awaitEarth,
    kid:{en:"When the Perseverance rover landed on Mars, the landing took about seven minutes — but its radio message took about eleven minutes to reach Earth. By the time engineers heard it had started landing, it was already safe on the ground!",ar:"عندما هبطت المركبة برسيفيرانس على المريخ، استغرق الهبوط نحو سبع دقائق — لكن رسالتها اللاسلكية احتاجت نحو إحدى عشرة دقيقة لتصل إلى الأرض. عندما سمع المهندسون أن الهبوط بدأ، كانت المركبة قد هبطت بأمان!"},
    title:{en:"A warning light is blinking!",ar:"ضوء تحذير يومض!"},
@@ -1476,7 +1511,7 @@ function render(){
   for(let i=0;i<S.battery;i++) html+=`<div class="pip bat ${solar+i<used?'used':''}" title="${t('pip_bat')}">🔋</div>`;
   $("pool").innerHTML=html;
   const left=available()-used;
-  $("poolHint").innerHTML = t("poolHint",{solar, dust:S.dust.left>0?t("poolDust"):"", bat:S.battery, left, extra:S.extraUse?t("poolExtra",{n:S.extraUse}):""});
+  $("poolHint").innerHTML = t("poolHint",{solar, dust:(S.dust.left>0?t("poolDust"):"")+(S.digLeft>0?t("poolDig"):""), bat:S.battery, left, extra:S.extraUse?t("poolExtra",{n:S.extraUse}):""});
   $("rows").innerHTML = SYSTEMS.map(sy=>{
     const v=S.alloc[sy.k], mx=CFG.maxUnits[sy.k]; const nm=L(sy.name);
     let units=""; for(let i=0;i<mx;i++) units+=`<i class="${i<v?'on':''}"></i>`;
@@ -1626,6 +1661,7 @@ function showEnd(){
       <li>${t("le2",{n:stormSols.length, s:shielded})}</li>
       ${big&&!S.live?`<li>${big.alloc.shield>0?t("le3on",{sol:big.sol,sh:big.alloc.shield,got:big.storm.got.toFixed(1)}):t("le3off",{sol:big.sol})}</li>`:""}
       <li>${t("le4",{d:S.dose.toFixed(1)})}</li>
+      <li>${t(S.covered?"le_cov":"le_nocov")}</li>
     </ul>
     <div class="btnrow"><button class="btn primary" id="btnAgain">${t("again")}</button><button class="btn" id="btnSrc">${t("seeData")}</button></div>`;
   showModal(head+body, showEnd);
@@ -1724,6 +1760,7 @@ function showData(){
     <li>${t("src2")} <a href="https://science.nasa.gov/mission/msl-curiosity/" target="_blank" rel="noopener">science.nasa.gov</a></li>
     <li>${t("src3")} <a href="https://osdr.nasa.gov/bio/repo/" target="_blank" rel="noopener">osdr.nasa.gov</a></li>
     <li>${t("src4")}</li>
+    <li>${t("src5")} <a href="https://doi.org/10.1126/science.1244797" target="_blank" rel="noopener">doi.org/10.1126/science.1244797</a> · <a href="https://arxiv.org/abs/2210.01061" target="_blank" rel="noopener">arxiv.org/abs/2210.01061</a></li>
   </ul>
   <h3>${t("simpH")}</h3>
   <p style="font-size:14px;color:var(--muted)">${t("simpP")}</p>

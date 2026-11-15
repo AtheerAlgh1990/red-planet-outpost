@@ -28,7 +28,7 @@ Each sol, the solar panels make **9 power units**, or only **5 during a dust sto
 |---|---|---|
 | 🫁 Life Support | Makes oxygen | Needs 3 every sol or the air runs down |
 | 🌱 Greenhouse | Grows food | Needs 2 every sol or the food runs down |
-| 🛡️ Radiation Shield | Storm shelter and water-wall pumps | Each unit blocks radiation but takes power from science |
+| 🛡️ Radiation Shield | Storm shelter and water-wall pumps | Great against solar storms, but only dents cosmic rays. Each unit takes power from science |
 | 📡 Radio to Earth | Sends science home and brings tomorrow's space-weather forecast | Costs power. Without it, storms arrive by surprise and science never reaches Earth |
 | 🔬 Science | The reason the crew is on Mars | Only what reaches Earth counts toward the score |
 
@@ -38,12 +38,22 @@ There is **no free safe choice.** We simulated 200 missions per strategy (`tools
 
 | Strategy | Survival rate | Science |
 |---|---|---|
-| Never shield | 0% (crew sent home around sol 19) | – |
-| Low shield every sol | ~39% | high |
-| Read the forecast, shield up on storm days | ~95% | ~41 ⭐⭐⭐ |
-| Medium shield every sol | ~95% | ~29 ⭐⭐ |
+| Never shield | 0% (crew sent home around sol 20) | – |
+| Low shield every sol | ~7% | high |
+| Medium shield every sol | ~68% | ~31 ⭐⭐ |
+| Read the forecast, shield up on storm days | ~79% | ~41 ⭐⭐⭐ |
+| Read the forecast **and cover the habitat with Mars soil** | **~94%** | ~39 ⭐⭐⭐ |
 
-**Why the real data matters:** keeping the shield on medium every sol is just as safe as reading the forecast, but it wastes power. Players who read the real space-weather forecast and shield up only on storm days send home **about 40% more science (41 vs 29) at the same safety**. That's exactly what NASA mission planners do: watch the space weather and protect the crew when it matters, so there's power left for the mission.
+**Why the real data matters:** keeping the shield on medium every sol wastes power and is still less safe. Players who read the real space-weather forecast and shield up only on storm days are safer and send home **about a third more science (41 vs 31)**. That's exactly what NASA mission planners do: watch the space weather and protect the crew when it matters, so there's power left for the mission.
+
+### Cosmic rays: the radiation that never stops
+
+There are two kinds of space radiation, and the game treats them differently, as on the real Mars:
+
+- **Solar storms** come and go. The storm shelter blocks most of their particles (up to 85% at full shield).
+- **Galactic cosmic rays** come from exploding stars far away and hit Mars every sol. They are so energetic that a thin storm shelter only blocks a little (up to 20% in the game). Curiosity's RAD measured about **210 µGy a day** from cosmic rays on the surface, compared with about **480 µGy a day** in space on the way to Mars, so Mars's thin air already blocks about half (Hassler et al., *Science*, 2014).
+- **The solution in the game:** on sol 3 (and again on sol 11 if the player said no), the player can **cover the habitat with Mars soil**. The rover digs for 3 sols, using 2 power each sol, and after that cosmic rays are cut by **30% every sol**. This follows a 2022 study that found a 10 g/cm² layer of Martian regolith cuts cosmic-ray energy deposition by about 30% (Gakis & Atri, International Astronautical Congress 2022, [arXiv:2210.01061](https://arxiv.org/abs/2210.01061)). Regolith is already on Mars, so nothing has to be launched from Earth.
+- It's a real trade-off: power now for safety later. In our 1,000 test missions, covering the habitat raised survival from about 79% to about 94% for players who also read the forecast.
 
 ![Storm report](docs/screenshot-storm.png)
 
@@ -53,7 +63,7 @@ There is **no free safe choice.** We simulated 200 missions per strategy (`tools
 |---|---|
 | Kids aged 7–12 run a lunar or Martian outpost | 30-sol Mars outpost in Gale Crater, plain language, big buttons, a talking scientist (Dr. Rana) who reads explanations aloud, English and Arabic |
 | **Life support** | Needs 3 power every sol or the air runs down; water-recycler and air-scrubber decisions |
-| **Radiation shielding** | Shield level 0–3 cuts the dose; real solar storms from NASA DONKI; real Curiosity RAD dose of 8,100 µGy on 20 May 2024 |
+| **Radiation shielding** | Shield level 0–3 cuts the solar-storm dose; real solar storms from NASA DONKI; real Curiosity RAD dose of 8,100 µGy on 20 May 2024. Steady cosmic rays (Curiosity RAD, ~210 µGy/day) need a different fix: covering the habitat with Mars soil |
 | **Power budgeting** | 9 solar units (5 in dust storms, 3 if panels retracted) plus a battery; every unit is a choice |
 | **Food production** | Greenhouse needs 2 power; the lettuce harvest decision (now or later) |
 | **Communication delay** | The radio must be on to get tomorrow's forecast and send science home; "Ask Mission Control and wait one sol" vs "fix it yourself now" decision; real Earth–Mars light time shown |
@@ -115,7 +125,8 @@ We used **Claude (Anthropic)** as a coding and research assistant. It helped wri
 - NASA DONKI: https://ccmc.gsfc.nasa.gov/tools/DONKI/ · API: https://api.nasa.gov/
 - DONKI flare record, X8.7, 14 May 2024: https://kauai.ccmc.gsfc.nasa.gov/DONKI/view/FLR/30849/3
 - NASA, "NASA Watches Mars Light Up During Epic Solar Storm" (June 2024): Curiosity RAD measured 8,100 µGy on 20 May 2024
-- Curiosity RAD typical surface dose (~210 µGy per day): Hassler et al., *Science* 343 (2014), NASA / Southwest Research Institute
+- Curiosity RAD cosmic-ray dose (~210 µGy per day on the surface, ~480 µGy per day during the cruise to Mars): Hassler et al., *Science* 343 (2014), https://doi.org/10.1126/science.1244797, NASA / Southwest Research Institute
+- Mars regolith as cosmic-ray shielding (~30% less energy deposition at 10 g/cm²): Gakis & Atri, "Radiation protection and shielding materials for crewed missions on the surface of Mars", International Astronautical Congress 2022 (IAC-22-A1.5.2), https://arxiv.org/abs/2210.01061
 - SIDC / Royal Observatory of Belgium flare reports, May 2024 (X1.0 8 May, X1.1 9 May, X5.8 11 May, X1.0 12 May)
 - NASA Open Science Data Repository: https://osdr.nasa.gov/bio/repo/
 - NASA Veggie, ISS Environmental Control and Life Support System, Perseverance MOXIE, Mars Exploration Rover (Opportunity): science.nasa.gov / nasa.gov

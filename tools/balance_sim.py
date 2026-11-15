@@ -1,17 +1,20 @@
 import json, sys
 from playwright.sync_api import sync_playwright
+SMART = "(a,S)=>{const lv=S.forecastFor===S.sol?S.weather[S.sol].level:0; return lv>=2?{life:3,green:2,shield:3,comms:1,science:0}:{life:3,green:2,shield:1,comms:1,science:2}}"
+# name: (allocation strategy, cover the habitat with Mars soil when asked?)
 STRATS = {
- "naive_no_shield": "a=>({life:3,green:2,shield:0,comms:1,science:3})",
- "shield1_always":  "a=>({life:3,green:2,shield:1,comms:1,science:2})",
- "smart_forecast":  "(a,S)=>{const lv=S.forecastFor===S.sol?S.weather[S.sol].level:0; return lv>=2?{life:3,green:2,shield:3,comms:1,science:0}:{life:3,green:2,shield:1,comms:1,science:2}}",
- "shield2_always":  "a=>({life:3,green:2,shield:2,comms:1,science:1})",
- "greedy_science":  "a=>({life:3,green:2,shield:0,comms:0,science:4})",
+ "naive_no_shield": ("a=>({life:3,green:2,shield:0,comms:1,science:3})", False),
+ "shield1_always":  ("a=>({life:3,green:2,shield:1,comms:1,science:2})", False),
+ "smart_no_cover":  (SMART, False),
+ "smart_cover":     (SMART, True),
+ "shield2_always":  ("a=>({life:3,green:2,shield:2,comms:1,science:1})", False),
 }
 js = """
-([strat, seed]) => {
+([strat, cover, seed]) => {
   const f = eval(strat); const R = window.RPO; R.newGame({seed}); let S=R.S; let guard=0;
   while(!S.over && guard++<60){
-    if(S.pendingCard){ R.chooseCard(S.pendingCard.choices.length>1 && (!S.pendingCard.choices[0].need || S.pendingCard.choices[0].need()) ? 0 : 1); }
+    if(S.pendingCard && S.pendingCard.id==="cover"){ R.chooseCard(cover?0:1); }
+    else if(S.pendingCard){ R.chooseCard(S.pendingCard.choices.length>1 && (!S.pendingCard.choices[0].need || S.pendingCard.choices[0].need()) ? 0 : 1); }
     let al = f(S.alloc, S);
     S.alloc = {life:0,green:0,shield:0,comms:0,science:0};
     let avail = R.available() - S.extraUse;
@@ -26,8 +29,8 @@ js = """
 with sync_playwright() as p:
     b = p.chromium.launch(); pg = b.new_page()
     pg.goto("file://" + __import__("os").path.abspath(__import__("os").path.join(__import__("os").path.dirname(__file__), "..", "index.html")) + "")
-    for name, s in STRATS.items():
-        res = [pg.evaluate(js, [s, seed]) for seed in range(1, 201)]
+    for name, (s, cover) in STRATS.items():
+        res = [pg.evaluate(js, [s, cover, seed]) for seed in range(1, 201)]
         wins = [r for r in res if r["win"]]
         fails = {}
         for r in res:
