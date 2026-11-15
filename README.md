@@ -106,6 +106,8 @@ The curated dataset is in [`data/may2024_space_weather.json`](data/may2024_space
 
 Run it locally by opening `index.html` in any browser.
 
+**About the NASA API key in `index.html`:** Live Sun mode reads public DONKI data from api.nasa.gov, which needs a key. This is a free NASA public API key, not a password: it only gives rate-limited, read-only access to public data. Because the game runs entirely in the player's browser (no server), any key it uses is visible by design. We use our own key instead of NASA's shared `DEMO_KEY`, because `DEMO_KEY` allows only about 30 requests per hour per network and would fail if several people play from the same network. If you fork this project, get your own free key at [api.nasa.gov](https://api.nasa.gov) and replace `NASA_API_KEY`.
+
 ## Use of AI
 We used **Claude (Anthropic)** as a coding and research assistant. It helped write the game code, design the trade-off mechanics, find and check the NASA data sources, run the balance simulations, and draft this README, our presentation and the Arabic translation (reviewed by our team). Our team chose the concept, reviewed and play-tested the game, and made the design decisions. The game contains no AI-generated images: all art is simple hand-coded SVG and emoji.
 
