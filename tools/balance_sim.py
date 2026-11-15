@@ -1,3 +1,5 @@
+# Balance test bot for Red Planet Outpost: plays 200 missions per strategy and reports survival and science.
+# AI disclosure: written with AI assistance from Claude (Anthropic), reviewed and run by the Orbit Cousins team.
 import json, sys
 from playwright.sync_api import sync_playwright
 SMART = "(a,S)=>{const lv=S.forecastFor===S.sol?S.weather[S.sol].level:0; return lv>=2?{life:3,green:2,shield:3,comms:1,science:0}:{life:3,green:2,shield:1,comms:1,science:2}}"
