@@ -41,7 +41,7 @@ There is **no free safe choice.** We simulated 200 missions per strategy (`tools
 | Never shield | 0% (crew sent home around sol 20) | – |
 | Low shield every sol | ~7% | high |
 | Medium shield every sol | ~68% | ~31 ⭐⭐ |
-| Read the forecast, shield up on storm days | ~79% | ~41 ⭐⭐⭐ |
+| Read the forecast, shield up on storm days | ~78% | ~41 ⭐⭐⭐ |
 | Read the forecast **and cover the habitat with Mars soil** | **~94%** | ~39 ⭐⭐⭐ |
 
 **Why the real data matters:** keeping the shield on medium every sol wastes power and is still less safe. Players who read the real space-weather forecast and shield up only on storm days are safer and send home **about a third more science (41 vs 31)**. That's exactly what NASA mission planners do: watch the space weather and protect the crew when it matters, so there's power left for the mission.
@@ -53,7 +53,7 @@ There are two kinds of space radiation, and the game treats them differently, as
 - **Solar storms** come and go. The storm shelter blocks most of their particles (up to 85% at full shield).
 - **Galactic cosmic rays** come from exploding stars far away and hit Mars every sol. They are so energetic that a thin storm shelter only blocks a little (up to 20% in the game). Curiosity's RAD measured about **210 µGy a day** from cosmic rays on the surface, compared with about **480 µGy a day** in space on the way to Mars, so Mars's thin air already blocks about half (Hassler et al., *Science*, 2014).
 - **The solution in the game:** on sol 3 (and again on sol 11 if the player said no), the player can **cover the habitat with Mars soil**. The rover digs for 3 sols, using 2 power each sol, and after that cosmic rays are cut by **30% every sol**. This follows a 2022 study that found a 10 g/cm² layer of Martian regolith cuts cosmic-ray energy deposition by about 30% (Gakis & Atri, International Astronautical Congress 2022, [arXiv:2210.01061](https://arxiv.org/abs/2210.01061)). Regolith is already on Mars, so nothing has to be launched from Earth.
-- It's a real trade-off: power now for safety later. In our 1,000 test missions, covering the habitat raised survival from about 79% to about 94% for players who also read the forecast.
+- It's a real trade-off: power now for safety later. In our 1,000 test missions, covering the habitat raised survival from about 78% to about 94% for players who also read the forecast.
 
 ![Storm report](docs/screenshot-storm.png)
 

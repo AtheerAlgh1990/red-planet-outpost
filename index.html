@@ -1228,7 +1228,7 @@ function runSol(){
     S.sol++;
     S.cardCooldown--;
     if(stormDecision){ S.pendingCard=CARDS.find(c=>c.id==="stow"); S.cardCooldown=2; }
-    else if(!S.covered && !S.digLeft && ((S.sol===3 && S.coverAsked===0) || (S.sol===11 && S.coverAsked===1))){ S.coverAsked++; S.pendingCard=CARDS.find(c=>c.id==="cover"); S.cardCooldown=2; }
+    else if(!S.covered && !S.digLeft && ((S.sol>=3 && S.coverAsked===0) || (S.sol>=11 && S.coverAsked===1 && S.sol<CFG.sols-2))){ S.coverAsked++; S.pendingCard=CARDS.find(c=>c.id==="cover"); S.cardCooldown=2; }
     else if(S.cardCooldown<=0 && S.rng()<0.38){ S.pendingCard=pickCard(); S.cardCooldown=3; }
   }
   return {sol, lines, wx, storm, factSeed};
